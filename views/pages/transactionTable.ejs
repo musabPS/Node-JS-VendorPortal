@@ -144,7 +144,7 @@
                         <thead>
                             <tr>
 
-                                <th title="Field #3">SO #</th>
+                                <th title="Field #3">SO #</th> 
                                 <th title="Field #3">CUSTOMER</th>
                                 <th title="Field #4">Date</th>
                                 <th title="Field #5">Quantity</th>
@@ -156,18 +156,17 @@
                         </thead>
                         <tbody>
                                
-                            <%  tranData.forEach((el)=>{  %>
-                                <tr>
-                                    <td><a> <%= el.values.tranid %> </td>
-                                    <td><a> <%= el.values.entity[0].text  %> </td>
-                                    <td><%= el.values.trandate %></td>
-                                    <td><%= el.values.quantity %></td>
-                                    <td><%= el.values.amount %></td>
-                                    <td><%= el.values.status[0].text %></td>
-                                    <td><a href= sales-orders/<%= el.values.internalid[0].value %>/edit ><i class="flaticon2-open-text-book text-primary "> </i> <a>  <i class="flaticon2-pen text-primary"></i></i></td>
-                                    
-                                    </tr>
-                                <%}) %>    
+                            <tr>
+
+                                <td >1</td> 
+                                <td >musav</td>
+                                <td >1-4-2000</td>
+                                <td >3</td>
+                                <td >100</td>
+                                <td>55</td>
+                                <td><a href= "#" ><i class="flaticon2-edit"></i><a>  <i class="flaticon2-rubbish-bin-delete-button"></i></td>
+                                
+                            </tr>
                             </tbody>
                        
                     </table>

@@ -41,6 +41,52 @@ app.get('/',(req,res)=>{
   res.render('index',{route,breadcrumbs})
 })
 
+
+
+app.get('/purchaseRequestList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+
+app.get('/ItemFulfillmentList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="ItemFulfillment"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/invoiceList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Invoice"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/paymentList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Payment List"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/purchaseRequestForm', (req,res)=>{
+  let route = "pages/purchaseRequestForm"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/itemfulfilmentForm', (req,res)=>{
+  let route = "pages/itemFulfillmentForm"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/billViewForm', (req,res)=>{
+  let route = "pages/BeforeCreateBill_View"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+
 const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`Serving on port ${port}`)
