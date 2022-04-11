@@ -127,7 +127,7 @@
 																
 																
 																
-																<th class="pl-0 font-weight-bold text-muted text-uppercase">S#</th>
+																
 																<th class="pl-0 font-weight-bold text-muted text-uppercase">Product</th>
                                                                 <th class=" font-weight-bold text-muted text-uppercase">Delivered Quantity</th>
                                                                 <th class=" font-weight-bold text-muted text-uppercase">Order Quantity</th>
@@ -140,19 +140,16 @@
 														</thead>
 														<tbody>
 
-															${ds.tddata}
-														
-														<!-- 	<tr class="font-weight-boldest border-bottom-0">
-																<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">
-																	<span style="width: 20px;"><label class="checkbox checkbox-single ">
-																	<input type="checkbox">&nbsp;<span></span></label></span></td>
-																<td class="pl-0 py-4 linenumber">2</td>
-																<td class="pl-0 py-4">Front-End Development</td>
-																<td class="text-right py-4">120</td>
-																<td class="text-right py-4  pt-7">$40.00</td>
-																<td class="  pr-0 py-4 text-right  pt-7">$4800.00</td>
-																<td class="text-danger pr-0 pt-7 text-right">$3200.00</td>
-															</tr>-->
+															<%  var totalQty=0, totalAmount=0; tableData.forEach((el)=>{  %>
+																<tr>
+																	<td> <%= el.values["GROUP(item)"][0].text %></td>
+																	<td> <%= el.values["SUM(quantity)"] %>  <% totalQty+=parseInt(el.values["SUM(quantity)"]) %></td>
+																	<td> <%= el.values["SUM(appliedToTransaction.quantity)"] %></td>
+																	<td> <%= el.values["SUM(rate)"] %></td>
+																	<td> <%= el.values["GROUP(locationnohierarchy)"] %></td>
+																	<td> <%= el.values["SUM(rate)"] * el.values["SUM(quantity)"] %>    <% totalAmount+=parseFloat(el.values["SUM(rate)"] * el.values["SUM(quantity)"]) %> </td>
+																</tr>
+																<%}) %>
 														
 														</tbody>
 													</table>
@@ -175,8 +172,8 @@
 														<tbody>
 															<tr class="font-weight-bolder">
 															
-																<td class="text-danger font-size-h3 font-weight-boldest" >30</td>
-																<td class="text-danger font-size-h3 font-weight-boldest" >23000</td>
+																<td class="text-danger font-size-h3 font-weight-boldest" > <%= totalQty %></td>
+																<td class="text-danger font-size-h3 font-weight-boldest" ><%= totalAmount %></td>
 															</tr>
 														</tbody>
 													</table>
