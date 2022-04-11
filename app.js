@@ -43,33 +43,56 @@ app.get('/',(req,res)=>{
   res.render("index",{route})
 })
 
+
 app.get('/dashboard', authCheck,(req,res)=>{
   // app.set('views', path.join(__dirname,'./demo7/views'))
    let route = "partials/_content"
    res.render('index',{route})
 })
 
-app.get('/create-sales-order', (req,res)=>{
- //  app.set('views', path.join(__dirname,'./demo7/views'))
-   let route = "pages/salesOrderForm"
-   res.render('index', {route})
+app.get('/purchaseRequestList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
 })
+
+app.get('/ItemFulfillmentList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="ItemFulfillment"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/invoiceList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Invoice"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+app.get('/paymentList', (req,res)=>{
+  let route = "pages/transactionTable"
+ let listName ="Payment List"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+
+
 app.get('/purchase-requests', async (req,res)=>{
   var data = []
-  try {
+   try {
     data = await PurchaseRequests.find({})
-    console.log(data)
+    console.log(res)
     //data.purchaseRequests = purchaseRequests
-}
-catch (e) {
+   }
+   catch (e) {
     console.log(e)
-}
-  // app.set('views', path.join(__dirname,'./demo7/views'))
+   }
+   // app.set('views', path.join(__dirname,'./demo7/views'))
    let route = "pages/table"
-  // console.log("trandata",data)
+   // console.log("trandata",data)
    res.render('index', {route,data}) 
-})
-app.get('/purchaseRequestForm', (req,res)=>{
+  })
+ app.get('/purchaseRequestForm', (req,res)=>{
    let route = "pages/purchaseRequestForm"
    let listName ="Purchase Request"
 
@@ -86,11 +109,10 @@ app.get('/purchaseRequestForm', (req,res)=>{
     let date=response.data[0].values["GROUP(trandate)"]
     breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
     res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
-  })
-  .catch(function (error) {
+   })
+   .catch(function (error) {
     console.log("erorr",error);
-  });
-
+   });
   
 })
 
@@ -120,6 +142,14 @@ app.get('/itemfulfilmentForm', (req,res)=>{
 
  
 })
+
+app.get('/billViewForm', (req,res)=>{
+  let route = "pages/BeforeCreateBill_View"
+ let listName ="Purchase Request"
+   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+  res.render('index', {route,listName ,breadcrumbs}) 
+})
+
 app.get('/view',async (req,res)=>{
   // app.set('views', path.join(__dirname,'./demo7/views'))
 
