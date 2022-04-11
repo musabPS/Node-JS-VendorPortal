@@ -93,7 +93,7 @@
                                               
 											<div class="col-md-9">
 												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row text-white pt-6">
-													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >PO Request  4343 </h1>
+													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >PO Request  </h1>
 													
 													
 												
@@ -114,11 +114,11 @@
 												<div class="d-flex justify-content-between text-white pt-6">
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2 ">DATE</span>
-														<span class="opacity-70">3-5-2022</span>
+														<span class="opacity-70"><%= date %></span>
 													</div>
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2">PO Request #</span>
-														<span class="opacity-70">34343</span>
+														<span class="opacity-70"><%= tranId %></span>
 													</div>
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2">INVOICE TO.</span>
@@ -152,21 +152,21 @@
 															</tr>
 														</thead>
 														<tbody>
-                                                            <tr>
-																<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">
-																<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">
-																<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></td>
-																<td class="text-right pl-0 font-weight-bold text-muted text-uppercase">1</td>
-																<td class="text-center pl-0 font-weight-bold text-muted text-uppercase">softr color</td>
-																<td class="text-center font-weight-bold text-muted text-uppercase">1</td>
-                                                                <td class="font-weight-bold text-muted text-uppercase">0</td>
-																<td class="font-weight-bold text-muted text-uppercase">0</td>
-                                                               <td class="font-weight-bold text-muted text-uppercase">0</td>
-																<td class="font-weight-bold text-muted text-uppercase">15</td>
-																<td class="pr-0 font-weight-bold text-muted text-uppercase">15</td>
-																<td class="pr-0 font-weight-bold text-muted text-uppercase">1-5-2022</td>
-                                                              <td class="text-right pr-0 font-weight-bold text-muted text-uppercase">NO</td>
-															</tr>
+															<% var reqQty=0,accptqty=0,accptamnt=0,reqamnt=0; tableData.forEach((el)=>{  %>
+																<tr class="font-weight-boldest">
+																	<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>
+																	<td class="pl-0 pt-7 linenumber"></td>
+																	<td class="pl-0 pt-7 txt-td item" ><%= el.values["GROUP(item)"][0].text %></td>
+																	<td class="text-center pt-7 qty"><%= el.values["SUM(quantity)"]  %> <% reqQty+= parseInt(el.values["SUM(quantity)"]) %></td>
+																	<td class="text-center pt-7 accqty"><%= el.values["SUM(custcol_pointstarvendor_originalqty)"] %> <% accptqty+= parseInt(el.values["SUM(custcol_pointstarvendor_originalqty)"]) %></td>
+																	<td class="text-center pt-7 recty"><%= el.values["SUM(quantityshiprecv)"] %></td>
+																	<td class="text-center pt-7 accqty"><%= el.values["SUM(quantitybilled)"] %></td>
+																	<td class="text-center pt-7 rate"><%= el.values["MAX(rate)"] %> <% accptamnt+= parseFloat( el.values["MAX(rate)"] * el.values["SUM(custcol_pointstarvendor_originalqty)"] ) %></td>
+																	<td class=" pr-0 pt-7 text-center amount"><%= el.values["MAX(formulanumeric)"] %> <% reqamnt+= parseFloat(el.values["MAX(formulanumeric)"])  %></td>
+																	<td class="text-danger pr-0 pt-7 text-center expecteddate" ><%= el.values["GROUP(expectedreceiptdate)"] %></td>
+																	<td class="text-success pr-0 pt-7 text-center statuscheck" ><%= el.values["GROUP(formulatext)"] %></td>																	
+																	</tr>
+																<%}) %>
 														
 														</tbody>
 													</table>
@@ -191,12 +191,12 @@
 														</thead>
 														<tbody>
 															<tr class="font-weight-bolder">
-																<td >BHG</td>
+																<td ><%= location %></td>
 																<td style="text-align: center;">1-5-2022</td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;">9 <p style="font-size: 15px;" class="text-info">9</p></td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;">7  <p style="font-size: 15px;" class="text-info">6</p> </td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;">6</td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;">5</td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><%=  accptqty %> <p style="font-size: 15px;" class="text-info">9</p></td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><%= accptamnt.toFixed(1) %> <p style="font-size: 15px;" class="text-info">6</p> </td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"><%= reqQty %></td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"> <%= reqamnt.toFixed(1) %></td>
 															</tr>
 														</tbody>
 													</table>
@@ -288,6 +288,7 @@
 		</form>
 	</NLFORM>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
 <script>
@@ -376,23 +377,29 @@
 
    });
 
+   $( document ).ready(function() {
 
-//    $(document).ready(function(){
- 
-//  $(".headerapprove").click(function(){
-// // 
-//    $.ajax(
-//      {
-//       url: "/app/site/hosting/restlet.nl?script=432&deploy=1",
-//       headers: { 'Access-Control-Allow-Origin': '*' }, 
-//       success: function(result){
-// 		console.log("chec",result);
-// 		ajaxstatus
-// 		$("#ajaxstatus").append('Accepted');
-//        // result = JSON.parse(result);
-//       }});
-//     });
-//   $("#headerapprove").click();
-// });
+	var postData=
+							 {
+								 'internalID' : 26357
+							 }
 
+								$.ajax({
+										type      : 'POST', //Method type
+										headers: {  'Access-Control-Allow-Origin': 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff' },
+										url       : 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff', //Your form processing file URL
+										data      : JSON.stringify(postData), //Forms 
+										contentType: "application/json; charset=utf-8",
+										success   : function(data) 
+												{
+													console.log(data)
+													// var parseData=JSON.parse(data) 
+													// console.log("chec",data)
+												}
+												
+		                      	});
+
+
+  });
+   
 	</script>					
