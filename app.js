@@ -68,6 +68,7 @@ catch (e) {
    let route = "pages/table"
   // console.log("trandata",data)
    res.render('index', {route,data}) 
+})
 app.get('/purchaseRequestForm', (req,res)=>{
    let route = "pages/purchaseRequestForm"
    let listName ="Purchase Request"
@@ -92,6 +93,7 @@ app.get('/purchaseRequestForm', (req,res)=>{
 
   
 })
+
 app.get('/itemfulfilmentForm', (req,res)=>{
   let route = "pages/itemFulfillmentForm"
  let listName ="Purchase Request"
