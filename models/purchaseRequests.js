@@ -35,6 +35,6 @@ const purchaseRequestSchema = new mongoose.Schema({
      }
 })
 
-const PurchaseRequest = mongoose.model('Product', purchaseRequestSchema)
+const PurchaseRequest = mongoose.model('PurchaseRequest', purchaseRequestSchema)
 
 module.exports = PurchaseRequest
