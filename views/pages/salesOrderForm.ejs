@@ -7,200 +7,98 @@
         <div class="container">
             <div class="d-flex justify-content-between">
 
-             
             <!-- begin::Card-->
             <div class="card card-custom overflow-hidden " style="width: 100%;">
-               
-                <div class="card-body ">
-
+                <div class="card-body p-0">
                  <!-- begin: Invoice-->
 										<!-- begin: Invoice header-->
-                                        <NLFORM>
-                                                
-                                     <form method="POST" id="tableform">
-										<div class="row justify-content-center py-8 px-8 px-md-0">
-											<div class="col-md-10">
+										<div class="row justify-content-center py-8 px-8 py-md-27 px-md-0">
+											<div class="col-md-9">
 												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
 													<h1 class="display-4 font-weight-boldest mb-10">Sales Order </h1>
-                                                       <div class="separator separator-solid separator-primary opacity-20 py-md-5"></div>
-                                    
+                                                        <!-- <p class="text-danger" style="font-size:20px;">Pending</p>--> 
+                                                   
+													<div class="d-flex flex-column align-items-md-end px-0">
 													
+													</div>
 												</div>
-
-                                          
-                                                     
-                                                <div class="form-group row">
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class="font-weight-bolder mb-2 text-muted">DATE</span>
-                                                            <span  class="opacity-70"><input  id="trandate" type="date" class="form-control" name="date" required style="width:90%;"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class="font-weight-bolder mb-2 text-muted">CUSTOMER</span>
-                                                            <span class="opacity-70"><select id="customerdropdown" class="form-control customerdropdown0" name="customer" style="width:90%;">
-                                                                <option value="">  </option>
-                                                                <%  customerData.forEach((el)=>{  %>
-                                                                    <option value="<%= el.id  %>"> <%= el.values.entityid  %> </option>
-                                                                    <%}) %>
-
-                                                            
-                                                            </select>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class="font-weight-bolder mb-2 text-muted">LOCATION</span>
-                                                            <span class="opacity-70"><select id="customerlocation" class="form-control customerlocationdropdown0" name="location" style="width:90%;"> </select>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </br>
-                                               
-
+												<div class="separator separator-solid separator-primary opacity-20"></div>
+												<div class="d-flex justify-content-between pt-6">
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">DATE</span>
+														<span  class="opacity-70"><input  id="trandate" type="date" class="form-control" name="qty0" required style="width:82%;"></span>
+													</div>
+													
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">Customer</span>
+														<span class="opacity-70"><select id="customerdropdown" class="form-control customerdropdown0" name="option" style="width:82%;"> </select>
+														</span>
+													</div>
+												</div>
 											</div>
-                                            <!-- <div class="separator separator-solid separator-primary opacity-20 py-md-5"></div>
-                                     -->
-                                         <div class="form-group row py-md-8">
-                                            <div class="col-lg-6">
-                                                <div class="d-flex flex-column flex-root ">
-                                                    <span class="font-weight-bolder mb-2 text-muted">BILLING ADDRESS</span>
-                                                    <span class="opacity-70"><select id="select_billing_address" class="form-control customerlocationdropdown0" name="billing" style="width:90%;"> </select>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="d-flex flex-column flex-root ">
-                                                    <span class="font-weight-bolder mb-2 text-muted">SHIPPING ADDRESS</span>
-                                                    <span class="opacity-70"><select id="select_shipping_address" class="form-control customerlocationdropdown0" name="shipping" style="width:90%;"> </select>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        </div>
-                                       
-
 										</div>
 										<!-- end: Invoice header-->
 										<!-- begin: Invoice body-->
                                         <!--begin::Card-->
 
-                                      
+                                        <div class="separator separator-solid separator-primary opacity-20"></div>
 
-                                        <div class="d-flex flex-column px-0">
                                         
-                                        <div class="row justify-content-center">
-                                        <div class="col-10">
-                                                       
-                                        <label id = "pasteExcelText" class="col-3 col-form-label text-muted">Paste Excel</label>
-                                        <div class="col-3">
-                                         <span class="switch">
-                                          <label>
-                                                    <input onclick="javascript:showdiz()" type="checkbox" name="select" id="excelcheckbox"/>
-                                                    <span></span>
-                                                </label>
-                                               </span>
-                                              </div>
-
-                                            
-                                        
-                                        </div>
-                                        
-                                      
-
-
-                            <div class="col-10">  
-
-                            <div class="form-group mb-1" id="excelpastediv" style="display: none;">
-                                
-                                <!-- <div class="separator separator-solid separator-primary opacity-20"></div> -->
-                                <br><br>
-      
-                                <label for="exampleTextarea" data-toggle="tooltip" title="Please Paste your Excel on given column Order ">Item | </label>
-                                <label for="exampleTextarea" data-toggle="tooltip" title="Please Paste your Excel on given column Order">Quantity |</label>
-                                <label for="exampleTextarea" data-toggle="tooltip" title="Please Paste your Excel on given column Order">Rate | </label>
-                                <label for="exampleTextarea" data-toggle="tooltip" title="Please Paste your Excel on given column Order">Amount</label>
-                                <textarea placeholder="Paste excel data..." class="form-control" id="excelid" rows="3" name=excel_data > </textarea>
-                                <br><br>
-                                <button class="btn btn-primary" onclick="javascript:generateTable()" ><i class="flaticon2-list-1" ></i> Generate Table </button>
-                            </div>
-                        </div>
-                        </div>
+                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                         
-                        <div id="excel_table" style="display: none;"></div>
-                                        
-                    <div class="row justify-content-center">
-                        
-                        <div class="col-md-10">
-
-                             <div class="table-responsive mb-10">
+                        <div class="col-md-9">
+                            <NLFORM>
+                                <form method="POST" >
+                            <div class="table-responsive">
                                
-                                <td ><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
-                                
-                                <table class="table item-detail-table" id="table-main">
+                                <td style="display:none;"><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
+                                <table class="table" id="table-main">
                                     <thead style="text-align: center;">
                                         <tr >
                                             
-                                             <!-- <th class=" pl-0 font-weight-bold text-muted text-uppercase">S#</th>  -->
+                                            <!-- <th class=" pl-0 font-weight-bold text-muted text-uppercase">S#</th> -->
                                             <th class=" pl-0 font-weight-bold text-muted text-uppercase">Product</th>
-                                            <th  class=" pl-0 font-weight-bold text-muted text-uppercase">Inventory Detail</th>
-                                            <th class=" font-weight-bold text-muted text-uppercase"> Quantity</th>
+                                            <th class=" font-weight-bold text-muted text-uppercase"> Qty</th>
+
                                             <th class=" font-weight-bold text-muted text-uppercase">Rate</th>
                                             <th class=" pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
                                             <th class=" pr-0 font-weight-bold text-muted text-uppercase">Add Rows</th>
                     
                                         </tr>
                                     </thead>
-                                   
-                                    <tbody class="table-tbody ">
+                                    
+                                    <tbody class="table-tbody">
 
-                                        <div class="form-group row">
+                                            <tr>
+                                                 <!-- <td>1</td> -->
 
-                                            <tr >   
-                                                  <!-- <td style="text-align: center;">1</td>  -->
+                                                 <td> <select id="itemdropdown0" class="form-control itemdropdown" name="option0" style="width:100%;"> </select> 
+                                                 </td>
 
-                                                 
-                                                
-                                                 <td>  
-                                                        <select id="itemdropdown0" name="option0"  class="itemdropdown form-control" placeholder="Select Item">
-
-                                                          
-                                                        </select>
-
-                                                        <!-- <span class="select2-selection__rendered" id="select2-itemdropdown0-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Select Item</span></span> -->
-
-                                                </td>
-                                            
-                                                <td  style="text-align: center;"> <button  id="inventorydetail0"  type="button"  class="btn btn-light-danger font-weight-bold inventorydetail" data-toggle="modal" data-target="#inventorydetailmodel" disabled><i class="fas fa-boxes"></i></button></td>
-                                                <td ><input  id="qty0" type="number" class="form-control qty" name="qty0" style="text-align: center;"></td>
-                                                <td > <input id="rate0" type="text" class="form-control rate" name="rate0" style="text-align: center;"></td>
-                                                <td ><input type="text" id="amount0" class="form-control amount" name="amount0"  style="text-align: center;"></td>
-                                                <td style="text-align: center;" class="btnresponce btnremoveresponce">  <button id="btn_addrow0" type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button><button type="button" class="btn btn-light-danger font-weight-bold delrow" id="btn_removerow0" style="display: none;">-</button> </td>
+                                                <td><input  id="qty0" type="text" class="form-control qty" name="qty0"></td>
+                                               
+                                                <td><input id="rate0" type="text" class="form-control rate" name="rate0"></td>
+                                                <td><input type="text" id="amount0" class="form-control amount" name="amount0"></td>
+                                                <td><button id="addformtablerows0" type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button> </tr>
                                                 
                                             </tr>
-                                        </div>    
 
                                           </tbody>
-                                       
+
                                 </table>
                                 
-                            </div> 
-                            <button id="btn_save" type="button" class="btn btn-primary" name="save" value="billdata" style="display: none;" ><i class="flaticon2-send-1" ></i> Save </button>
-                            <button id="btn_savebeforesubmit" type="button" class="btn btn-primary" name="save" value="billdata" ><i class="flaticon2-send-1"></i> Save </button>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="save" value="billdata" ><i class="flaticon2-send-1"></i> Save</button>
                                     
-            
+                </form>
+            </NLFORM>
                         </div>
                         
                     </div>
-                </form>
-            </NLFORM>
-       
+                    
                     <!-- end: Invoice body-->
                     <!-- begin: Invoice footer-->
-                    <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0" style="margin-top: 20px;">
+                    <!-- <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="table-responsive">
                                  <table class="table" id="formtable">
@@ -213,22 +111,26 @@
                                     </thead>
                                     <tbody >
                                         <tr class="font-weight-bolder">
-                                            <td id="totalqtyold" class="text-primary font-size-h3 font-weight-boldest" > <span id="totalqty"> 0 </span> </td>
-                                            <td id="totalamountold" class="text-primary font-size-h3 font-weight-boldest" > <span id="totalamount"> 0 </span> </td>
+                                            <td id="totalqtyold" class="text-danger font-size-h3 font-weight-boldest" >0</td>
+                                            <td id="totalamountold" class="text-danger font-size-h3 font-weight-boldest" >0</td>
                                         </tr>
                                     </tbody>
                                 </table> 
                             </div>
                         </div>
-                    </div>
-                    
+                    </div> -->
                     <!-- end: Invoice footer-->
                     <!-- begin: Invoice action-->
                     <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between">
 
-                           
+                                <!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
+                                  
+                                <!-- <button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button> -->
+                                <!-- <button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Invoice</button> -->
+                               <!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark btn-hover-text-white border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
+
                             </div>
                         </div>
                     </div>
@@ -238,7 +140,32 @@
                 </div>
                 
             </div>
+            <!-- end::Card-->
+        <!--begin::Card-->
+         <!-- begin::sideCard-->
+        <!--begin::Card-->
         
+        <div class="card card-custom bg-white" style="height: 30%; width: 26%; float: right;  margin-left: 1%; ">  
+            <div class="card-header border-0">
+                <div class="card-title">
+                    <span class="card-icon">
+                        <i class="flaticon2 "></i>
+                    </span>
+                    <h3 class="card-label  text-black">Summary</h3>
+                </div>
+               
+            </div>
+            <div class="separator separator-solid separator-grey opacity-20"></div>
+            <div class="card-body text-black "><p> Total Amount : <span id="totalamount" class="text-danger"> 0 </span>  </p><p>Total Quantity : <span id="totalqty" class="text-danger"> 0 </span></p>
+                <!-- <p>Total Items : <span id="totalitems" class="text-danger"> 0 </span></p> -->
+                <div class="separator separator-solid separator-grey opacity-50"></div>
+                <div class="separator separator-solid separator-grey opacity-50"></div>
+            </br>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();"> <i class="flaticon2-file-1"></i> Print Invoice</button>
+            </div>
+           
+          
+        </div>
 
         <!--end::Card-->
         </div>
@@ -251,131 +178,71 @@
 <!--end::Content-->
 
 <!-- Modal -->
-<div class="modal fade" id="inventorydetailmodel" role="dialog">
+<div class="modal fade" id="myModaldate" role="dialog">
 <div class="modal-dialog">
 
 <!-- Modal content-->
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title">Inventory Detail</h5>
-</br>
+<h5 class="modal-title" id="exampleModalLabel">Change Date To all Items</h5>
 
 
 </div>
 <div class="modal-body">
+<NLFORM>
+<form method="POST" >
+<div id="totalcount" style="display:none;">
 
-    <h5 class="modal-title" style="padding-bottom: 2px;">Item Name : <span id="modalspan_itemname" style="font-size: 5;"></span></h5>
-    <!-- <div class="separator separator-solid separator-primary opacity-20" ></div> -->
-</br>
-    <h5>Item Description : <span id="modalspan_itemdescription" style="text-align: left;" ></span></h5>
-   
-    <!-- <div class="separator separator-solid separator-primary opacity-20" ></div> -->
+</div>
+<input type="date" id="changeallitemdate" class="form-control changeallitemdate" name="changeallitemdate" value="">
 
-        <table class="table modeltable"  id="" >
-        <thead>
-        <tr>
-        
-            <th scope="col">Location</th>
-            <th scope="col">Quantity</th>
-        </tr>
-        </thead>
-        <tbody class="modeltable-body">
-        
-        </tbody>
+<table class="table modeltable">
+<thead>
+<tr>
+    <th scope="col" style="display:none;">line #</th>
+    <th scope="col">Product</th>
+    <th scope="col">Qty</th>
+    <th scope="col">Rate</th>
+    <th scope="col">Remove</th>
+</tr>
+</thead>
+<tbody class="table-body">
 
-        </table>
+</tbody>
 
+</table>
+<button type="submit" class="btn btn-primary" name="save" value="linedate">Save</button>
+</form>
+</NLFORM>
 </div>
 
 <div class="modal-footer">
-    
-</div>
 
+</div>
 </div>
 
 </div>
 </div>
 <!-- END  Modal -->
-
+<NLFORM>
+<form method="POST" id="approveform">
+<div id="approvepost" style="display: none;">
+</div>
+</form>
+</NLFORM>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="assets/js/pages/features/forms/validation/form-widgets.js"></script>
 
 <script>
 
-
-
-//$("#itemdropdown0").select2().select2('text','ALFIN C/040');
-
-var date = new Date();
-var currentDate = date.toISOString().slice(0,10);
-var currentTime = date.getHours() + ':' + date.getMinutes();
-
-
 var totalqty=0
 var totalAmount=0
 var button = document.getElementById("addformtablerows");
 var dataArray=[];
-var itemdropdown = ''
-var masterData='';
-var productData='';
-var lines=1;
-var currentcell=0;
-var customerData='';
-var exceltablelength=1
-var isSelectDestroy=false
-
-
-   document.getElementById('trandate').value = currentDate;
-
-   function showdiz()
-   {
-
-            console.log("check",document.getElementById("excelcheckbox").checked)
-
-        if (document.getElementById("excelcheckbox").checked == true)
-            {
-
-                document.getElementById("excelpastediv").style.display = "block";
-                isSelectDestroy=true
-                var rowCount = $('#table-main tr').length-1;
-
-                 for(var i=0; i<rowCount; i++)
-                 {
-                    $('#itemdropdown'+i).select2('destroy')
-                    // $('#itemdropdown'+i).select2({
-                    // placeholder: "Select Item"
-                    // });
-
-                 }
-
-                //   $('#itemdropdown0').select2({
-                // placeholder: "Select Items",
-                // //    width: "400px",
-                // //    height : "200px"
-                // // minimumResultsForSearch: Infinity
-                // });
-
- 
-
-            }
-            else
-            {
-                isSelectDestroy=false
-                document.getElementById("excelpastediv").style.display = "none";
-                var rowCount = $('#table-main tr').length-1;
-
-                 for(var i=0; i<rowCount; i++)
-                 {
-                    $('#itemdropdown'+i).select2({
-                placeholder: "Select Item"});
-                 }
-
-                
-              
-            }
-   }
-
+var itemdropdown=''
+var masterData=''
+var lines=1
 // button.addEventListener( "click" , function(){
 
 // var options = document.getElementsByClassName('qty');
@@ -393,8 +260,6 @@ var isSelectDestroy=false
 
 
 $(function () {
-
-    $('[data-toggle="tooltip"]').tooltip()
 counttd=0
 sno=2
 
@@ -404,85 +269,39 @@ $('#table-main .table-tbody').on('click','.delrow',function(){
 
 });
 
-    $('#table-main').on('change','.qty',function(){
-
-
-        $('#table-main').find('.table-tbody .qty').each(function(){
-
-            if ($(this).val() != "") {totalqty+=parseInt($(this).val());} 
-        })
-        
-        $('#table-main').find('.table-tbody .amount').each(function(){
-
-        if ($(this).val() != "") {totalAmount+=parseInt($(this).val());} 
-        })
-        $('#totalamount').empty().append();
-        $("#totalamount").append(totalAmount);
-        totalAmount=0
-        $('#totalqty').empty().append();
-        $("#totalqty").append(totalqty); 
-        totalqty=0
-
-    });
-    $('#table-main').on('change','.amount',function(){
-
-       // alert("Amount")
-
-
-});
-
 $('#table-main .table-tbody').on('click','.addformtablerows',function(){
 
               var value = this.value;
              var $cell = $(this).parent();
-             currentcell = $cell.parent();
-             $row = $cell.parent();
-             $row = currentcell
-
-
+             var $row = $cell.parent();
+             
              if($("#qty"+$row.index()).val()=="")
              {
-                Swal.fire({  icon: 'warning',  title: 'Please Enter Quantity'  })
+                 alert("enter qty") 
                 return
              }
-             if($("#itemdropdown"+$row.index()).val()=="")
-             {
-                Swal.fire({  icon: 'warning',  title: 'Please Enter Product'  })
-                return
-             }
-             
-             if($("#qty"+$row.index()).val()=="0" || $("#qty"+$row.index()).val()<0)
-             {
-                Swal.fire({  icon: 'warning',  title: 'Quantity must be greater then 0'  })
-                return
-             }
-            
-             console.log("check lines", $row.index())
-
-
+               
                $("#totalitems").text($('#table-main tr').length)
-               $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
-    qty=0
-    td='<tr>'
-    //td+='<td>'+sno+'</td>' 
-    td+="<td id='"+lines+"' ><select id='itemdropdown"+lines+"' class='form-control itemdropdown' name='option"+lines+"' required style='width: 100%;'>"+itemdropdown+" </select>"
-    
-    td+=  '</td>'   
-    td+='<td style="text-align: center;">  <button id="inventorydetail'+lines+'" type="button"  class="btn btn-light-danger font-weight-bold inventorydetail" data-toggle="modal" data-target="#inventorydetailmodel" disabled><i class="fas fa-boxes"></i></button>'  
-    td+='<td style="text-align: center;"><input id="qty'+lines+'" type="number" class="form-control qty" name="qty'+lines+'" style="text-align: center;" required></td>'  
-    td+=' <td style="text-align: center;"><input id="rate'+lines+'" type="text" class="form-control rate" name="rate'+lines+'" style="text-align: center;" required ></td>'  
-    td+= '<td style="text-align: center;"><input id="amount'+lines+'" type="text" class="form-control amount" name="amount'+lines+'" style="text-align: center;" ></td>'                                              
-    td+='<td style="text-align: center;"  style="width:30px"><button id="btn_addrow'+lines+'" type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button> <button id="btn_removerow'+lines+'" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'
-    //td+='<td><button  type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'
-    td+=  '</tr>'                                                              
-    $("#btn_addrow"+$row.index()).hide()
-    $("#btn_removerow"+$row.index()).show()    
-   // alert($row.index())                               
+
+            $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
+qty=0
+td='<tr>'
+//td+='<td>'+sno+'</td>' 
+td+="<td><select id='itemdropdown"+lines+"' class='form-control itemdropdown' name='option"+lines+"' required>"+itemdropdown+" </select>"
+td+=  '</td>'                                                              
+td+='<td><input id="qty'+lines+'" type="text" class="form-control qty" name="qty'+lines+'" required></td>'  
+//td+=' <td><input type="text" class="form-control av" name="avlqty'+lines+'"></td>'  
+td+=' <td><input id="rate'+lines+'" type="text" class="form-control rate" name="rate'+lines+'" required></td>'  
+td+= '<td><input id="amount'+lines+'" type="text" class="form-control amount" name="amount'+lines+'" required></td>'                                              
+td+='<td id="addformtablerows'+lines+'" style="width:50px"><button type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button></td>'
+td+='<td><button  type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td> '
+td+=  '</tr>'                                                              
+                                           
 // $('#table-main tbody').find('.addformtablerows').each(function(){
 
 //     $(this).append(td);
 // })
-         
+
 $.fn.eachFunction();
 // $('#table-main tbody').append(td)
 // var tr = $(this).prev('modeltable').find('tr:last');
@@ -495,36 +314,24 @@ $('#totalrows').val(counttd);
 });
 
 $.fn.eachFunction=function(){
-    
-    
-         
+
 $('#table-main').find('.table-tbody').each(function(){
         //Retrieves the text within <td>
      $(this).append(td);
 })
 
-    if(isSelectDestroy==false)
-    {
-       
-        $('#itemdropdown'+parseInt(lines)).select2({
-                placeholder: "Select Item"});
-    }
-
-    // $('#itemdropdown'+parseInt(lines)).select2({
-    //             placeholder: "Select Item"}); //added by husnain (checking  )
-            
-    $('#table-main').find('.table-tbody .qty').each(function(){
-    if ($(this).val() != "") {totalqty+=parseInt($(this).val());}      
-    })
-    $('#table-main').find('.table-tbody .amount').each(function(){
-    if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
-    })
-        $('#totalqty').empty().append();
-        $("#totalqty").append(totalqty);
-        totalqty=0
-        $('#totalamount').empty().append();
-        $("#totalamount").append(totalAmount);
-        totalAmount=0
+$('#table-main').find('.table-tbody .qty').each(function(){
+if ($(this).val() != "") {totalqty+=parseInt($(this).val());}      
+})
+$('#table-main').find('.table-tbody .amount').each(function(){
+if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
+})
+$('#totalqty').empty().append();
+$("#totalqty").append(totalqty);
+totalqty=0
+$('#totalamount').empty().append();
+$("#totalamount").append(totalAmount);
+totalAmount=0
 
 }
 
@@ -533,7 +340,7 @@ $('#table-main .table-tbody').on('click','.delrow',function(){       //delete bu
 
 $(this).parents('tr').remove();
 counttd--
-$('#totalrows').val(counttd);
+$('#totalrows').text(counttd);
 sno--
 lines--
 $.fn.eachFunctiondel();
@@ -542,47 +349,19 @@ $.fn.eachFunctiondel();
 });
 $.fn.eachFunctiondel=function(){
 
-    var tableLines=0
+$('#table-main').find('.table-tbody .qty').each(function(){
 
-$("#table-main tbody tr td:first-child").each(function(event){
-
-  
-    $("#itemdropdown"+$(this).attr('id')).prop('id', 'itemdropdown'+tableLines).prop('name', 'option'+tableLines);
-    $("#qty"+$(this).attr('id')).prop('id', 'qty'+tableLines).prop('name', 'qty'+tableLines)
-    $("#rate"+$(this).attr('id')).prop('id', 'rate'+tableLines).prop('name', 'rate'+tableLines)
-    $("#amount"+$(this).attr('id')).prop('id', 'amount'+tableLines).prop('name', 'amount'+tableLines)
-    $("#btn_addrow"+$(this).attr('id')).prop('id', 'btn_addrow'+tableLines);  
-    $("#btn_removerow"+$(this).attr('id')).prop('id', 'btn_removerow'+tableLines);
-    $("#"+$(this).attr('id')).prop('id',tableLines);
-    $('#itemdropdown'+tableLines).select2({
-                placeholder: "Select Item"});
-    
-    tableLines++
-
+if ($(this).val() != "") {totalqty+=parseInt($(this).val());} 
 })
-    lastRow=$('#table-main tr').length
-   // alert("btn_addrow"+parseInt(lastRow-2))
-    $("#btn_addrow"+parseInt(lastRow-2)).show()
-    if(parseInt(lastRow-2)==0)
-    {
-        $("#btn_removerow"+parseInt(lastRow-2)).hide() 
-       
-    }
-   
-
-    $('#table-main').find('.table-tbody .qty').each(function(){
-
-    if ($(this).val() != "") {totalqty+=parseInt($(this).val());} 
-    })
-    $('#table-main').find('.table-tbody .amount').each(function(){
-    if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
-    })
-    $('#totalqty').empty().append();
-    $("#totalqty").append(totalqty);
-    totalqty=0
-    $('#totalamount').empty().append();
-    $("#totalamount").append(totalAmount);
-    totalAmount=0
+$('#table-main').find('.table-tbody .amount').each(function(){
+if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
+})
+$('#totalqty').empty().append();
+$("#totalqty").append(totalqty);
+totalqty=0
+$('#totalamount').empty().append();
+$("#totalamount").append(totalAmount);
+totalAmount=0
 
 }
 
@@ -600,105 +379,82 @@ $('input:checkbox').not(this).prop('checked', this.checked);
 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
 // $('#table-main tbody').append(Nodata);
 
+$("#modaldate").click(function () {
 
+$('.modeltable .table-body').empty();
+var counttd=0
+var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+//Loop through all checked CheckBoxes in GridView.
+$("#table-main tbody input[type=checkbox]:checked").each(function () {
+
+// var row = $(this).closest("tr")[0];
+//var name = $('.txt-td').val();
+linenumber=$(this).parents("tr").find(".linenumber").text();
+item =$(this).parents("tr").find(".item").text();
+qty =$(this).parents("tr").find(".qty").text();
+rate =$(this).parents("tr").find(".rate").text();
+// amount =$(this).parents("tr").find(".amount").text();
+// itemid=$(this).parents("tr").find(".itemid").text();
+// linenumber=$(this).parents("tr").find(".linenumber").text();
+console.log("qty",qty)
+td=  '<tr>'
+td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+td+= '<td><input id="modalitem" class="form-control " value="'+item+'" name="item'+counttd+'" ></td>'
+td+= '<td><input id="modalqty" class="form-control" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+td+='</tr>' 
+counttd++ 
+$('.modeltable .table-body').append(td);
 });
-                   function generateTable() {
+if(counttd==0)
+{
+$('.modeltable .table-body').append(nodata);
+}
 
-                    try { 
-                                 var data = $('textarea[name=excel_data]').val();
-                                 var rows = data.split("\n");
-                                 var table = $('<table />');
-                               //  exceltablelength=0 
-                                 checking=0
-                                 console.log("product",productData.length)
+total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+$('#totalcount').append(total);
+})
 
-                              //  alert('#itemdropdown'+parseInt(exceltablelength-1))
-                             for(var y in rows) 
-                             {
-                               
-                                var cells = rows[y].split("\t");
-                                var row = $('<tr />');
+$(".headerapprove").click(function () 
+{
 
-                               
-                                    console.log("exceltable data", cells)
-                                   // $('#itemdropdown'+parseInt(exceltablelength-1)).text(cells[0]);
+var counttd=0
+//Loop through all checked CheckBoxes in GridView.
+$("#table-main tbody input[type=checkbox]:checked").each(function () {
+// var row = $(this).closest("tr")[0];
+//var name = $('.txt-td').val();
+linenumber=$(this).parents("tr").find(".linenumber").text();
+td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
+$('#approvepost').append(td);
+counttd++
+});
+td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
+$('#approvepost').append(td);
+total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+$('#approvepost').append(total);
+console.log("check")
+$("#btnapprove").click();
+const form  = document.getElementById('#approveform');
+// form.addEventListener('submit', (event) => {
+// handle the form data
+// form.submit();
+// });
 
-                                   
-                                    for(var i=0; i<productData.length; i++)
-                                    {
-                                        if(productData[i].itemid==cells[0])
-                                        {
-                                           // alert('#itemdropdown'+parseInt(exceltablelength-1))
-                                            $('#itemdropdown'+parseInt(exceltablelength-1)).val(productData[i].id[0].value);
-                                            console.log("ProductData", productData[i])
-                                            if(productData[i].itemtype[0].value=="InvtPart")  //check for inventory item
-                                            {
-                                                $('#inventorydetail'+parseInt(exceltablelength-1)).prop("disabled", false);
-                                            }
-                                            
-                                        }
-                                        else
-                                        {
-                                            $('#itemdropdown'+parseInt(exceltablelength-1)).val();
-                                        }
-                                      //  ProductData[i].id[0].value+'">'+ProductData[i].itemid
-                                    }
-                                   
-                                  //  $('#itemdropdown'+parseInt(exceltablelength-1)).find(":selected").text(cells[0])
-                                //  alert('#itemdropdown'+parseInt(exceltablelength-1))
-                                    document.getElementById("qty"+parseInt(exceltablelength-1)).value = cells[1];
-                                  
-                                    document.getElementById("rate"+parseInt(exceltablelength-1)).value = cells[2];
-                                 
-                                    document.getElementById("amount"+parseInt(exceltablelength-1)).value = cells[3];
-                                   
-                                    document.getElementById("btn_addrow"+parseInt(exceltablelength-1)).click()
-                                    exceltablelength++
-                               
-
- 
-                                 
-                                    checking++
-                                    table.append(row);
-                                }
-
-                                // Insert into DOM
-                                $('#excel_table').style('display',block);
-                                $('#excel_table').html(table);
-                                
-
-                             // console.log("exceltablelength", $('#excel_table tr').length-1)
-
-                                $('#excelid').val("");
-                              // document.getElementById("btn_removerow5").click()
-                            //    alert(checking)
-                            }
-
-                            catch(err) 
-                            { 
-                                
-                            }
-                         
-
-                      }
+})
+});
  //////////////................ajax.......................///////////////
-
    $(document).ready(function(){
-
-    //$("#itemdropdown0").select2().select2('text','ALFIN C/040');
-
+       
 
     var url = window.location.href;
     url=url.replace("create-sales-order", "getsaleorder");
-  
-   // setItems()
-   // setCustomers('')
-    
+   
 
    var orderid = [{ //Fetch form data
             'orderid'     : url+'&id=123' //Store name fields value
             }];
-            console.log("ORder",orderid)
+            console.log(orderid)
 
     // $.ajax({ 
     //         type      : 'POST', 
@@ -714,77 +470,104 @@ $('input:checkbox').not(this).prop('checked', this.checked);
 
    $.ajax(
      {
-      url: "/data",
+      url: "http://localhost:3000/data",
       headers: { 'Access-Control-Allow-Origin': '*' }, 
       success: function(result){
-        setItems(result)
-        //setCustomers(result.Customers)
-      //  setLocation(result.Locations)
+		console.log("checkdata",result.Products);
+		masterData=result
+        setItems(result.Products)
+        setCustomers(result.Customers)
        // result = JSON.parse(result);
-     //  setItems()
+
         //loadGraphAPI(result[0],result[1],result[2],result[3]);
       }});
-    
+
+      $('form').submit(function(event) { //Trigger on form submit
+        $('#name + .throw_error').empty(); //Clear the messages first
+        $('#success').empty();
+
+        //Validate fields if required using jQuery
+            
+             var postDataArray=[];
+
+
+        var postForm = { //Fetch form data
+            'customer'     : $('#customerdropdown').find(":selected").text(),
+            'trandate'     : $('#trandate').val(),
+            'amount'       : $('#totalamount').text(),
+            'quantity'     :  $('#totalqty').text(),
+                       };
+                       
+             for(var i=0;i<lines;i++)
+             {
+                postDataArray.push(
+                    {
+                        'rate': $("#rate"+i).val(),'qty': $("#qty"+i).val(),
+                         'amount': $("#amount"+i).val(),
+                         'name': $('#itemdropdown'+i).find(":selected").text(),
+                         
+                    }
+                    )
+             }
+             postForm.items=postDataArray
+             console.log("checks postDataArray",postForm)
+
+        $.ajax({ 
+            type      : 'POST', //Method type
+            url       : '/getsaleorder', //Your form processing file URL
+            data      : JSON.stringify(postForm), //Forms name
+            contentType: "application/json; charset=utf-8",
+            success   : function(data) 
+                        {
+                            console.log(data)
+                            Swal.fire({  icon: 'success',  title: 'Saved',  text: 'Data Saved',  footer: '<a href="sales-orders">View all saleorder</a>'})
+                            $("#trandate option[value='']").attr('selected', true)
+                            $("#customer option[value='']").attr('selected', true)
+                        }
+        });
+        event.preventDefault(); //Prevent the default submit
+    });
       
 });
 //////////////................ajax end.......................///////////////
 
 function setItems(itemData)
 {
-     console.log("items")
-     productData =  JSON.parse(itemData)
-     console.log("items",productData)
     itemdropdown+='<option></option>'
-    for(var i=0; i<productData.length; i++)
+    for(var i=0; i<itemData.length; i++)
     {
-        itemdropdown+='<option value="'+productData[i].id+'">'+productData[i].values.itemid+'</option>'
+        itemdropdown+='<option value="'+itemData[i].id+'">'+itemData[i].name+'</option>'
     }
     $(".itemdropdown").append(itemdropdown);  
 }
-function setCustomers(Data)
-{
-    //  customerData="<%= customerData  %>"
-    //  console.log("check",customerData)  
-    //  dropdownData='<option></option>'
-    //  for(var i=0; i<customerData.length; i++)
-    //  {
-    //     dropdownData+='<option value="'+customerData[i].internalid+'">'+customerData[i].entityid+'</option>'
-    //  }
-    //  $("#customerdropdown").append(dropdownData);  
-}
-
-function setLocation(locationData)
+function setCustomers(customerData)
 {
     dropdownData='<option></option>'
-    for(var i=0; i<locationData.length; i++)
+    for(var i=0; i<customerData.length; i++)
     {
-        dropdownData+='<option value="'+locationData[i].name+'">'+locationData[i].name+'</option>'
+        dropdownData+='<option value="'+customerData[i].name+'">'+customerData[i].name+'</option>'
     }
-    $("#customerlocation").append(dropdownData);  
+    $("#customerdropdown").append(dropdownData);  
 }
 
 $(document).ready(function () {
 
-     //////////.............. Select2 itemdropdown feature
-
-     $('#itemdropdown0').select2({
-       placeholder: "Please Select Items",
-      width: "150px",
-       // height : "200px",
-     //  minimumResultsForSearch: Infinity
+     // Select2
+     $('.itemdropdown').select2({
+       placeholder: "Select Item",
       });
 
     //   $('.itemdropdown').on('change', function(){
     //    // Revalidate field
     //    validator.revalidateField('.itemdropdown');
     //   });
-        var inventorydetailarray=[]
+
         //Dropdownlist Selectedchange event
         $('#table-main').on('change', '.itemdropdown', function()  {
 
-             
-              //// var selectedValue = $(this).val();
-             $(".qty").change(function(){
+           
+            // // var selectedValue = $(this).val();
+            $(".qty").change(function(){
              //alert("The text has been changed.");
              var value = this.value;
              var $cell = $(this).parent();
@@ -792,14 +575,12 @@ $(document).ready(function () {
              var rowCount = $('#table-main tr').length-1;
              if($("#qty"+$row.index()).val()=="")
              {
-                 alert("enter qty")
-                 return
+                 alert("enter qty") 
+                return
              }
-            
-            //  $('#itemdropdown'+$row.index()).select2({ 
-            //   placeholder: "Select Item"});
+      
 
-             $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
+            $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
 
              });
               var value = this.value;
@@ -808,328 +589,20 @@ $(document).ready(function () {
              //   alert("Selected ["+value+"] in cell ["+$cell.index()+"] of row ["+$row.index()+"]");
               // // var nextfield = row.find('.classnamefornextfield'); 
              // // $(nextfield).html(selectedVal);
-
-              console.log("checkitemsonchange",$(this).val())
+             
+            
              if($(this).val()!="")
-             {
-               
-                    for(var i=0; i<productData.length; i++)
+            {
+               // alert($(this).val())
+                for(var i=0; i<masterData.Products.length; i++)
+                {
+                    if(masterData.Products[i].id==$(this).val())
                     {
-                        if(productData[i].id==$(this).val())
-                        {
-
-                            $(this).parent($('#table-main tbody #rate'+$row.index()+'').val(productData[i].values.baseprice));
-                            console.log("checkitems",productData[i].values.type[0].value)
-
-                            if(productData[i].values.type[0].value=="InvtPart")
-                            {
-                                $("#inventorydetail"+$row.index()).prop("disabled", false);
-                               // $("#inventorybtnheader").show();
-                            }
-                            else
-                            {
-                                $("#inventorydetail"+$row.index()).prop("disabled", true);
-                                
-                            }
-
-
-                        }
+                        $(this).parent($('#table-main tbody #rate'+$row.index()+'').val(masterData.Products[i].rate));
                     }
-             }
-
-             inventorydetailarray.push({
-                "row":$row.index(),
-                "location":[
-                    {
-                        "A":3,
-                        "B":4,
-                        "C": 6
-                    }
-                ]
-            })
-            console.log("inventorydetail",inventorydetailarray)
-       
-
+                }
+            }
         })
-
-        $('#table-main').on('click','.inventorydetail',function()
-          {
-              
-          
-            var value = this.value;
-             var $cell2 = $(this).parent();
-             var $row2 = $cell2.parent();
-           //  let inventorydetailrow = inventorydetailarray.find(inventorydetailarray => inventorydetailarray.row === $row2.index());
-             var itemName=$('#itemdropdown'+$row2.index()).find(":selected").text()
-
-             var post ={
-                item : itemName
-             }
-               
-             
-             
-             $.ajax({ 
-                            type      : 'POST', //Method type
-                            url       : '/inventordetail', //Your form processing file URL
-                            data      : JSON.stringify(post), //Forms name
-                            contentType: "application/json; charset=utf-8",
-                            success   : function(data) 
-                                        {
-                                            //empty modal content//
-                                            $('.modeltable .modeltable-body').empty().append();
-                                            $('#modalspan_itemname').empty().append();
-                                            $('#modalspan_itemdescription').empty().append()
-                                            if(data.length>0)
-                                            {
-                                                console.log("data length",JSON.parse(data))
-                                                var inventoryData=JSON.parse(data)
-                                                modaltable=''
-                                               
-                                                for(var i=0; i<inventoryData.length; i++)
-                                                {
-                                                    console.log("location",inventoryData.length)
-                                                    modaltable+='<tr>'
-                                                    modaltable+='<td>'+inventoryData[i].values["GROUP(inventorylocation)"][0].text+'</td>'
-                                                    modaltable+='<td>'+inventoryData[i].values["MAX(locationquantityonhand)"]+'</td>'
-                                                    modaltable+='</tr>'
-                                                }
-                                                
-                                                $('.modeltable .modeltable-body').append(modaltable);
-                                                $('#modalspan_itemname').append(inventoryData[0].values["GROUP(itemid)"]);
-                                                $('#modalspan_itemdescription').append(inventoryData[0].values["GROUP(salesdescription)"]);
-                                                
-                                            }
-
-                                        }
-                        });
-
-          });
-
-        
-        $('#customerdropdown').change(function()
-          {
-            $('#select_billing_address').empty().append();
-            $('#select_shipping_address').empty().append();
-            dropdownData='<option></option>'
-         
-             var customerInternalid=$('#customerdropdown').find(":selected").val()
-
-             post = {
-                 customername:customerInternalid
-             }
-             
-             $.ajax({ 
-                            type      : 'POST', //Method type
-                            url       : '/getcustomeraddress', //Your form processing file URL
-                            data      : JSON.stringify(post), //Forms name
-                            contentType: "application/json; charset=utf-8",
-                            success   : function(data) 
-                                        {
-                                            console.log("data",data)
-                                            console.log("get inloop",data[0])
-                                            if(data.length>0)
-                                            {
-                                               customerData=data
-                                              console.log("get inloop",customerData)
-                                                for(var i=0; i<customerData.length; i++)
-                                                {
-                                                    dropdownData+='<option value="'+customerData[i].values.address+'">'+customerData[i].values.address+'</option>'
-                                                    console.log("get inloop",customerData[i].values)
-                                                }
-                                                 $("#select_billing_address").append(dropdownData); 
-                                                 $("#select_shipping_address").append(dropdownData); 
-
-                                                for(var i=0; i<customerData.length; i++)
-                                                {
-                                                    if(customerData[i].values.isdefaultbilling)
-                                                    {
-                                                        $('#select_billing_address').val(customerData[i].values.address);
-                                                    }
-                                                    if(customerData[i].values.isdefaultshipping)
-                                                    {
-                                                        $('#select_shipping_address').val(customerData[i].values.address);
-                                                    }
-                                                   
-                                                }
-
-                                            }
-                                        }
-                        });
-
-          });
- 
-             $('#btn_savebeforesubmit').click(function(){
-
-                saveSuccess=true
-
-                if(document.getElementById('customerdropdown').value.length==0)
-                { 
-                    saveSuccess=false
-                    Swal.fire({  icon: 'warning',  title: 'Please Select Customer!'})
-            
-                }
-                
-                var rowCount = $('#table-main tr').length-1;
-
-                
-
-               for(var i=0; i<rowCount; i++)
-               {
-                if(document.getElementById('itemdropdown'+i).value.length==0)
-                {
-                    saveSuccess=false
-                    Swal.fire({  icon: 'warning',  title: 'Please Select Products!'})
-                    break;
-                }
-                
-                if(!document.getElementById('qty'+i).value)
-                {
-                    saveSuccess=false
-                    Swal.fire({  icon: 'warning',  title: 'Please Enter Quantity!'})
-                    break;
-                }
-               }
-                console.log("checkbutton",document.getElementById('qty0').value)
-                if(saveSuccess)
-                {
-                    $("#btn_save").click();
-                   // console.log("savebtnclick","successs")
-                }
-                else
-                {
-                 //   console.log("savebtnclick",document.getElementById('itemdropdown0').value.length)
-                   
-                }
-             // 
-
-
-             })
-
-             $("#btn_save").click(function() { //Trigger on form submit
-
-
-                            
-                   $('#name + .throw_error').empty(); //Clear the messages first
-                    $('#success').empty();
-                    var loc=window.location.href
-                    var url = new URL(loc);
-                    var orderInternalId = url.searchParams.get("orderid");
-                    
-                    var postDataArray=[];
-
-                    var postForm = { //Fetch form data
-                    'customer'       :  $('#customerdropdown').find(":selected").val(),
-                    'amount'         :  $('#totalamount').text(),
-                    'quantity'       :  $('#totalqty').text(),
-                    'location'       :  $('#customerlocation').find(":selected").text(),
-                    'billingaddress' : $('#select_billing_address').find(":selected").text(),
-                    'shipingaddress' : $('#select_shipping_address').find(":selected").text()
-                            };
-                            var liness= $('#table-main tr').length-1
-
-
-                            $('#table-main tr').each(function(index, tr)   //$('#table-main tr tr:eq(2) td:eq(1) select').text()
-                            {
-                                var itemobject={}
-            
-                                    $(tr).find('td select').each (function (index, td) 
-                                    {
-
-                                        itemobject.name=$(this).val()
-                                // postDataArray.push({'name':  $(this).val()})
-
-                                    });
-
-                                    $(tr).find('td input').each (function (index, td) 
-                                    {
-                                        if(index==0)
-                                        {
-                                            itemobject.qty=$(this).val()
-                                        // postDataArray.push({'qty':  $(this).val()})
-                                        }
-                                        if(index==1)
-                                        {
-                                            itemobject.rate=$(this).val()
-                                        //  postDataArray.push({'rate':  $(this).val()})
-                                        }
-                                        if(index==2)
-                                        {
-                                        //  postDataArray.push({'amount':  $(this).val()})
-                                            itemobject.amount=$(this).val()
-                                            postDataArray.push(itemobject)
-                                        }
-                                    
-
-                                        //console.log("input",$(this).val()+"index"+index)
-                                    });
-                            
-
-                            });       
-
-                    // for(var i=0;i<$('#table-main tr').length;i++)
-                    // {
-                    //     postDataArray.push(
-                    //         {
-                    //             'rate': $("#rate"+i).val(),'qty': $("#qty"+i).val(),
-                    //             'amount': $("#amount"+i).val(),
-                    //             'name': $('#itemdropdown'+i).find(":selected").val(),
-                                
-                    //         }
-                    //         )
-                    // }
-
-                    postForm.items=postDataArray
-                    console.log("checks postDataArray",postForm)
-
-                let timerInterval
-                            Swal.fire({
-                            title: '',
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading()
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval)
-                            }
-                            }).then((result) => {
-                            /* Read more about handling dismissals below */
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                console.log('I was closed by the timer')
-                            }
-                            })
-
-
-                    
-                $.ajax({ 
-                    type      : 'POST', //Method type
-                    url       : '/createSaleOrder_netsuite', //Your form processing file URL
-                    data      : JSON.stringify(postForm), //Forms name
-                    contentType: "application/json; charset=utf-8",
-                    success   : function(data) 
-                                {
-                                    
-                                    console.log("sucess")
-                                    Swal.close();
-
-                                    Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                 
-                                }
-                                
-                });
-   
-
- 
-}); 
-
-
-
-
-             
-
-
     });
-
-
-
 
 </script>

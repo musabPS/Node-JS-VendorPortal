@@ -1,1307 +1,398 @@
-<!--begin::Content-->
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <!--begin::Entry-->
-    <div class="d-flex flex-column-fluid">
-        
-        <!--begin::Container-->
-        <div class="container">
-
-            <!-- begin::Card-->
-            <div class="card card-custom overflow-hidden">
-                <div class="card-body p-0">
-                  <!--end::Header-->
 					<!--begin::Content-->
-					
-                    <form id="tableform">
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- begin::Card--> 
+								<div class="card card-custom overflow-hidden">
+									<div class="card-body p-0">
 										<!-- begin: Invoice-->
 										<!-- begin: Invoice header-->
-										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-15 px-md-0" >
-											<div class="col-md-10">
-												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
-                                                    <h1 class="display-4 font-weight-boldest mb-10 opacity-80 text-white"><p class="display-4 font-weight-boldest   text-dark" id="tranid"> <%= soHeader[0].values.tranid %></p> <span id="orderid"> </span> 
-                                                        
-                                                    </h1>
-                                                     
-													<div class="d-flex flex-column align-items-md-end px-0">
+
+										<!-- begin acction button-->
+										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-27 px-md-0" style="background-image: url(https://tstdrv925863.app.netsuite.com/core/media/media.nl?id=18190&c=TSTDRV925863&h=tPjhOTbDJOEUf8GsGGFY0MkwUumHqvpcsdR0Em3E_gSFEQSb);" opacity="20" >
+											  <div class="col-md-11 d-flex flex-column align-items-md-end px-0">
+															<!--begin::Dropdown-->
+											<div class="dropdown dropdown-inline mr-2">
+												<button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<span class="svg-icon svg-icon-md">
+													<!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+															<rect x="0" y="0" width="24" height="24" />
+															<path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
+															<path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
+														</g>
+													</svg>
+													<!--end::Svg Icon-->
+												</span>Action</button>
+												<!--begin::Dropdown Menu-->
+												<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+													<!--begin::Navigation-->
+													<ul class="navi flex-column navi-hover py-2">
+														<li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">Choose an option:</li>
+														<li class="navi-item">
+															
+																<span class="navi-icon">
+																	
+																</span>
+																<!--<button type="button" class="btn btn-hover-bg-success btn-text-success btn-hover-text-white border-0 font-weight-bold headerapprove" style="width:100%">Accept</button>-->
+															
+														</li>
+														<li class="navi-item">
+															
+															<span class="navi-icon">
+															
+															</span>
+															<button type="button" class="btn btn-hover-bg-success btn-text-primary btn-hover-text-white border-0 font-weight-bold" data-toggle="modal" data-target="#myModaldate" id="modaldate" style="width:100%">Accept & Modify</button>
+															<NLFORM>
+																<form method="POST" >
+																	
+															<button type="submit" class="btn btn-hover-bg-danger btn-text-danger btn-hover-text-white border-0 font-weight-bold"   id="reject" name="save" value="rejected" style="width:100%">Rejected</button>
+                                                              </form>
+															</NLFORM>
+															<!-- <button type="button" class="btn btn-hover-bg-success btn-text-primary btn-hover-text-white border-0 font-weight-bold" style="width:100%"  onclick="window.open('${ds.exportcsv}')">Export All Items</button> -->
+															
+																<a style="width:100%" href="${ds.exportcsv}" class="navi-link"><span class="navi-icon"></span><span class="navi-text">Export CSV</span>
+																</a>
+                                                                 <a style="width:100%" href="${ds.exportgooglesheet}" class="navi-link" target="_blank"><span class="navi-icon"></span><span class="navi-text">Open In Google Sheet</span></a>
 														
+
+
+													     </li>
+														 <li class="navi-item">
+															
+															<span class="navi-icon">
+															
+															</span>
+														
+													     </li>
+														 <li class="navi-item">
+															
+															<span class="navi-icon">
+															
+															</span>
+														</li>
+
+													
+													
+													</ul>
+													<!--end::Navigation-->
+												</div>
+												<!--end::Dropdown Menu-->
+											</div>
+
+
+
+												</div>
+
+											<!-- end action-->
+                                              
+											<div class="col-md-9">
+												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row text-white pt-6">
+													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >PO Request  4343 </h1>
+													
+													
+												
+                                                     <!-- 													
+													<div class="d-flex flex-column align-items-md-end px-0">
+														begin::Logo
+														<a href="#" class="mb-5">
+															<img src="assets/media/project-logos/3.png" class="h-100px rounded" alt="" />
+														</a>
+														end::Logo
+														<span class="d-flex flex-column align-items-md-end opacity-70">
+															<span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
+															<span>Mississippi 96522</span>
+														</span>
+													</div> -->
+												</div>
+												<div class="border-bottom w-100"></div>
+												<div class="d-flex justify-content-between text-white pt-6">
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2 ">DATE</span>
+														<span class="opacity-70">3-5-2022</span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">PO Request #</span>
+														<span class="opacity-70">34343</span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">INVOICE TO.</span>
+														<span class="opacity-70">ABC, P.O. Box 283 8562 Fusce RD.
+														<br />Fredrick Nebraska 20620</span>
 													</div>
 												</div>
-												<div class="border-bottom w-100 opacity-20"></div>
-												<div class="form-group row">
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class=" font-weight-bolder mb-2 text-muted">DATE</span>
-                                                            <span  class="opacity-70"><input  id="kt_datepicker_2" type="date" class="form-control" name="date" required style="width:90%;" value="<%= soHeader[0].values.trandate1 %>"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class="font-weight-bolder mb-2 text-muted">CUSTOMER</span>
-                                                            <span class="opacity-70"><select id="customerdropdown" class="form-control customerdropdown0" name="customer" style="width:90%;" > 
-                                                                <option value="">  </option>
-                                                                <%  customerList.forEach((el)=>{  %>
-                                                                    <option value="<%= el.id  %>"> <%= el.values.entityid  %> </option>
-                                                                    <%}) %>
-                                                            </select>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="d-flex flex-column flex-root ">
-                                                            <span class=" font-weight-bolder mb-2 text-muted">LOCATION</span>
-                                                            <span class="opacity-70"><select id="customerlocation" class="form-control customerlocationdropdown0" name="location" style="width:90%;"> </select>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </br>
-                                                <div class="separator separator-solid separator-primary opacity-20 py-md-5"></div>
-                                                </div>
-
-                                                <div class="border-bottom w-100 opacity-20"></div>
-                                            </br>
-                                                <div class="form-group row ">
-                                                <div class="col-lg-6 ">
-                                                    <div class="d-flex flex-column flex-root ">
-                                                        <span class=" font-weight-bolder mb-2 text-muted">BILLING ADDRESS</span>
-                                                        <span class="opacity-70 mobilebottom"><select id="select_billing_address" class="form-control customerlocationdropdown0" name="billing" style="width:90%;"> <option value="${ds.billaddress}">  </option></select>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            
-                                                <div class="col-lg-6 ">
-                                                    <div class="d-flex flex-column flex-root ">
-                                                        <span class="font-weight-bolder mb-2 text-muted">SHIPPING ADDRESS</span>
-                                                        <span class="opacity-70"><select id="select_shipping_address" class="form-control customerlocationdropdown0" name="shipping" style="width:90%;"><option value="${ds.shipaddress}">  </option> </select>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
 											</div>
 										</div>
 										<!-- end: Invoice header-->
 										<!-- begin: Invoice body-->
-                    
-                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
-                        
-                        <div id="load_btn_container" class="btn col-md-10 btn-hover-primary bg-primary h-40px btn_loaditems" style="font-size: medium; color: white;">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"
-                            ></i></div>
-                    
-                        <div class="col-md-10" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
-                           
-                           
-                            <div class="table-responsive">
-                                <td style="display:none;"><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
-                                <table class="table item-detail-table" id="table-main">
+										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-11">
+												<div class="table-responsive">
+													<table class="table" id="table-main">
+														<thead>
+															<tr>
+																<th data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">
+																<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">
+																<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></th>
+																<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>
+																<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>
+																<th class="text-center font-weight-bold text-muted text-uppercase">Requested Quantity</th>
+                                                                <th class="font-weight-bold text-muted text-uppercase">Accepted Quantity</th>
+																<th class="font-weight-bold text-muted text-uppercase">Delivered Quantity</th>
+                                                               <th class="font-weight-bold text-muted text-uppercase">Billed Quantity</th>
+																<th class="font-weight-bold text-muted text-uppercase">Rate</th>
+																<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
+																<th class="pr-0 font-weight-bold text-muted text-uppercase">Delivery Date</th>
+                                                                                                                                 <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Accepted</th>
+															</tr>
+														</thead>
+														<tbody>
+                                                            <tr>
+																<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">
+																<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">
+																<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></td>
+																<td class="text-right pl-0 font-weight-bold text-muted text-uppercase">1</td>
+																<td class="text-center pl-0 font-weight-bold text-muted text-uppercase">softr color</td>
+																<td class="text-center font-weight-bold text-muted text-uppercase">1</td>
+                                                                <td class="font-weight-bold text-muted text-uppercase">0</td>
+																<td class="font-weight-bold text-muted text-uppercase">0</td>
+                                                               <td class="font-weight-bold text-muted text-uppercase">0</td>
+																<td class="font-weight-bold text-muted text-uppercase">15</td>
+																<td class="pr-0 font-weight-bold text-muted text-uppercase">15</td>
+																<td class="pr-0 font-weight-bold text-muted text-uppercase">1-5-2022</td>
+                                                              <td class="text-right pr-0 font-weight-bold text-muted text-uppercase">NO</td>
+															</tr>
+														
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<!-- end: Invoice body-->
+										<!-- begin: Invoice footer-->
+										<div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-11">
+												<div class="table-responsive">
+													<table class="table" id="formtable">
+														<thead>
+															<tr>
+																<th class="font-weight-bold text-muted text-uppercase">Location</th>
+																<th class="font-weight-bold text-muted text-uppercase">First Delivery Date</th>
+																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
+																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Amount</th>
+																<th class="font-weight-bold text-muted text-uppercase">Total Requested Qty</th>
+																<th class="font-weight-bold text-muted text-uppercase">Total Requested Amount</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr class="font-weight-bolder">
+																<td >BHG</td>
+																<td style="text-align: center;">1-5-2022</td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;">9 <p style="font-size: 15px;" class="text-info">9</p></td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;">7  <p style="font-size: 15px;" class="text-info">6</p> </td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;">6</td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;">5</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									
+										<!-- end: Invoice footer-->
+										<!-- begin: Invoice action-->
+										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-9">
+												<div class="d-flex justify-content-between">
 
-                                </table>
-                               
-                                <button id="btn_save" type="button" class="btn btn-primary" name="save" value="billdata" ><i id="btn_save_icon" class="flaticon2-send-1"></i> Edit </button>  
-                                <button type="button" class="btn btn-danger flaticon2-close" id="btncancel" name="cancel" style="display: none;"> Cancel</button>
-                                <button id="btn_addfirstrow" type="button" class="btn btn-light-primary font-weight-bold addfirstrow" name="addfirstrow" style="display: none;">ADD</button>
-                            </div>
+													
+													<!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
+                                                      
+													<button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>
+													<button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Invoice</button>
+                                                   <!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark btn-hover-text-white border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
 
-                        </div>
-                    </form>
-                    </div>
-                    
-                    <!-- end: Invoice body-->
-                    <!-- begin: Invoice footer-->
-                    <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
-                        <div class="col-md-9">
-                            <div class="table-responsive">
-                                <table class="table " id="formtable">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th class="font-weight-bold text-muted text-uppercase">Total  Qty</th>
-                                            <th class="font-weight-bold text-muted text-uppercase">Total  Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody >
-                                        <tr class="font-weight-bolder">
-                                            <td id="totalqty" class=" font-size-h3 font-weight-bolder text-primary" >0</td>
-                                            <td id="totalamount" class=" font-size-h3 font-weight-bolder text-primary" >0</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end: Invoice footer-->
-                    <!-- begin: Invoice action-->
-                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
-                        <div class="col-md-10">
-                            <div class="d-flex justify-content-between">
+                                                </div>
+											</div>
+										</div>
+										<!-- end: Invoice action-->
+										<!-- end: Invoice-->
+									</div>
+								</div>
+								<!-- end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
 
-                                
-                                <!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
-                                  
-                               
-                                <!-- <button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button> -->
-                                <button style="float:right;" type="button" class="btn btn-primary font-weight-bold" onclick="window.print();"  ><i class="flaticon2-file-1" ></i> Print Invoice</button>
-                               <!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark btn-hover-text-white border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
+  <!-- Modal -->
+  <div class="modal fade" id="myModaldate" role="dialog">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Change Date To all Items</h5>
+		
+		
+		</div>
+		<div class="modal-body">
+			<NLFORM>
+				<form method="POST" >
+					<div id="totalcount" style="display:none;">
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end: Invoice action-->
-                    <!-- end: Invoice-->
-                </div>
-            </div>
-            <!-- end::Card-->
-        </div>
-        <!--end::Container-->
-    </div>
-    <!--end::Entry-->
-</div>
-<!--end::Content-->
+					</div>
+					<label for="changeallitemdate">Expected Delivery Date</label>
+					<input type="date" id="changeallitemdate" class="form-control changeallitemdate" name="changeallitemdate" value="">
+		
+			<table class="table modeltable">
+				<thead>
+					<tr>
+						<th scope="col" style="display:none;">line #</th>
+						<th scope="col">Product</th>
+						<th scope="col">A.Qty</th>
+						<th scope="col">Ordered Qty</th>
+						<th scope="col">Rate</th>
+						<th scope="col">Remove</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
 
+				</tbody>
+		
+			</table>
+			<button type="submit" class="btn btn-primary" name="save" value="linedate">Save</button>
+		</form>
+	</NLFORM>
+		</div>
 
-<!-- Modal -->
-<div class="modal fade" id="inventorydetailmodel" role="dialog">
-    <div class="modal-dialog">
-    
-    <!-- Modal content-->
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title">Inventory Detail</h5>
-    </br>
-    
-    
-    </div>
-    <div class="modal-body">
-    
-        <h5 class="modal-title" style="padding-bottom: 2px;">Item Name : <span id="modalspan_itemname" style="font-size: 5;"></span></h5>
-       
-        <div class="separator separator-solid separator-primary opacity-20" ></div>
-    
-            <table class="table modeltable"  id="" >
-            <thead>
-            <tr>
-            
-                <th scope="col">Location</th>
-                <th scope="col">Quantity</th>
-            </tr>
-            </thead>
-            <tbody class="modeltable-body">
-            
-            </tbody>
-    
-            </table>
-    
-    </div>
-    
-    <div class="modal-footer">
-        <h5>Item Description : <span id="modalspan_itemdescription" style="text-align: left;" >Test Product Description</span></h5>
-    </div>
-    
-    </div>
-    
-    </div>
-    </div>
-    <!-- END  Modal -->
-<NLFORM>
-<form method="POST" id="approveform">
-<div id="approvepost" style="display: none;">
-</div>
-</form>
-</NLFORM>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<div class="modal-footer">
+	   
+		</div>
+	</div>
+	  
+	</div>
+  </div>
+   <!-- END  Modal -->
+   <NLFORM>
+		<form method="POST" id="approveform">
+			<div id="approvepost" style="display: none;">
+			</div>
+		</form>
+	</NLFORM>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="assets/js/pages/features/forms/validation/form-widgets.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
-
 
 
 <script>
-    
-var totalqty=0
-var totalAmount=0
-var button = document.getElementById("addformtablerows");
-var dataArray=[];
-var itemdropdown=''
-var masterData=''
-var lines=document.getElementById("table-main")
-lines=lines.rows.length;
+	  $(function () {
 
-    
-
-
-$(function () {
-counttd=0
-sno=2
-
-        $('#table-main').on('change','.qty',function(){
-
-             var value = this.value;
-             var $cell = $(this).parent();
-             var $row = $cell.parent();
-             var rowCount = $('#table-main tr').length-1;
-             var selectedRowIndex=parseInt($row.index())+1
-             if($("#qty"+$row.index()).val()=="")
-             {
-                 alert("enter qty")
-                 return
-             }
-             rate=$('#table-main  tr:eq('+selectedRowIndex+') td:eq(3) input').val()
-             qty=$('#table-main  tr:eq('+selectedRowIndex+') td:eq(2) input').val()
-             $('#table-main  tr:eq('+selectedRowIndex+') td:eq(4) input').val(rate*qty)
-            
-            //  $('#itemdropdown'+$row.index()).select2({
-            //   placeholder: "Select Item"});
-
-            // $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
-
-
-                $('#table-main').find('.table-tbody .qty').each(function(){
-
-                    if ($(this).val() != "") {totalqty+=parseInt($(this).val());} 
-                })
-
-                $('#table-main').find('.table-tbody .amount').each(function(){
-
-                if ($(this).val() != "") {totalAmount+=parseInt($(this).val());} 
-                })
-                $('#totalamount').empty().append();
-                $("#totalamount").append(totalAmount);
-                totalAmount=0
-                $('#totalqty').empty().append();
-                $("#totalqty").append(totalqty); 
-                totalqty=0
-
-        });
-$('#table-main .table-tbody tr').click(function () {
-        var tr_id = $(this).attr('id'); 
-       
-       // alert(tr_id );
-    });
-
-    
-
-    $('#tableform').on('click','.addfirstrow',function(){
-      
-    $("#btn_addfirstrow").hide();
-    $("#btncancel").show();
-    $("#btn_save").show();
-
-    td="<tr id="+lines+">"
-  //  td+='<td>'+sno+'</td>' 
-  //td+="<td id='rowid'>"+lines+" </td>"
-    td+="<td id='"+lines+"'><select id='itemdropdown"+lines+"' class='form-control itemdropdown' name='option"+lines+"' style='width: 100%;'>"+itemdropdown+" </select>"
-    td+=  '</td>'  
-    td+='<td style="text-align: center;"> <i class="fas fa-window-minimize"></i> </td>'  
-    td+='<td style="text-align: center;"><input id="qty'+lines+'" type="number" class="form-control qty" name="qty'+lines+'"  style="text-align: center;"></td>'  
-    td+=' <td style="text-align: center;"><input id="rate'+lines+'" type="text" class="form-control rate" name="rate'+lines+'"  style="text-align: center;"></td>'  
-    td+= '<td style="text-align: center;"><input id="amount'+lines+'" type="text" class="form-control amount" name="amount'+lines+'"  style="text-align: center;"></td>'                                              
-    td+='<td style="text-align: center; width: 90pt"><button id="btn_addrow'+lines+'" type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button> <button id="btn_removerow'+lines+'" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'
-    //td+='<td><button id="addformtablerows" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td> '
-    td+=  "</tr>"                        
-
-    counttd="${ds.totalrows?number}"
-    $('#totalrows').val(counttd);
-    $('#table-main').find('.table-tbody').append(td);
-    $('#itemdropdown'+lines).select2({placeholder: "Search Items....."});
-});
-
-$('#table-main').on('click','.addformtablerows',function(){
-      //alert("ccc")
-   
-    var value = this.value;
-             var $cell = $(this).parent();
-             var $row = $cell.parent();
-          
-             console.log("checkline","#addformtablerows"+parseInt($row.index()))
-
-             
-                         ///------------------------------------Start Validations-----------------//////////
-              var selectedRowIndex=parseInt($row.index())+1
-             
-
-              if($('#table-main  tr:eq('+selectedRowIndex+') td:eq(0) select').val()=="")
-             {
-                Swal.fire({  icon: 'warning',  title: 'Please Enter Product'  })
-                return
-             }
-             if($('#table-main  tr:eq('+selectedRowIndex+') td:eq(2) input').val()=="")
-             {
-                Swal.fire({  icon: 'warning',  title: 'Please Enter Quantity'  })
-                return
-             }
-             
-             if($('#table-main  tr:eq('+selectedRowIndex+') td:eq(2) input').val()=="")
-             {
-                Swal.fire({  icon: 'warning',  title: 'Please Enter Quantity'  })
-                return
-             }
-             if($("#qty"+parseInt($row.index())).val()=="0" || $("#qty"+parseInt($row.index())).val()<0)
-             {
-                Swal.fire({  icon: 'warning',  title: 'Quantity must be greater then 0'  })
-                return
-             }
-             
-                     ///------------------------------------End Validations-----------------//////////
-
-             $("#table-main tbody tr td:last-child .addformtablerows").hide();
-
-            
-             $(this).parent($('#table-main tbody #amount'+$row.index()+'').val($("#rate"+$row.index()).val() * $("#qty"+$row.index()).val()))
-    qty=0
-
-    sno++ 
-    counttd++
-    lines++
-
-    //document.getElementById('checklineid').value= lines
-    
-    td="<tr id="+lines+">"
-  //  td+='<td>'+sno+'</td>' 
-  //td+="<td id='rowid'>"+lines+" </td>"
-    td+="<td id='"+lines+"'><select id='itemdropdown"+lines+"' class='form-control itemdropdown' name='option"+lines+"' style='width: 100%;'>"+itemdropdown+" </select>"
-    td+=  '</td>'  
-    td+='<td style="text-align: center;"> <i class="fas fa-window-minimize"></i> </td>'  
-    td+='<td style="text-align: center;"><input id="qty'+lines+'" type="number" class="form-control qty" name="qty'+lines+'"  style="text-align: center;"></td>'  
-    td+=' <td style="text-align: center;"><input id="rate'+lines+'" type="text" class="form-control rate" name="rate'+lines+'"  style="text-align: center;"></td>'  
-    td+= '<td style="text-align: center;"><input id="amount'+lines+'" type="text" class="form-control amount" name="amount'+lines+'"  style="text-align: center;"></td>'                                              
-    td+='<td style="text-align: center; width: 90pt"><button id="btn_addrow'+lines+'" type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button> <button id="btn_removerow'+lines+'" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'
-    //td+='<td><button id="addformtablerows" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td> '
-    td+=  "</tr>"                                                              
-    $('#btn_addrow'+parseInt($row.index())).hide();   
-    
-    // alert(parseInt($row.index()))
-    
- 
-    $.fn.eachFunction();
-    // $('#table-main tbody').append(td)
-    // var tr = $(this).prev('modeltable').find('tr:last');
-    // tr.clone(true).insertAfter(tr);
-   
-
-    $('#totalrows').val(counttd); 
-});
-$.fn.eachFunction=function(){
-$('#table-main').find('.table-tbody').each(function(){
-        //Retrieves the text within <td>
-     $(this).append(td);
-})
-     console.log("firstline",lines)
-    $('#itemdropdown'+lines).select2({
-                placeholder: "Search Items....."});
-    $('#table-main').find('.table-tbody .qty').each(function(){
-    if ($(this).val() != "") {totalqty+=parseInt($(this).val());}      
-    })
-    $('#table-main').find('.table-tbody .amount').each(function(){
-    if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
-    })
-    $('#totalqty').empty().append();
-    $("#totalqty").append(totalqty);
-    totalqty=0
-    $('#totalamount').empty().append();
-    $("#totalamount").append(totalAmount);
-    totalAmount=0
-}
-///////////////
-$('#table-main').on('click','.delrow',function(){ 
-    var value = this.value;
-    var $cell = $(this).parent();
-    var $row = $cell.parent(); 
-        
-   
-   
-    // $.fn.rowcheck();
-    $(this).parents('tr').remove();
-   
-
-    counttd--
-    $('#totalrows').text(counttd);
-    sno--
-   // lines--
-   // var results = $('#table-main .table-tbody').parent().siblings(":first").text()
-   //alert("TR ID " + results);
-  // lastRow=parseInt($('#table-main tr').length-3)
-    
-    
-  
-  
-   // $('checklineid').val($('#table-main tr').length-2)
-
-    //document.getElementById('checklineid').value= lines
-    $.fn.eachFunctiondelete();
-    $.fn.eachResults();
-
- 
-});
-
-// $.fn.rowcheck = function(){
-
-    
-    // $("#table-main").find('tr', function(){
-        
-    // })
-
-// }
-
-$.fn.eachResults = function(){
-    tableLines=0
-     lastrowid=0
-
-     $("#table-main tbody tr td:first-child").each(function(event){
-        // $(this).find('td:last()').addClass('LastTD');
-        // alert("#itemdropdown"+$(this).attr('id'))
-        // lastrowid=$(this).attr('id')
-        // document.getElementById('rowid').innerHTML=tableLines
-
-        // console.log("all Values",$(this).attr('id'))
-        //  $("#itemdropdown"+$(this).attr('id')).prop('id', 'itemdropdown'+tableLines);
-        //  $("#qty"+$(this).attr('id')).prop('id', 'qty'+tableLines);
-        //  $("#rate"+$(this).attr('id')).prop('id', 'rate'+tableLines);
-        //  $("#amount"+$(this).attr('id')).prop('id', 'amount'+tableLines);
-        //  $("#btn_addrow"+$(this).attr('id')).prop('id', 'btn_addrow'+tableLines);  
-        //  $("#btn_removerow"+$(this).attr('id')).prop('id', 'btn_removerow'+tableLines);
-        //  $("#"+$(this).attr('id')).prop('id',tableLines);
-        //  $('#itemdropdown'+tableLines).select2({
-        //              placeholder: "Please Select Item"});
-        // tableLines++
-    })
-
-    
-    var table = document.getElementById("table-main");
-    var totalRowCount = table.rows.length;
-    
-  
-     var table = document.getElementById("table-main");
-     var totalRowCount = table.rows.length;
-    
-     
-    if(totalRowCount==1) 
-    {
-        $('#btn_removerow'+lastRow).hide();
-        $("#btn_addfirstrow").show();
-        $("#btncancel").show();
-        $("#btn_save").hide();
-    }
-  
-     lastRow=$("#table-main tbody tr td:last-child")
-     lastRow=$(lastRow[lastRow.length-1]).find("td:first-child").prevObject[0].firstElementChild.style.display=''
-     console.log("lastrowTest",lastRow)
-        //$('#btn_addrow'+$("#table-main tbody tr td:last-child")).show();
-
-    
-
-
-}
-
-$.fn.eachFunctiondelete=function(){
-    
-    var rowCount = $('#table-main tr').length-1;
-
-$('#table-main').find('.table-tbody .qty').each(function(){
-if ($(this).val() != "") {totalqty+=parseInt($(this).val());} 
-})
-$('#table-main').find('.table-tbody .amount').each(function(){
-if ($(this).val() != "") {totalAmount+=parseInt($(this).val());}      
-})
-$('#totalqty').empty().append();
-$("#totalqty").append(totalqty);
-totalqty=0
-$('#totalamount').empty().append();
-$("#totalamount").append(totalAmount);
-totalAmount=0
-
-
-
-lastRow=parseInt($('#table-main tr').length)
- //(lastRow)
-// alert("#btn_addrow.show"+lastRow)
-// $('#btn_addrow'+lastRow).show();
-}
-});
-$(function () {
-$("#checkAll").click(function(){
-$('input:checkbox').not(this).prop('checked', this.checked);
-});
-//
-// var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
-// $('#table-main tbody').append(Nodata);
-$("#modaldate").click(function () {
-$('.modeltable .table-body').empty();
-var counttd=0
-var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
-//Loop through all checked CheckBoxes in GridView.
-$("#table-main tbody input[type=checkbox]:checked").each(function () {
-// var row = $(this).closest("tr")[0];
-//var name = $('.txt-td').val();
-linenumber=$(this).parents("tr").find(".linenumber").text();
-item =$(this).parents("tr").find(".item").text();
-qty =$(this).parents("tr").find(".qty").text();
-rate =$(this).parents("tr").find(".rate").text();
-// amount =$(this).parents("tr").find(".amount").text();
-// itemid=$(this).parents("tr").find(".itemid").text();
-// linenumber=$(this).parents("tr").find(".linenumber").text();
-console.log("qty",qty)
-td=  '<tr>'
-td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
-td+= '<td><input id="modalitem" class="form-control " value="'+item+'" name="item'+counttd+'" ></td>'
-td+= '<td><input id="modalqty" class="form-control" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
-td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
-td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
-td+='</tr>' 
-counttd++ 
-$('.modeltable .table-body').append(td);
-});
-if(counttd==0)
-{
-$('.modeltable .table-body').append(nodata);
-}
-total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-$('#totalcount').append(total);
-})
-$(".headerapprove").click(function () 
-{
-var counttd=0
-//Loop through all checked CheckBoxes in GridView.
-$("#table-main tbody input[type=checkbox]:checked").each(function () {
-// var row = $(this).closest("tr")[0];
-//var name = $('.txt-td').val();
-linenumber=$(this).parents("tr").find(".linenumber").text();
-td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
-$('#approvepost').append(td);
-counttd++
-});
-td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
-$('#approvepost').append(td);
-total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-$('#approvepost').append(total);
-console.log("check")
-$("#btnapprove").click();
-const form  = document.getElementById('#approveform');
-// form.addEventListener('submit', (event) => {
-// handle the form data
-// form.submit();
-// });
-})
-});
- //////////////................ajax.......................///////////////
-   $(document).ready(function(){
-
-    $('#btn_save').hide();
-
-    for(var i=0; i<lines; i++)
-    {
-        $('#itemdropdown'+i).select2({placeholder: "Search Items....."});
-    }
-
-    
-    
-    setItems('{$ds.items}')
-    setCustomers('{$ds.customers}')
-    var url = window.location.href;
-    isurledit=url.search("edit");
-    
-     console.log("cjsd",url)
-     if(isurledit<0)
-       {
-        $("#tableform :input:not([name=save],[name=cancel],[name=btn_loaditems])").prop("disabled", true);
-        $("#btn_save").html(" Edit");
-       }
-       else
-       {
-             // $('#btn_save').text(' Save')
-             $("#btn_save").html(" Edit");
-              $("#tableform :input:not([name=save],[name=cancel],[name=btn_loaditems])").prop("disabled", false);
-            //  $("#btncancel").show();
-              //$('#btn_save').text(' Save')
-              
-       }
-   
-  
-        $('#btn_save').click(function () 
-        {
-
-            if($('#btn_save').text()==" Edit")
-            {
-            
-            var table = document.getElementById("table-main");
-
-            var totalRowCount = table.rows.length;
-
-      
-    
-            document.getElementById("addrowsth").style.display = ''
-                for(var i=0; i<totalRowCount-1; i++){
-            document.getElementById("tdbtn"+i).style.display = 'block'
-                }
-           
-            }
-            
-        //     if($('#btn_save').text()==" Save")
-        //     {
-             
-        //       $('#btn_save').text(' Save')
-        //      // document.getElementsByName("save")[0].type = "submit";
-        //    }
-        //    if($('#btn_save').text()==" Edit")
-        //     {
-             
-        //       $('#btn_save').text(' Save')
-        //       $("#btncancel").show();
-        //       $("#tableform :input:not([name=save],[name=cancel],[name=amount0],[name=rate0])").prop("disabled", false);
-        //    }
-
-        });
-        $('#btncancel').click(function () 
-        {
-            window.location.reload();
-            // $("#tableform :input:not([name=save],[name=cancel])").prop("disabled", true);
-            // document.getElementsByName("save")[0].type = "button";
-            // $('#btn_save').text(' Edit')
-             $("#btncancel").hide();
-            
+		$("#checkAll").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
         });
 
+	 //
 
-     
+	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
+	 // $('#table-main tbody').append(Nodata);
 
-        
-$(document).ready(function () {
+	 $("#modaldate").click(function () {
 
-$('#table-main .table-tbody').on('click','#btn_addrow72',function () 
-    {
-
-        alert("ddd")
-        // window.location.reload();
-        // // $("#tableform :input:not([name=save],[name=cancel])").prop("disabled", true);
-        // // document.getElementsByName("save")[0].type = "button";
-        // // $('#btn_save').text(' Edit')
-        //  $("#btncancel").hide();
-        
-    });
-
-    
-
-});
-
-      $("#btn_save").click(function() { //Trigger on form submit
-
-
-                  
-        $('#name + .throw_error').empty(); //Clear the messages first
-                $('#success').empty();
-                var loc=window.location.href
-                var url = new URL(loc);
-                var orderInternalId = url.searchParams.get("orderid");
-                
-                var postDataArray=[];
-
-                var postForm = { //Fetch form data
-                'tranid'         :  $('#tranid').text(),
-                'trandate'       :  $('#trandate').text(),
-                'customer'       :  $('#customerdropdown').find(":selected").val(),
-                'amount'         :  $('#totalamount').text(),
-                'quantity'       :  $('#totalqty').text(),
-                'location'       :  $('#customerlocation').find(":selected").text(),
-                'internalid'     :  orderInternalId,
-                'billingaddress' : $('#select_billing_address').find(":selected").text(),
-                'shipingaddress' : $('#select_shipping_address').find(":selected").text()
-                        };
-                        var liness= $('#table-main tr').length-1
-
-
-                        $('#table-main tr').each(function(index, tr)   //$('#table-main tr tr:eq(2) td:eq(1) select').text()
-                         {
-                             var itemobject={}
-           
-                                $(tr).find('td select').each (function (index, td) 
-                                {
-
-                                    itemobject.name=$(this).val()
-                               // postDataArray.push({'name':  $(this).val()})
-
-                                });
-
-                                $(tr).find('td input').each (function (index, td) 
-                                {
-                                    if(index==0)
-                                    {
-                                        itemobject.qty=$(this).val()
-                                       // postDataArray.push({'qty':  $(this).val()})
-                                    }
-                                    if(index==1)
-                                    {
-                                        itemobject.rate=$(this).val()
-                                      //  postDataArray.push({'rate':  $(this).val()})
-                                    }
-                                    if(index==2)
-                                    {
-                                      //  postDataArray.push({'amount':  $(this).val()})
-                                        itemobject.amount=$(this).val()
-                                        postDataArray.push(itemobject)
-                                    }
-                                   
-
-                                    //console.log("input",$(this).val()+"index"+index)
-                                });
-                         
-
-                         });       
-
-                // for(var i=0;i<$('#table-main tr').length;i++)
-                // {
-                //     postDataArray.push(
-                //         {
-                //             'rate': $("#rate"+i).val(),'qty': $("#qty"+i).val(),
-                //             'amount': $("#amount"+i).val(),
-                //             'name': $('#itemdropdown'+i).find(":selected").val(),
-                            
-                //         }
-                //         )
-                // }
-
-                postForm.items=postDataArray
-                console.log("checks postDataArray",postForm)
-                console.log("checksave",$('#btn_save').text())
-           if($('#btn_save').text()==" Save")
-           {
-
-            let timerInterval
-						Swal.fire({
-						title: '',
-						timerProgressBar: true,
-						didOpen: () => {
-							Swal.showLoading()
-						},
-						willClose: () => {
-							clearInterval(timerInterval)
-						}
-						}).then((result) => {
-						/* Read more about handling dismissals below */
-						if (result.dismiss === Swal.DismissReason.timer) {
-							console.log('I was closed by the timer')
-						}
-						})
-
-
-            $('#btn_save_icon').removeClass('flaticon2-send-1');
-                   $(this).addClass('fa fa-spinner fa-spin');
-                   
-            $.ajax({ 
-                type      : 'POST', //Method type
-                url       : '${ds.links.customscript_sl_sp_view_salesorder}', //Your form processing file URL
-                data      : JSON.stringify(postForm), //Forms name
-                contentType: "application/json; charset=utf-8",
-                success   : function(data) 
-                            {
-                                
-                                console.log("sucess")
-                                Swal.close();
-
-                                Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                $("#trandate option[value='']").attr('selected', true)
-                                $("#customer option[value='']").attr('selected', true)
-                                $('#btn_save').removeClass('fa fa-spinner fa-spin');
-                                $(this).addClass('flaticon2-send-1');
-                              ///  window.location.reload();
-                               // event.preventDefault();
-                            }
-                            
+		$('.modeltable .table-body').empty();
+		var counttd=0
+		var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+ 		     //Loop through all checked CheckBoxes in GridView.
+            $("#table-main tbody input[type=checkbox]:checked").each(function () {
+				
+                // var row = $(this).closest("tr")[0];
+				//var name = $('.txt-td').val();
+				linenumber=$(this).parents("tr").find(".linenumber").text();
+                 item =$(this).parents("tr").find(".item").text();
+                 qty =$(this).parents("tr").find(".qty").text();
+                 rate =$(this).parents("tr").find(".rate").text();
+                // amount =$(this).parents("tr").find(".amount").text();
+                // itemid=$(this).parents("tr").find(".itemid").text();
+                // linenumber=$(this).parents("tr").find(".linenumber").text();
+                 td=  '<tr>'
+                 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+				 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
+				 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+				 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
+				 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+				 
+				 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+                 td+='</tr>' 
+				 counttd++ 
+				 $('.modeltable .table-body').append(td);
             });
-           }
+			if(counttd==0)
+			{
+				$('.modeltable .table-body').append(nodata);
+			}
 
-           if($('#btn_save').text()==" Edit")
-             {
-           
-               $('#btn_save').text(' Save')
-               $("#btncancel").show();
-               $("#tableform :input:not([name=save],[name=cancel])").prop("disabled", false);
-            }
-        
+			total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+			$('#totalcount').append(total);
+
+        })
+		 $('.modeltable .table-body').on('click' , '#deltop',function(){
+
+			$(this).parents('tr').remove();
+			counttd--
+		 })
+
+		$(".headerapprove").click(function () 
+		{
+			
+          var counttd=0
+	     //Loop through all checked CheckBoxes in GridView.
+	     $("#table-main tbody input[type=checkbox]:checked").each(function () {
+		 // var row = $(this).closest("tr")[0];
+		 //var name = $('.txt-td').val();
+		 linenumber=$(this).parents("tr").find(".linenumber").text();
+		  td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
+		  $('#approvepost').append(td);
+		  counttd++
+		 });
+		 td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
+		 $('#approvepost').append(td);
+		 total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+	       $('#approvepost').append(total);
+		 console.log("check")
+		 $("#btnapprove").click();
+		 const form  = document.getElementById('#approveform');
+         // form.addEventListener('submit', (event) => {
+           // handle the form data
+		  // form.submit();
+            // });
+	      
+         })
 
 
-        
-        
-           
-            //Prevent the default submit
-      });
-   
+   });
+
+
+//    $(document).ready(function(){
  
-});
-//////////////................ajax end.......................///////////////
-$.ajax(
-     {
-      url: "/data",
-      headers: { 'Access-Control-Allow-Origin': '*' }, 
-      success: function(result){
-        setItems(result)
-      }});
-
-    function setItems(itemData)
-    {
-        console.log("items")
-        productData =  JSON.parse(itemData)
-        console.log("items",productData)
-        itemdropdown+='<option></option>'
-        for(var i=0; i<productData.length; i++)
-        {
-            itemdropdown+='<option value="'+productData[i].id+'">'+productData[i].values.itemid+'</option>'
-        }
-        $(".itemdropdown").append(itemdropdown);  
-    }
-function setCustomers(Data)
- {
-//      customerData=JSON.parse('${ds.customers}')
-//      console.log("check",customerData[0])  
-//      dropdownData='<option></option>'
-//      for(var i=0; i<customerData.length; i++)
+//  $(".headerapprove").click(function(){
+// // 
+//    $.ajax(
 //      {
-//          dropdownData+='<option value="'+customerData[i].internalid+'">'+customerData[i].entityid+'</option>'
-//      }
-//      $("#customerdropdown").append(dropdownData);  
-}
-function setLocation(locationData)
-{
-    dropdownData='<option></option>'
-    for(var i=0; i<locationData.length; i++)
-    {
-        dropdownData+='<option value="'+locationData[i].name+'">'+locationData[i].name+'</option>'
-    }
-    $("#customerlocation").append(dropdownData);  
-}
+//       url: "/app/site/hosting/restlet.nl?script=432&deploy=1",
+//       headers: { 'Access-Control-Allow-Origin': '*' }, 
+//       success: function(result){
+// 		console.log("chec",result);
+// 		ajaxstatus
+// 		$("#ajaxstatus").append('Accepted');
+//        // result = JSON.parse(result);
+//       }});
+//     });
+//   $("#headerapprove").click();
+// });
 
-
-    $(document).ready(function () {
-
-
-        var date2="<%= soHeader[0].values.trandate1 %>"
-        var date = new Date(date2);    
-        document.getElementById("kt_datepicker_2").value = moment(date).format('YYYY-MM-DD')
-        document.getElementById("customerdropdown").value = "<%= soHeader[0].values.entity[0].value %>"
-        getCustomerAddress();
-        var selectBillAddress=`<%= soHeader[0].values.billaddress %>`
-        var selectShipAddress = `<%= soHeader[0].values.shipaddress %>`
-        $('#select_billing_address').val(selectBillAddress);
-        $('#select_shipping_address').val(selectShipAddress);
-
-
-        $('#itemdropdown0').select2({placeholder: "Search Items....."});
-
-        var loc=window.location.href
-        var url = new URL(loc);
-        var viewType = url.searchParams.get("t");
-
-
-        if(viewType=="edit")
-            {
-            
-            var table = document.getElementById("table-main");
-
-            var totalRowCount = table.rows.length;
-
-      
-            document.getElementById("addrowsth").style.display = ''
-                for(var i=0; i<totalRowCount-1; i++){
-            document.getElementById("tdbtn"+i).style.display = 'block'
-                }
-           
-            }
-
-        // $(".btnresponce , #hide_row").hide();
-
-        // $(".item-detail-table").on("click","#btn_save" , function(){
-        //     $(".btnresponce , #hide_row").css("display","block !important");
-        // })
-
-//////////.............. Select2 itemdropdown feature
-
-    // var rowCount = $('#table-main tr').length-1;
-    // console.log("rowCount",rowCount)
-    // for(var i=0; i<rowCount; i++)
-    // {
-    //     $('#itemdropdown'+i).select2({
-    //      placeholder: "Select Item",
-    //  minimumResultsForSearch: Infinity
-    // });
- 
-    // }
-  
-
-//   $('.itemdropdown').on('change', function(){
-//    // Revalidate field
-//    validator.revalidateField('.itemdropdown');
-//   });
-   var inventorydetailarray=[]
-   //Dropdownlist Selectedchange event
-   $('#table-main').on('change', '.itemdropdown', function()  {
-        
-         //// var selectedValue = $(this).val();
-        $(".qty").change(function(){
-           
-        //alert("The text has been changed.");
-        var value = this.value;
-        var $cell = $(this).parent();
-        var $row = $cell.parent();
-        var rowCount = $('#table-main tr').length-2;
-        var selectedRowIndex=parseInt($row.index())+1
-        if($("#qty"+$row.index()).val()=="")
-        {
-            alert("enter qty") 
-            return
-        }
-        
-       // $('#table-main  tr:eq('+selectedRowIndex+') td:eq(0) select').find(":selected").text()
-        $('#itemdropdown'+$row.index()).select2({
-              placeholder: "Select Item"});
-        $(this).parent($('#table-main tbody #amount'+parseInt($row.index())+'').val( $("#rate"+parseInt($row.index())).val() * $("#qty"+parseInt($row.index())).val()))
-        });
-         var value = this.value;
-        var $cell = $(this).parent();
-        var $row = $cell.parent();
-        //   alert("Selected ["+value+"] in cell ["+$cell.index()+"] of row ["+$row.index()+"]");
-         // // var nextfield = row.find('.classnamefornextfield'); 
-        // // $(nextfield).html(selectedVal);
-        var selectedRowIndex=parseInt($row.index())+1
-      
-        if($(this).val()!="")
-        {
-          // alert($(this).val())
-           for(var i=0; i<ProductData.length; i++)
-           {
-               if(ProductData[i].id[0].value==$(this).val())
-               {
-                   console.log("itemmatch",ProductData[i])
-                 //  $(this).parent($('#table-main tbody #rate'+parseInt($row.index())+'').val(ProductData[i].itemprice));
-                   $('#table-main  tr:eq('+selectedRowIndex+') td:eq(3) input').val(ProductData[i].itemprice)
-
-                   if(ProductData[i].itemtype[0].value=="InvtPart")
-                            {
-                                console.log("checkElement", $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1)').innerHTML)
-                                $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1)').empty()
-                                $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1)').append(' <button type="button" class="btn btn-light-danger font-weight-bold inventorydetail" data-toggle="modal" data-target="#inventorydetailmodel" ><i class="fas fa-boxes"></i></button>');
-                               // $("#inventorybtnheader").show();
-                            }
-                            else
-                            {
-                                $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1)').empty()
-                               //  $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1) button').prop("disabled", true);   
-                               $('#table-main  tr:eq('+selectedRowIndex+') td:eq(1)').append('<i class="fas fa-window-minimize"></i>')
-                            }
-               }
-           }
-        }
-        inventorydetailarray.push({
-           "row":$row.index(),
-           "location":[
-               {
-                   "A":3,
-                   "B":4,
-                   "C": 6
-               }
-           ]
-       })
-       console.log("inventorydetail",inventorydetailarray)
-       $('#table-main').on('click','.inventorydetail',function()
-     {
-      
-       var value = this.value;
-        var $cell2 = $(this).parent();
-        var $row2 = $cell2.parent();
-        let inventorydetailrow = inventorydetailarray.find(inventorydetailarray => inventorydetailarray.row === $row2.index());
-        $('.modeltable .modeltable-body').empty().append()
-        for(var k=0; k<inventorydetailrow.location.length; k++)
-        {
-           mtd=''
-           for (const [key, value] of Object.entries(inventorydetailrow.location[0])) 
-           {
-               mtd+='<tr>'
-               mtd+='<td>'+key+'</td>'
-               mtd+='<td>'+value+'</td>'
-               mtd+='</tr>'
-           }
-           
-        }
-        
-           // console.log(inventorydetailrow.location)
-           //  mtd='<tr>'
-           //  mtd+='<td>'+inventorydetailrow.location[k]+'</td>'
-           //  mtd+='<td>'+inventorydetailrow.location[k]+'</td>'
-           //  mtd+='</tr>'
-        
-        $('.modeltable .modeltable-body').append(mtd);
-        
-     });
-   })
-
-
-        $('#table-main').on('click','.inventorydetail',function()
-          {
-           
-            var value = this.value;
-             var $cell2 = $(this).parent();
-             var $row2 = $cell2.parent();
-             let inventorydetailrow = inventorydetailarray.find(inventorydetailarray => inventorydetailarray.row === $row2.index());
-             var selectedRowIndex=parseInt($row2.index())+1
-            // var itemName=$('#itemdropdown'+$row2.index()).find(":selected").text()
-            var itemName=$('#table-main  tr:eq('+selectedRowIndex+') td:eq(0) select').find(":selected").text()
-             
-
-             
-             $.ajax({ 
-                            type      : 'POST', //Method type
-                            url       : '${ds.links.customscript_sl_sp_inventory_details}&itemname='+itemName, //Your form processing file URL
-                            data      : '{item:12345}', //Forms name
-                            contentType: "application/json; charset=utf-8",
-                            success   : function(data) 
-                                        {
-                                            //empty modal content//
-                                            $('.modeltable .modeltable-body').empty().append();
-                                            $('#modalspan_itemname').empty().append();
-                                            $('#modalspan_itemdescription').empty().append()
-                                            if(data.length>0)
-                                            {
-                                                console.log("data length",JSON.parse(data))
-                                                var inventoryData=JSON.parse(data)
-                                                modaltable=''
-                                               
-                                                for(var i=0; i<inventoryData.length; i++)
-                                                {
-                                                    console.log("location",inventoryData.length)
-                                                    modaltable+='<tr>'
-                                                    modaltable+='<td>'+inventoryData[i].values["GROUP(inventorylocation)"][0].text+'</td>'
-                                                    modaltable+='<td>'+inventoryData[i].values["MAX(locationquantityonhand)"]+'</td>'
-                                                    modaltable+='</tr>'
-                                                }
-                                                
-                                                $('.modeltable .modeltable-body').append(modaltable);
-                                                $('#modalspan_itemname').append(inventoryData[0].values["GROUP(itemid)"]);
-                                                $('#modalspan_itemdescription').append(inventoryData[0].values["GROUP(salesdescription)"]);
-                                                
-                                            }
-
-                                        }
-                        });
-
-          });
-
-
-        
-          $('#customerdropdown').change(function()
-          {
-            getCustomerAddress()
-          });
-
-          function getCustomerAddress()
-          {
-              
-            $('#select_billing_address').empty().append();
-            $('#select_shipping_address').empty().append();
-            dropdownData='<option></option>'
-         
-           
-             var customerInternalid=$('#customerdropdown').find(":selected").val()
-
-             post = {
-                 customername:customerInternalid
-             }
-             
-             $.ajax({ 
-                            type      : 'POST', //Method type
-                            url       : '/getcustomeraddress', //Your form processing file URL
-                            data      : JSON.stringify(post), //Forms name
-                            contentType: "application/json; charset=utf-8",
-                            success   : function(data) 
-                                        {
-                                            console.log("data",data)
-                                            console.log("get inloop",data[0])
-                                            if(data.length>0)
-                                            {
-                                              var  customerData=data
-                                              console.log("get inloop",customerData)
-                                                for(var i=0; i<customerData.length; i++)
-                                                {
-                                                    dropdownData+='<option value="'+customerData[i].values.address+'">'+customerData[i].values.address+'</option>'
-                                                    console.log("get inloop",customerData[i].values)
-                                                }
-                                                 $("#select_billing_address").append(dropdownData); 
-                                                 $("#select_shipping_address").append(dropdownData); 
-
-                                                for(var i=0; i<customerData.length; i++)
-                                                {
-                                                    if(customerData[i].values.isdefaultbilling)
-                                                    {
-                                                        $('#select_billing_address').val(customerData[i].values.address);
-                                                    }
-                                                    if(customerData[i].values.isdefaultshipping)
-                                                    {
-                                                        $('#select_shipping_address').val(customerData[i].values.address);
-                                                    }
-                                                   
-                                                }
-
-                                            }
-                                        }
-                        });
-
-          }
-
-          $('#load_btn_container').click(function () 
-        {
-            alert("check")
-          
-           if($('.btn_loaditems').html()=='Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>')
-           {
-            $('#table_container').css('display','none');
-            $('.btn_loaditems').empty();
-            $('.btn_loaditems').append('Item Details<i class="fas fa-caret-right text-white icon-2x" style="float:right;"></i>');
-            $('#table-main').empty();
-            $('#btn_save').hide();
-            $('#btncancel').hide();
-            return
-           }
-           $('.btn_loaditems').empty();
-           $('.btn_loaditems').append('Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>');
-           $('#table_container').css('display','block');
-           $('#table-main').empty();
-           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
-         
-
-           var loc=window.location.href
-                var url = new URL(loc).href;
-                urlSplit=url.split('/')
-                console.log("url",urlSplit)
-              
-                var tableData='<thead style="text-align: center;">'
-                var postForm={};
-                var record=""
-               
-               
-
-               
-                postForm = { //Fetch form data
-                    
-                        };
-
-          
-
-           $.ajax({ 
-                type      : 'POST', //Method type
-                url       : '/sales-orders/'+urlSplit[4]+'/itemdetail', //Your form processing file URL
-                data      : JSON.stringify(postForm), //Forms name
-                contentType: "application/json; charset=utf-8",
-                success   : function(data) 
-                            {
-                                
-                              
-                                $('#table-main').empty();
-
-                                var dataParse=JSON.parse(data)
-                                
-                                var totalQuantity=0
-                                var totalAmount=0
-
-                                tableData+= '<tr>'     
-                                        +'<th class="pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
-                                        +'<th class="pl-0 font-weight-bold text-muted text-uppercase">Inventory Detail</th>'
-                                        +'<th class="font-weight-bold text-muted text-uppercase"> Quantity</th>'
-                                        +'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
-                                        +'<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>'
-                                        + '<th id = "addrowsth" style="display:none;" class="pr-0 font-weight-bold text-muted text-uppercase">Add Rows</th>'
-                                      + '</tr>'
-                                    + '</thead>'
-                                      + '<tbody class="table-tbody">' 
-                                  for(var i=0; i<dataParse.length; i++)
-                                  {
-                                    
-                                      lines=i
-                                      tableData+='<tr class="custom_hover">'
-                                        tableData+="<td id='"+i+"'><select id='itemdropdown"+i+"' class='form-control itemdropdown' name='option"+i+"' style='width: 100%;' disabled>"+itemdropdown+" </select>"
-                                        tableData+=  '</td>'  
-                                        if(dataParse[i].values.formulatext=="Inventory Item")
-                                        {
-                                            tableData+='<td style="text-align: center;">  <button id="inventorydetail'+i+'" type="button" class="btn btn-light-danger font-weight-bold inventorydetail" data-toggle="modal" data-target="#inventorydetailmodel" disabled><i class="fas fa-boxes"></i></button></td>'
-                                        }
-                                        else
-                                        {
-                                            tableData+='<td style="text-align: center;"> <i class="fas fa-window-minimize"></i> </td>'
-                                        }
-                                        tableData+='<td style="text-align: center;"><input id="qty'+i+'" type="number" class="form-control qty" name="qty'+i+'"  style="text-align: center;" value="'+dataParse[i].values.quantity+'" disabled></td>'  
-                                        tableData+=' <td style="text-align: center;"><input id="rate'+i+'" type="text" class="form-control rate" name="rate'+i+'"  style="text-align: center;" value="'+dataParse[i].values.rate+'" disabled></td>'  
-                                        tableData+= '<td style="text-align: center;"><input id="amount'+i+'" type="text" class="form-control amount" name="amount'+i+'"  style="text-align: center;" value="'+dataParse[i].values.amount+'" disabled></td>'                                              
-                                       
-                                        if(i==parseInt(dataParse.length)-1)
-                                        {
-                                            tableData+= '<td id="tdbtn'+i+'" style="text-align: center; display:none; width: 90pt">  <button id="btn_addrow7'+i+'" type="button" class="btn btn-light-primary font-weight-bold addformtablerows" >+</button> <button id="btn_removerow'+i+'" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'
-                                        }
-                                        else
-                                        {
-                                            tableData+= '<td id="tdbtn'+i+'" style="text-align: center; display:none; width:90pt"> <button id="btn_addrow'+i+'" type="button" class="btn btn-light-primary font-weight-bold addformtablerows" style="display: none;">+</button>   <button id="btn_removerow'+i+'" type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td>'  
-                                        }
-                                            
-                                            
-                                      tableData+='</tr>'
-                                      totalQuantity+=parseInt(dataParse[i].values.quantity)  
-                                      totalAmount+=parseFloat(dataParse[i].values.amount)                                 
-                                  }
-                                   
-
-                                  tableData+='</tbody>'
-          
-                                    $('#table-main').html(tableData)
-
-
-
-                                    for(var i=0; i<dataParse.length; i++)
-                                    {
-                                        console.log("i",i)
-                                    //    console.log("length",dataParse[i].values.item.length)    
-
-                                      if(!dataParse[i].values.item.length)
-                                      {
-                                        console.log("continue")
-                                          continue;
-                                       
-                                      }
-                                      console.log('#itemdropdown'+i,$('#itemdropdown'+i).val(dataParse[i].values.item[0].value))
-
-                                        $('#itemdropdown'+i).val(dataParse[i].values.item[0].value);
-                                        $('#itemdropdown'+i).select2({placeholder: "Search Items....."});
-                                        // console.log("sucess after",dataParse[i].values.item[0].value)
-
-                                    }
-
-                                    $('#totalqty').text(totalQuantity)
-                                    $('#totalamount').text(totalAmount)
-
-                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                    //     $("#trandate option[value='']").attr('selected', true)
-                                    //     $("#customer option[value='']").attr('selected', true)
-                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
-                                    //     $(this).addClass('flaticon2-send-1');
-                                    //   ///  window.location.reload();
-                                    // event.preventDefault();
-
-                                    // if(recordType!='invoice'){
-                                    //     $('#btn_save').show();
-                                    // }
-
-                                    $('#btn_save').show();
-
-                                    // if(pageType=='view'){
-                                    //     $('#btn_save').hide();
-                                    // }
-
-                            }
-                            
-            });
-           
-
-          //fas fa-caret-down
-            
-        });
-   
-});
-
-
-</script>
+	</script>					

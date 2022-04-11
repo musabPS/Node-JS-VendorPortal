@@ -40,6 +40,6 @@ const itemFulfillmentSchema = new mongoose.Schema({
     }
 })
 
-const ItemFulfillment = mongoose.model('Product', itemFulfillmentSchema)
+const ItemFulfillment = mongoose.model('ItemFulfillment', itemFulfillmentSchema)
 
 module.exports = ItemFulfillment

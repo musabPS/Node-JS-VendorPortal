@@ -22,7 +22,7 @@ const purchaseRequestSchema = new mongoose.Schema({
      location:{
          type:String
      },
-     approvalStatus:{
+     status:{
          type:String,
          trim:true
      },
@@ -35,6 +35,6 @@ const purchaseRequestSchema = new mongoose.Schema({
      }
 })
 
-const PurchaseRequest = mongoose.model('Product', purchaseRequestSchema)
+const PurchaseRequest = mongoose.model('PurchaseRequest', purchaseRequestSchema)
 
 module.exports = PurchaseRequest
