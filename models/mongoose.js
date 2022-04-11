@@ -5,6 +5,12 @@ const mongodbAtlas = 'mongodb+srv://pointstar:poinstar123@cluster0.nenzn.mongodb
 
 mongoose.connect( mongodbAtlas ,{
     useNewUrlParser:true,
+
+}).then(()=>{
+    console.log("Mongo connection open")
+})
+.catch(err=>{
+    console.log(err)
 })
 var db = mongoose.connection
 db.on('error',console.error.bind(console,'MongoDB connection error:'))
