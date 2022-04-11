@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
+const axios = require('axios');
 var nsrestlet = require('nsrestlet');
 
 // console.log(data)
@@ -69,16 +70,54 @@ app.get('/paymentList', (req,res)=>{
   res.render('index', {route,listName ,breadcrumbs}) 
 })
 app.get('/purchaseRequestForm', (req,res)=>{
-  let route = "pages/purchaseRequestForm"
- let listName ="Purchase Request"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
+   let route = "pages/purchaseRequestForm"
+   let listName ="Purchase Request"
+
+   axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response.data[0]);
+    
+    let tableData=response.data
+    let tranId=response.data[0].values["GROUP(tranid)"]
+    let location=response.data[0].values["GROUP(locationnohierarchy)"]
+    let date=response.data[0].values["GROUP(trandate)"]
+    breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+    res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
+  })
+  .catch(function (error) {
+    console.log("erorr",error);
+  });
+
+  
 })
 app.get('/itemfulfilmentForm', (req,res)=>{
   let route = "pages/itemFulfillmentForm"
  let listName ="Purchase Request"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
+ 
+
+ axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response.data[0]);
+    
+    let tableData=response.data
+    // let tranId=response.data[0].values["GROUP(tranid)"]
+    // let location=response.data[0].values["GROUP(locationnohierarchy)"]
+    // let date=response.data[0].values["GROUP(trandate)"]
+    breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
+    res.render('index', {route,listName ,breadcrumbs,tableData}) 
+  })
+  .catch(function (error) {
+    console.log("erorr",error);
+  });
+
+
+ 
 })
 app.get('/billViewForm', (req,res)=>{
   let route = "pages/BeforeCreateBill_View"
