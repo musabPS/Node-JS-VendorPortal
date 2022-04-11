@@ -1,5 +1,5 @@
-
 const express = require('express')
+require('./models/mongoose')
 const path = require('path')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
@@ -35,13 +35,31 @@ app.use(methodOverride('_method'))
 // app.use(express.static(publicDirectoryPath)) 
 
 
+const PurchaseRequests = require('./models/purchaseRequests')
+const ItemFulfillments = require('./models/itemFulfillments')
+const Invoices = require('./models/invoices')
+
 app.get('/',(req,res)=>{
   breadcrumbs = {"noBreadcrumbs" : {name:"",link:""}};
   let route = "partials/_content"
 
   res.render('index',{route,breadcrumbs})
 })
-
+app.get('/purchase-requests', async (req,res)=>{
+  var data = []
+  try {
+    data = await PurchaseRequests.find({})
+    console.log(data)
+    //data.purchaseRequests = purchaseRequests
+}
+catch (e) {
+    console.log(e)
+}
+  // app.set('views', path.join(__dirname,'./demo7/views'))
+   let route = "pages/table"
+  // console.log("trandata",data)
+   res.render('index', {route,data}) 
+})
 
 
 app.get('/purchaseRequestList', (req,res)=>{

@@ -5,8 +5,6 @@ const mongodbLocal = 'mongodb://127.0.0.1:27017/vendor-portal-app'
 
 mongoose.connect( mongodbLocal ,{
     useNewUrlParser:true,
-    useCreateIndex:true,
-    useFindAndModify:false // to add deprecated methods
 })
 var db = mongoose.connection
 db.on('error',console.error.bind(console,'MongoDB connection error:'))
