@@ -1,4 +1,3 @@
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Entry-->
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
@@ -143,50 +142,38 @@
                     <!--end: Search Form-->
                     <!--begin: Datatable-->
 
-                   
-
-                        <table class="datatable datatable-bordered datatable-head-custom" id="kt_datatable">
-                            <thead>
+                    <table class="datatable datatable-bordered datatable-head-custom" id="kt_datatable">
+                        <thead>
+                            <tr>
+                                <th title="Field #3">SO #</th>
+                                <th title="Field #4">Date</th>
+                                <th title="Field #5">Quantity</th>
+                                <th title="Field #6">Amount</th>
+                                <th title="Field #6">Action</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% data.forEach((el)=>{  %>
                                 <tr>
-                                    <th title="Field #1">S#</th>
-                                    <th title="Field #3">SO #</th>
-                                    <th title="Field #4">Date</th>
-                                    <th title="Field #5">Quantity</th>
-                                    <th title="Field #6">Amount</th>
-                                    <th title="Field #6">Action</th>
+                                    <td> <a href= "/sales-orders/<%= el.poNumber %>" > <%= el.poNumber%>  </a> </td>
+                                    <td><%= el.date %></td>
+                                    <td><%= el.quantity %></td>
+                                    <td><%= el.amount %></td>
+                                    <td><a href= "/sales-orders/<%= el._id %>/edit" >    <i class="flaticon2-edit"></i> &nbsp;&nbsp;&nbsp; &nbsp;</a> <i class="flaticon2-rubbish-bin-delete-button"></i></td>
                                     
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <%  tranData.forEach((el)=>{  %>
-                                    <tr>
-                                        <td><a> <%= el.values.tranid  %> </td>
-                                        <td> <a href= "/sales-orders/<%= el.tranid %>" > <%= el.values.tranid %>  </a> </td>
-                                        <td><%= el.values.trandate %></td>
-                                        <td><%= el.values.quantity %></td>
-                                        <td><%= el.values.amount %></td>
-                                        <td><a href= "/sales-orders/<%= el._id %>/edit" ><i class="flaticon2-edit"></i><a>  <i class="flaticon2-rubbish-bin-delete-button"></i></td>
-                                        
-                                        </tr>
-                                    <%}) %>
-                               
-                                   
-                            </tbody>
-                        </table>
+                                    </tr>
+                                <%}) %>
+                                
+                        </tbody>
+                    </table>
                         
+                    </div>
                     <!--end: Datatable-->
                 </div>
             </div>
             <!--end::Card-->
         </div>
         <!--end::Container-->
-    </div>
-    <!--end::Entry-->
-</div>
-
-<script>    
-
-  var lrr = "<%=tranData%>"
-  console.log("check",lrr)
-</script>
+   
