@@ -155,7 +155,7 @@
                         </thead>
                         <tbody>
                             
-                            <% datatest.forEach((el)=>{  %>
+                            <% data.forEach((el)=>{  %>
                                 <tr class="custom_hover">
                                    
                                     <td> <a href= "/purchaseRequestForm&id=<%= el.internalid %>" > <%= el.poNumber%>  </a> </td>
@@ -178,11 +178,3 @@
         </div>
         <!--end::Container-->
    
-
-        <script> 
-        
-        var tt= JSON.parse('<%- datatest %>')
-
-        console.log(tt.internalid)
-        console.log(tt)
-        </script>

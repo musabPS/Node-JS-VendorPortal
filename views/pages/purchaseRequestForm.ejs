@@ -450,7 +450,28 @@
 													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Delivery Date</th>'
 													+'<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Accepted</th>'
 													+'</tr>'
-													+'</thead>'
+												+'</thead>'
+												+'<tbody>'
+
+                                            for(var i=0; i<data.length; i++)
+											{
+												tableData+='<tr class="font-weight-bolder">'
+												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>'
+												 tableData+='<td class="pl-0 pt-7 linenumber">'+parseInt(i+1)+'</td>'
+                                                 tableData+='<td class="pl-0 pt-7 txt-td item" >'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
+                                                 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
+												 tableData+='</tr>'
+											}
+												 
+
+											tableData+='</tbody>'	
 
 											$('#table-main').append(tableData)
 

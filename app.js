@@ -44,23 +44,17 @@ app.get('/',(req,res)=>{
 app.get('/purchase-requests', async (req,res)=>{
   var data = []
   try {
-    data = await PurchaseRequests.find({})
-    data2=data
-    datatest=JSON.stringify(data2)
-    datatest=JSON.parse(datatest)
+    data = await PurchaseRequests.find({}).lean()
 
-    objValues = Object.values(data2),
-    console.log( objValues)
-   
-    //data.purchaseRequests = purchaseRequests
+    console.log("data[0]", data[0].internalid)
+
 }
 catch (e) {
     console.log(e)
 }
-  // app.set('views', path.join(__dirname,'./demo7/views'))
+
    let route = "pages/table"
-  // console.log("trandata",data)
-   res.render('index', {route,data,datatest}) 
+   res.render('index', {route,data,data}) 
 })
 
 app.get('/purchaseRequestForm&:id', async (req,res)=>{
