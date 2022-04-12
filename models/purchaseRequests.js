@@ -1,6 +1,15 @@
 const mongoose = require("mongoose")
 
 const purchaseRequestSchema = new mongoose.Schema({
+    internaid: {
+        type: Number,
+        trim:true,
+        required : true
+    },
+    invoiceNumber: {
+        type: String,
+        trim:true
+    },
     poNumber:{
          type:String,
          required:true,

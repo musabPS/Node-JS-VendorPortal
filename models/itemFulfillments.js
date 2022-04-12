@@ -1,6 +1,15 @@
 const mongoose = require("mongoose")
 
 const itemFulfillmentSchema = new mongoose.Schema({
+    internalId: {
+        type: Number,
+        trim:true,
+        required : true
+    },
+    invoiceNumber: {
+        type: String,
+        trim:true
+    },
     ifNumber:{
         type:String,
         required:true,

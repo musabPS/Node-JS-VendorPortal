@@ -145,23 +145,24 @@
                     <table class="table-hover-bg-white pt-10 table-striped" id="kt_datatable" style="display: none;">
                         <thead>
                             <tr>
-                                <th title="Field #3">SO #</th>
+                               
+                                <th title="Field #3">PO #</th>
                                 <th title="Field #4">Date</th>
                                 <th title="Field #5">Quantity</th>
                                 <th title="Field #6">Amount</th>
-                                <th title="Field #6">Action</th>
-                                
+                                <th title="Field #6">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             
-                            <% data.forEach((el)=>{  %>
+                            <% datatest.forEach((el)=>{  %>
                                 <tr class="custom_hover">
-                                    <td> <a href= "/sales-orders/<%= el.poNumber %>" > <%= el.poNumber%>  </a> </td>
+                                   
+                                    <td> <a href= "/purchaseRequestForm&id=<%= el.internalid %>" > <%= el.poNumber%>  </a> </td>
                                     <td><%= el.date %></td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
-                                    <td><a href= "/sales-orders/<%= el._id %>/edit" >    <i class="text-primary flaticon2-edit"></i> &nbsp;&nbsp;&nbsp; &nbsp;</a> <i class="text-primary flaticon2-rubbish-bin-delete-button"></i></td>
+                                    <td><%= el.status %></td>
                                     
                                     </tr>
                                 <%}) %>
@@ -177,3 +178,11 @@
         </div>
         <!--end::Container-->
    
+
+        <script> 
+        
+        var tt= JSON.parse('<%- datatest %>')
+
+        console.log(tt.internalid)
+        console.log(tt)
+        </script>
