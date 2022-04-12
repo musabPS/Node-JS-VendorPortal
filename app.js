@@ -1,4 +1,3 @@
-
 const express = require('express')
 require('./models/mongoose')
 const path = require('path')
@@ -28,7 +27,6 @@ const ItemFulfillments = require('./models/itemFulfillments')
 const Invoices = require('./models/invoices')
 
 
-
 const authCheck = (req, res, next) => {
   if (!req.user) { 
       return res.redirect('/login')
@@ -42,7 +40,21 @@ app.get('/',(req,res)=>{
   let route = "partials/_content"
   res.render("index",{route})
 })
-
+app.get('/purchase-requests', async (req,res)=>{
+  var data = []
+  try {
+    data = await PurchaseRequests.find({})
+    console.log(data)
+    //data.purchaseRequests = purchaseRequests
+}
+catch (e) {
+    console.log(e)
+}
+  // app.set('views', path.join(__dirname,'./demo7/views'))
+   let route = "pages/table"
+  // console.log("trandata",data)
+   res.render('index', {route,data}) 
+})
 
 app.get('/dashboard', authCheck,(req,res)=>{
   // app.set('views', path.join(__dirname,'./demo7/views'))
