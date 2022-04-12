@@ -142,7 +142,7 @@
                     <!--end: Search Form-->
                     <!--begin: Datatable-->
 
-                    <table class="datatable datatable-bordered datatable-head-custom" id="kt_datatable">
+                    <table class="table-hover-bg-white pt-10 table-striped" id="kt_datatable" style="display: none;">
                         <thead>
                             <tr>
                                 <th title="Field #3">SO #</th>
@@ -156,12 +156,12 @@
                         <tbody>
                             
                             <% data.forEach((el)=>{  %>
-                                <tr>
+                                <tr class="custom_hover">
                                     <td> <a href= "/sales-orders/<%= el.poNumber %>" > <%= el.poNumber%>  </a> </td>
                                     <td><%= el.date %></td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
-                                    <td><a href= "/sales-orders/<%= el._id %>/edit" >    <i class="flaticon2-edit"></i> &nbsp;&nbsp;&nbsp; &nbsp;</a> <i class="flaticon2-rubbish-bin-delete-button"></i></td>
+                                    <td><a href= "/sales-orders/<%= el._id %>/edit" >    <i class="text-primary flaticon2-edit"></i> &nbsp;&nbsp;&nbsp; &nbsp;</a> <i class="text-primary flaticon2-rubbish-bin-delete-button"></i></td>
                                     
                                     </tr>
                                 <%}) %>
