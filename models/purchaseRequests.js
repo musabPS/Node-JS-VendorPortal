@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const purchaseRequestSchema = new mongoose.Schema({
-    internaid: {
+    internalId: {
         type: Number,
         trim:true,
         required : true

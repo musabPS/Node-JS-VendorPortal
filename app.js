@@ -215,26 +215,22 @@ app.post('/createPurchaseRequest', async (req,res)=>{
    try {
     
     console.log("reg",req.body)
+    var obj =req.body.netsuiteData
+    var responceData={}
+
+
+    data = await PurchaseRequests.insertMany(obj, function(err, res) {
+      if (err) throw err;
+      console.log("1 document inserted",res);
+      responceData=res
+      
+      console.log("checkresponce ",data)
+    });
+
     
-  // var obj= [ { 
-  //         "poNumber"       : "PO140001CM",  
-  //         "quantity"       : 10, 
-  //         "amount"         : 0, 
-  //         "location"       : "BHG",  
-  //         "status"         : "Fully Billed", 
-  //         "internaid"      : 1149755,
-  //         "syncStatus"     :  1
-  //     }]
-
-  //   data = await PurchaseRequests.insertMany(obj, function(err, res) {
-  //     if (err) throw err;
-  //     console.log("1 document inserted",res);
-  //     db.close();
-  //   });
-
-  //   console.log(data)
-  //   //data.purchaseRequests = purchaseRequests
-  res.send("successs")
+  
+    //data.purchaseRequests = purchaseRequests
+    res.send("Sucsess")
    }
    catch (e) {
     console.log(e)
@@ -242,6 +238,50 @@ app.post('/createPurchaseRequest', async (req,res)=>{
  
    
   })
+  app.post('/updatePurchaseRequest', async (req,res)=>{
+    var data = []
+     try {
+      
+      console.log("reg",req.body)
+      var obj =req.body.netsuiteData
+      var responceData={
+        poNumber  :   obj[0].poNumber,
+        quantity  :   obj[0].quantity,
+        amount    :   obj[0].amount,
+        status    :   obj[0].status
+
+      }
+      
+       const filter = { internalId: obj[0].internalId };
+        const update = { amount: '59' };
+        console.log("checkresponce ",filter)
+        delete obj[0].internalId;
+        delete obj[0].poNumber;
+        delete obj[0].date;
+        delete obj[0].quantity;
+        delete obj[0].status;
+
+
+        data = await PurchaseRequests.updateOne(filter, responceData, function(err, res) {
+        if (err) throw err;
+        console.log("1 document update",res);
+        responceData=res
+        
+        console.log("checkresponce ",data)
+      });
+  
+      
+    
+      //data.purchaseRequests = purchaseRequests
+      res.send("Success")
+     }
+     catch (e) {
+      console.log(e)
+      res.send("fail")
+     }
+   
+     
+    })
 
 app.get('/view',async (req,res)=>{
   // app.set('views', path.join(__dirname,'./demo7/views'))
