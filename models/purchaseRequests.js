@@ -36,7 +36,7 @@ const purchaseRequestSchema = new mongoose.Schema({
          trim:true
      },
      syncStatus:{
-         type:String,
+         type:Number,
          trim:true
      },
      lineItems:{
@@ -46,4 +46,4 @@ const purchaseRequestSchema = new mongoose.Schema({
 
 const PurchaseRequest = mongoose.model('PurchaseRequest', purchaseRequestSchema)
 
-module.exports = PurchaseRequest
+module.exports = PurchaseRequest 
