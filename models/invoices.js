@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 
 const invoiceSchema = new mongoose.Schema({
+    internalId: {
+        type: Number,
+        trim:true,
+        required : true
+    },
     invoiceNumber: {
         type: String,
         trim:true
@@ -37,6 +42,7 @@ const invoiceSchema = new mongoose.Schema({
     lineItems:{
         type:Array
     }
+    
 })
 
 const Invoice = mongoose.model('Invoice', invoiceSchema)

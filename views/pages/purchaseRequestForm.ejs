@@ -22,7 +22,7 @@
 													<!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
 													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-															<rect x="0" y="0" width="24" height="24" />
+					 										<rect x="0" y="0" width="24" height="24" />
 															<path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
 															<path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
 														</g>
@@ -132,41 +132,15 @@
 										<!-- begin: Invoice body-->
 										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
 											<div class="col-md-11">
+												<div id="load_btn_container" class=" col-md-12 btn-hover-primary bg-primary h-25px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
+
 												<div class="table-responsive">
+
+
 													<table class="table" id="table-main">
-														<thead>
-															<tr>
-																<th data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">
-																<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">
-																<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></th>
-																<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>
-																<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>
-																<th class="text-center font-weight-bold text-muted text-uppercase">Requested Quantity</th>
-                                                                <th class="font-weight-bold text-muted text-uppercase">Accepted Quantity</th>
-																<th class="font-weight-bold text-muted text-uppercase">Delivered Quantity</th>
-                                                               <th class="font-weight-bold text-muted text-uppercase">Billed Quantity</th>
-																<th class="font-weight-bold text-muted text-uppercase">Rate</th>
-																<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
-																<th class="pr-0 font-weight-bold text-muted text-uppercase">Delivery Date</th>
-                                                                                                                                 <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Accepted</th>
-															</tr>
-														</thead>
-														<tbody>
-															<% var reqQty=0,accptqty=0,accptamnt=0,reqamnt=0; tableData.forEach((el)=>{  %>
-																<tr class="font-weight-boldest">
-																	<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>
-																	<td class="pl-0 pt-7 linenumber"></td>
-																	<td class="pl-0 pt-7 txt-td item" ><%= el.values["GROUP(item)"][0].text %></td>
-																	<td class="text-center pt-7 qty"><%= el.values["SUM(quantity)"]  %> <% reqQty+= parseInt(el.values["SUM(quantity)"]) %></td>
-																	<td class="text-center pt-7 accqty"><%= el.values["SUM(custcol_pointstarvendor_originalqty)"] %> <% accptqty+= parseInt(el.values["SUM(custcol_pointstarvendor_originalqty)"]) %></td>
-																	<td class="text-center pt-7 recty"><%= el.values["SUM(quantityshiprecv)"] %></td>
-																	<td class="text-center pt-7 accqty"><%= el.values["SUM(quantitybilled)"] %></td>
-																	<td class="text-center pt-7 rate"><%= el.values["MAX(rate)"] %> <% accptamnt+= parseFloat( el.values["MAX(rate)"] * el.values["SUM(custcol_pointstarvendor_originalqty)"] ) %></td>
-																	<td class=" pr-0 pt-7 text-center amount"><%= el.values["MAX(formulanumeric)"] %> <% reqamnt+= parseFloat(el.values["MAX(formulanumeric)"])  %></td>
-																	<td class="text-danger pr-0 pt-7 text-center expecteddate" ><%= el.values["GROUP(expectedreceiptdate)"] %></td>
-																	<td class="text-success pr-0 pt-7 text-center statuscheck" ><%= el.values["GROUP(formulatext)"] %></td>																	
-																	</tr>
-																<%}) %>
+														
+														<tbody >
+															
 														
 														</tbody>
 													</table>
@@ -183,20 +157,20 @@
 															<tr>
 																<th class="font-weight-bold text-muted text-uppercase">Location</th>
 																<th class="font-weight-bold text-muted text-uppercase">First Delivery Date</th>
-																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
-																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Amount</th>
 																<th class="font-weight-bold text-muted text-uppercase">Total Requested Qty</th>
 																<th class="font-weight-bold text-muted text-uppercase">Total Requested Amount</th>
+																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
+																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Amount</th>
 															</tr>
 														</thead>
 														<tbody>
 															<tr class="font-weight-bolder">
 																<td ><%= location %></td>
 																<td style="text-align: center;">1-5-2022</td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><%=  accptqty %> <p style="font-size: 15px;" class="text-info">9</p></td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><%= accptamnt.toFixed(1) %> <p style="font-size: 15px;" class="text-info">6</p> </td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"><%= reqQty %></td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"> <%= reqamnt.toFixed(1) %></td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><p style="font-size: 15px;" class="text-info">9</p></td>
+																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"> <p style="font-size: 15px;" class="text-info">6</p> </td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"></td>
+																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"> </td>
 															</tr>
 														</tbody>
 													</table>
@@ -401,5 +375,134 @@
 
 
   });
+
+  $('#load_btn_container').click(function () 
+        {
+            alert("check")
+          
+           if($('.btn_loaditems').html()=='Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>')
+           {
+            $('#table_container').css('display','none');
+            $('.btn_loaditems').empty();
+            $('.btn_loaditems').append('Item Details<i class="fas fa-caret-right text-white icon-2x" style="float:right;"></i>');
+            $('#table-main').empty();
+            $('#btn_save').hide();
+            $('#btncancel').hide();
+            return
+           }
+           $('.btn_loaditems').empty();
+           $('.btn_loaditems').append('Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>');
+           $('#table_container').css('display','block');
+           $('#table-main').empty();
+           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+         
+
+           var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+              
+                var tableData='<thead style="text-align: center;">'
+                var postForm={};
+                var record=""
+               
+               
+
+               
+                postForm = { //Fetch form data
+                    
+                        };
+					
+                                var poInternalId = urlSplit[1]
+
+								alert(poInternalId)
+          
+
+           $.ajax({ 
+                type      : 'GET', //Method type
+                url       : '/purchaseRequestForm/itemdetail&id='+poInternalId, //Your form processing file URL
+                data      : JSON.stringify(postForm), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+                                
+								console.log(data)
+                                $('#table-main').empty();
+
+                                var dataParse=data
+                                
+                                var totalQuantity=0
+                                var totalAmount=0
+
+								
+								tableData+= '<tr>'
+											 +'<th data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">'
+												+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
+													+'<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></th>'
+													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
+													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Requested Quantity</th>'
+													+' <th class="font-weight-bold text-muted text-uppercase">Accepted Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Delivered Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Billed Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
+													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>'
+													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Delivery Date</th>'
+													+'<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Accepted</th>'
+													+'</tr>'
+												+'</thead>'
+												+'<tbody>'
+
+                                            for(var i=0; i<data.length; i++)
+											{
+												tableData+='<tr class="font-weight-bolder">'
+												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>'
+												 tableData+='<td class="pl-0 pt-7 linenumber">'+parseInt(i+1)+'</td>'
+                                                 tableData+='<td class="pl-0 pt-7 txt-td item" >'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
+                                                 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
+												 tableData+='</tr>'
+											}
+												 
+
+											tableData+='</tbody>'	
+
+											$('#table-main').append(tableData)
+
+                                    $('#totalqty').text(totalQuantity)
+                                    $('#totalamount').text(totalAmount)
+
+                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
+                                    //     $("#trandate option[value='']").attr('selected', true)
+                                    //     $("#customer option[value='']").attr('selected', true)
+                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
+                                    //     $(this).addClass('flaticon2-send-1');
+                                    //   ///  window.location.reload();
+                                    // event.preventDefault();
+
+                                    // if(recordType!='invoice'){
+                                    //     $('#btn_save').show();
+                                    // }
+
+                                    $('#btn_save').show();
+
+                                    // if(pageType=='view'){
+                                    //     $('#btn_save').hide();
+                                    // }
+
+                            }
+                            
+            });
+           
+
+          //fas fa-caret-down
+            
+        });
    
 	</script>					
