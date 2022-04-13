@@ -182,8 +182,6 @@ app.get('/itemfulfilmentForm', (req,res)=>{
   .catch(function (error) {
     console.log("erorr",error);
   });
-
-
  
 })
 
@@ -208,9 +206,42 @@ app.get('/billViewForm', (req,res)=>{
     console.log("erorr",error);
   });
 
-
-  
 })
+
+///////////////////// mongols //////////////////
+
+app.post('/createPurchaseRequest', async (req,res)=>{
+  var data = []
+   try {
+    
+    console.log("reg",req.body)
+    
+  // var obj= [ { 
+  //         "poNumber"       : "PO140001CM",  
+  //         "quantity"       : 10, 
+  //         "amount"         : 0, 
+  //         "location"       : "BHG",  
+  //         "status"         : "Fully Billed", 
+  //         "internaid"      : 1149755,
+  //         "syncStatus"     :  1
+  //     }]
+
+  //   data = await PurchaseRequests.insertMany(obj, function(err, res) {
+  //     if (err) throw err;
+  //     console.log("1 document inserted",res);
+  //     db.close();
+  //   });
+
+  //   console.log(data)
+  //   //data.purchaseRequests = purchaseRequests
+  res.send("successs")
+   }
+   catch (e) {
+    console.log(e)
+   }
+ 
+   
+  })
 
 app.get('/view',async (req,res)=>{
   // app.set('views', path.join(__dirname,'./demo7/views'))
