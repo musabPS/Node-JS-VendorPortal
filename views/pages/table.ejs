@@ -159,11 +159,11 @@
                                 <tr class="custom_hover">
                                    
                                     <td> <a href= "/purchaseRequestForm&id=<%= el.internalid %>" > <%= el.poNumber%>  </a> </td>
-                                    <td><%= el.date %></td>
+                                    <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
                                     <td><%= el.status %></td>
-                                    
+                                     
                                     </tr>
                                 <%}) %>
                                 

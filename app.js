@@ -2,294 +2,51 @@ const express = require('express')
 require('./models/mongoose')
 const path = require('path')
 const mongoose = require('mongoose')
-const methodOverride = require('method-override')
-const bodyParser = require('body-parser');
-const axios = require('axios');
-var nsrestlet = require('nsrestlet');
-var moment = require('moment');
 
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
-
-
 app.use('/', express.static(path.join(__dirname, './public')))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-// app.use(express.static(publicDirectoryPath)) 
 
 
-const PurchaseRequests = require('./models/purchaseRequests')
-const ItemFulfillments = require('./models/itemFulfillments')
-const Invoices = require('./models/invoices')
+
+const purchaseRequestRouter = require('./routes/purchaseRequest-route')
+
+const itemFulfillmentRouter = require('./routes/itemfulfillment-route')
+
+const invoiceRouter = require('./routes/invoice-route')
+
+const billRouter = require('./routes/bill-route')
 
 
 const authCheck = (req, res, next) => {
-  if (!req.user) { 
-      return res.redirect('/login')
+  if (!req.user) {
+    return res.redirect('/login')
   }
- // next()
+  // next()
 }
 
+app.use(purchaseRequestRouter)
+
+app.use(itemFulfillmentRouter)
+
+app.use(invoiceRouter)
+
+app.use(billRouter)
 
 
-app.get('/',(req,res)=>{
-  let route = "partials/_content"
-  res.render("index",{route})
-})
-app.get('/purchase-requests', async (req,res)=>{
-  var data = []
-  try {
-    data = await PurchaseRequests.find({}).lean()
-
-    console.log("data[0]", data[0].internalid)
-
-}
-catch (e) {
-    console.log(e)
-}
-
-   let route = "pages/table"
-   res.render('index', {route,data,data}) 
-})
-
-app.get('/purchaseRequestForm&:id', async (req,res)=>{
-  console.log(req.params)
-  var {id} =req.params
-  var data = []
-  var query = {internalid:11497};
-  try {
-    data = await PurchaseRequests.findOne({query})
-    console.log( data)
-   
-    //data.purchaseRequests = purchaseRequests
- }
-catch (e) {
-    console.log(e)
-}
-  let route = "pages/purchaseRequestForm"
-  let listName ="Payment List"
-
-  let tranId=data.poNumber
-  let location=data.location
-  let date=data.date
-   date=moment(new Date(date)).format('MM-DD-YYYY')
-
-  breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs,tranId,location,date}) 
-})
-
-app.get('/dashboard', authCheck,(req,res)=>{
-  // app.set('views', path.join(__dirname,'./demo7/views'))
-   let route = "partials/_content"
-   res.render('index',{route})
-})
-
-app.get('/purchaseRequestList', (req,res)=>{
-  let route = "pages/transactionTable"
- let listName ="Purchase Request"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
-})
-
-app.get('/ItemFulfillmentList', (req,res)=>{
-  let route = "pages/transactionTable"
- let listName ="ItemFulfillment"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
-})
-app.get('/invoiceList', (req,res)=>{
-  let route = "pages/transactionTable"
- let listName ="Invoice"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
-})
-app.get('/paymentList', (req,res)=>{
-  let route = "pages/transactionTable"
- let listName ="Payment List"
-   breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-  res.render('index', {route,listName ,breadcrumbs}) 
-})
-
-
-app.get('/purchase-requests', async (req,res)=>{
-  var data = []
-   try {
-    data = await PurchaseRequests.find({})
-    console.log(data)
-    //data.purchaseRequests = purchaseRequests
-   }
-   catch (e) {
-    console.log(e)
-   }
-   // app.set('views', path.join(__dirname,'./demo7/views'))
-   let route = "pages/table"
-   // console.log("trandata",data)
-   res.render('index', {route,data}) 
-  })
- app.get('/purchaseRequestForm/itemdetail&:id', (req,res)=>{
-
-  console.log("chd",id)
-
-  
-   let route = "pages/purchaseRequestForm"
-   let listName ="Purchase Request"
-     var {id} =req.params
-
-   console.log("chd",id)
-   axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest', {
-  })
-  .then(function (response) {
-    console.log(response.data[0]);
-    
-    let tableData=response.data
-    let tranId=response.data[0].values["GROUP(tranid)"]
-    let location=response.data[0].values["GROUP(locationnohierarchy)"]
-    let date=response.data[0].values["GROUP(trandate)"]
-    breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-    res.send(tableData)
-  //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
-   })
-   .catch(function (error) {
-    console.log("erorr",error);
-   });
-  
-})
-
-app.get('/itemfulfilmentForm', (req,res)=>{
-  let route = "pages/itemFulfillmentForm"
- let listName ="Purchase Request"
- 
-
- axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt', {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  })
-  .then(function (response) {
-    console.log(response.data[0]);
-    
-    let tableData=response.data
-    // let tranId=response.data[0].values["GROUP(tranid)"]
-    // let location=response.data[0].values["GROUP(locationnohierarchy)"]
-    // let date=response.data[0].values["GROUP(trandate)"]
-    breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-    res.render('index', {route,listName ,breadcrumbs,tableData}) 
-  })
-  .catch(function (error) {
-    console.log("erorr",error);
-  });
- 
-})
-
-app.get('/billViewForm', (req,res)=>{
-  let route = "pages/BeforeCreateBill_View"
- let listName ="Purchase Request"
-  axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt', {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  })
-  .then(function (response) {
-    console.log(response.data[0]);
-    
-    let tableData=response.data
-    // let tranId=response.data[0].values["GROUP(tranid)"]
-    // let location=response.data[0].values["GROUP(locationnohierarchy)"]
-    // let date=response.data[0].values["GROUP(trandate)"]
-    breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-    res.render('index', {route,listName ,breadcrumbs,tableData}) 
-  })
-  .catch(function (error) {
-    console.log("erorr",error);
-  });
-
-})
-
-///////////////////// mongols //////////////////
-
-app.post('/createPurchaseRequest', async (req,res)=>{
-  var data = []
-   try {
-    
-    console.log("reg",req.body)
-    var obj =req.body.netsuiteData
-    var responceData={}
-
-
-    data = await PurchaseRequests.insertMany(obj, function(err, res) {
-      if (err) throw err;
-      console.log("1 document inserted",res);
-      responceData=res
-      
-      console.log("checkresponce ",data)
-    });
-
-    
-  
-    //data.purchaseRequests = purchaseRequests
-    res.send("Sucsess")
-   }
-   catch (e) {
-    console.log(e)
-   }
- 
-   
-  })
-  app.post('/updatePurchaseRequest', async (req,res)=>{
-    var data = []
-     try {
-      
-      console.log("reg",req.body)
-      var obj =req.body.netsuiteData
-      var responceData={
-        poNumber  :   obj[0].poNumber,
-        quantity  :   obj[0].quantity,
-        amount    :   obj[0].amount,
-        status    :   obj[0].status
-
-      }
-      
-       const filter = { internalId: obj[0].internalId };
-        const update = { amount: '59' };
-        console.log("checkresponce ",filter)
-        delete obj[0].internalId;
-        delete obj[0].poNumber;
-        delete obj[0].date;
-        delete obj[0].quantity;
-        delete obj[0].status;
-
-
-        data = await PurchaseRequests.updateOne(filter, responceData, function(err, res) {
-        if (err) throw err;
-        console.log("1 document update",res);
-        responceData=res
-        
-        console.log("checkresponce ",data)
-      });
-  
-      
-    
-      //data.purchaseRequests = purchaseRequests
-      res.send("Success")
-     }
-     catch (e) {
-      console.log(e)
-      res.send("fail")
-     }
-   
-     
-    })
-
-app.get('/view',async (req,res)=>{
-  // app.set('views', path.join(__dirname,'./demo7/views'))
-
-   let route = "pages/transaction"
-   res.render('index', {route})
-})
-
+// app.get('/', (req, res) => {
+//   let route = "partials/_content"
+//   res.render("index", { route })
+// })
+// // 
+// app.get('/dashboard', authCheck, (req, res) => {
+//   // app.set('views', path.join(__dirname,'./demo7/views'))
+//   let route = "partials/_content"
+//   res.render('index', { route })
+// })
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
