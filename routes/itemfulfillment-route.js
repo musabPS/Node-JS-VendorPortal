@@ -36,12 +36,13 @@ app.use(router)
 
 
 
-router.get('/itemFulfillmentList', (req, res) => {
+router.get('/itemFulfillmentList', async (req, res) => {
 
 
     var data = []
     try {
-        data =  ItemFulfillments.find({}).lean()
+        data =  await ItemFulfillments.find({})
+        // data = await ItemFulfillments.findOne({internalId:"6728"})
         console.log("check",data)
         //data.purchaseRequests = purchaseRequests
 
@@ -49,7 +50,7 @@ router.get('/itemFulfillmentList', (req, res) => {
      let listName = "ItemFulfillment"
 
      breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-     res.render('index', { route, listName, breadcrumbs,data })
+     res.render('index', { route, listName, breadcrumbs,data,moment })
      }
      catch (e) {
         console.log(e)
