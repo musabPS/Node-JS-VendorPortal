@@ -7,7 +7,7 @@
             <div class="card card-custom">
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <h3 class="card-label"><%= trantype  %></h3>
+                        <h3 class="card-label">Item Fulfillment</h3>
                     </div>
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
@@ -146,26 +146,26 @@
                         <thead>
                             <tr>
                                
-                                <th title="Field #3">Tran #</th>
+                                <th title="Field #3">IF #</th>
                                 <th title="Field #4">Date</th>
+                                <th title="Field #3">PO #</th>
                                 <th title="Field #5">Quantity</th>
                                 <th title="Field #6">Amount</th>
-                                <th title="Field #6">Action</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
                             
-                            <% var i=0; itmdata.forEach((el)=>{ i++ %>
-                                <tr>
+                            <% data.forEach((el)=>{  %>
+                                <tr class="custom_hover">
                                    
-                                    
-                                    <td> <%= el.DocumentNumber  %> </td>
-                                    <td> <%= el.Date  %> </td>
-                                    <td> <%= el.quantity  %> </td>
-                                    <td> <%= el.quantity*2  %> </td>
-                                    <td><a href= "/sales-orders/<%= el._id %>/edit" >    <i class="flaticon2-edit"></i> &nbsp;&nbsp;&nbsp; &nbsp;</a> <i class="flaticon2-rubbish-bin-delete-button"></i></td>
-
+                                    <td> <a href= "/itemfulfillmentForm&id=<%= el.internalId %>" > <%= el.ifNumber%>  </a> </td>
+                                    <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
+                                    <td><%= el.quantity %></td>
+                                    <td><%= el.amount %></td>
+                                    <td><%= el.approvalStatus %></td>
+                                     
+                                    </tr>
                                 <%}) %>
                                 
                         </tbody>

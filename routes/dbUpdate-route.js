@@ -35,10 +35,8 @@ router.use(bodyParser.json());
 app.use(router)
 
 
-
-
 router.post('/createPurchaseRequest', async (req, res) => {
-    try {
+     try {
 
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
@@ -50,10 +48,11 @@ router.post('/createPurchaseRequest', async (req, res) => {
         console.log("objId", purchaseRequests._id)
 
         res.send(JSON.stringify(purchaseRequests._id))
-    }
-    catch (e) {
-        console.log(e)
-    }
+     }
+     catch (e) 
+     {
+       console.log(e)
+     }
 
 
 })
@@ -87,3 +86,5 @@ router.post('/updatePurchaseRequest', async (req, res) => {
 
 
 })
+
+module.exports = router

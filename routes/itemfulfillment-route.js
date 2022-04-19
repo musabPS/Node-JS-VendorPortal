@@ -26,7 +26,7 @@ router.use(bodyParser.json());
 app.use(router)
 
 // const PurchaseRequests = require('../models/purchaseRequests')
-// const ItemFulfillments = require('../models/itemFulfillments')
+ const ItemFulfillments = require('../models/itemFulfillments-model')
 
 
 
@@ -36,11 +36,25 @@ app.use(router)
 
 
 
-router.get('/ItemFulfillmentList', (req, res) => {
-    let route = "pages/transactionTable"
-    let listName = "ItemFulfillment"
-    breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-    res.render('index', { route, listName, breadcrumbs })
+router.get('/itemFulfillmentList', (req, res) => {
+
+
+    var data = []
+    try {
+        data =  ItemFulfillments.find({}).lean()
+        console.log("check",data)
+        //data.purchaseRequests = purchaseRequests
+
+     let route = "pages/itemfulfillment_table"
+     let listName = "ItemFulfillment"
+
+     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+     res.render('index', { route, listName, breadcrumbs,data })
+     }
+     catch (e) {
+        console.log(e)
+     }
+
 })
 
 router.get('/itemfulfillmentForm', (req, res) => {

@@ -6,7 +6,18 @@ const purchaseRequestSchema = new mongoose.Schema({
         trim:true,
         required : true
     },
-    invoiceNumber: {
+    vendorInternalId: {
+        type: Number,
+        trim:true,
+        required : true
+    },
+    vendorName: {
+        type: String,
+    },
+    vendorName: {
+        type: String,
+    },
+    vendorAccept : { 
         type: String,
         trim:true
     },

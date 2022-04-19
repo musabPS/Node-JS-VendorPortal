@@ -2,6 +2,8 @@ const express = require('express')
 require('./models/mongoose')
 const path = require('path')
 const mongoose = require('mongoose')
+var request = require('request')
+var session = require('express-session')
 
 const app = express()
 
@@ -20,13 +22,20 @@ const invoiceRouter = require('./routes/invoice-route')
 
 const billRouter = require('./routes/bill-route')
 
+const updateDb = require('./routes/dbUpdate-route')
 
+app.use(session({
+  secret: "keyy",
+}))
 const authCheck = (req, res, next) => {
-  if (!req.user) {
+  if (! req.session.user_id) {
     return res.redirect('/login')
+
   }
-  // next()
+   next()
 }
+
+
 
 app.use(purchaseRequestRouter)
 
@@ -36,17 +45,59 @@ app.use(invoiceRouter)
 
 app.use(billRouter)
 
+app.use(updateDb)
 
-// app.get('/', (req, res) => {
-//   let route = "partials/_content"
-//   res.render("index", { route })
-// })
-// // 
-// app.get('/dashboard', authCheck, (req, res) => {
-//   // app.set('views', path.join(__dirname,'./demo7/views'))
-//   let route = "partials/_content"
-//   res.render('index', { route })
-// })
+
+
+
+app.get('/login', (req, res) => {
+
+  let route = "pages/login"
+  res.render(route)
+})
+
+app.post('/login', (req, res) => {
+
+  console.log("check logindata",req.body)
+  req.body.type='login'
+
+  const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff"
+  request({
+      url, json: true,
+      method: "POST",
+      body: req.body,
+      headers: {
+          "contentType" : "application/json",
+          
+      }
+  },
+      (error, response, body) => {
+          if (error) {
+              console.log('Unable to connect to suitelet', body)
+           }
+           else {
+
+             req.session.user_id=response.body
+              console.log("sessions",req.session.user_id)
+
+            res.redirect("/") 
+          }
+
+      })
+
+
+})
+
+app.get('/', authCheck, (req, res) => {
+
+  console.log("sesssiondashboard",req.session.user_id)
+
+  let route = "partials/_content"
+  res.render("index", { route })
+
+})
+
+
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {

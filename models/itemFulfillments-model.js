@@ -6,9 +6,13 @@ const itemFulfillmentSchema = new mongoose.Schema({
         trim:true,
         required : true
     },
-    invoiceNumber: {
+    vendorInternalId: {
+        type: Number,
+        trim:true,
+        required : true
+    },
+    vendorName: {
         type: String,
-        trim:true
     },
     ifNumber:{
         type:String,

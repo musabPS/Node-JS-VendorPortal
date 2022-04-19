@@ -34,8 +34,16 @@ router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
 
+const authCheck = (req, res, next) => {
+    if (! req.session.user_id) {
+      return res.redirect('/login')
+  
+    }
+     next()
+  }
 
-router.get('/purchaseRequestForm&id=:id', async (req, res) => {
+
+router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
     console.log("checkparam", req.params)
 
     var { id } = req.params
@@ -62,7 +70,7 @@ router.get('/purchaseRequestForm&id=:id', async (req, res) => {
     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
     res.render('index', { route, listName, breadcrumbs, tranId, location, date })
 })
-router.get('/purchaseRequestForm/itemdetail&id=:id', (req, res) => {
+router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
     console.log("chddd", req.params)
 
@@ -91,7 +99,7 @@ router.get('/purchaseRequestForm/itemdetail&id=:id', (req, res) => {
 
 })
 
-router.post('/purchaseRequestForm', async (req, res) => {
+router.post('/purchaseRequestForm', authCheck,async (req, res) => {
     console.log(req.body)
     console.log(req.params)
     var { id } = req.params
@@ -121,11 +129,11 @@ router.post('/purchaseRequestForm', async (req, res) => {
 
 })
 
-router.get('/purchaseRequestList', async (req, res) => {
+router.get('/purchaseRequestList',authCheck, async (req, res) => {
     var data = []
     try {
-        data = await PurchaseRequests.find({}).lean()
-        console.log(data)
+        data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).lean()
+        console.log(req.session.user_id)
         //data.purchaseRequests = purchaseRequests
     }
     catch (e) {
@@ -135,8 +143,6 @@ router.get('/purchaseRequestList', async (req, res) => {
     let route = "pages/table"
     // console.log("trandata",data)
     res.render('index', { route, data, data, moment: moment })
-
-
 })
 
 module.exports = router
