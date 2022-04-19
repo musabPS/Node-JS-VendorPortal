@@ -133,17 +133,14 @@
 										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
 											<div class="col-md-11">
 												<div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
+												<div class="col-md-12" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
 
-												<div class="table-responsive">
-
-
-													<table class="table" id="table-main">
-														
-														<tbody >
-															
-														
-														</tbody>
-													</table>
+													<div class="table-responsive">
+														<table class="table" id="table-main">
+															<tbody>
+															</tbody>
+														</table>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -151,30 +148,32 @@
 										<!-- begin: Invoice footer-->
 										<div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
 											<div class="col-md-11">
-												<div class="table-responsive">
-													<table class="table" id="formtable">
-														<thead>
-															<tr>
-																<th class="font-weight-bold text-muted text-uppercase">Location</th>
-																<th class="font-weight-bold text-muted text-uppercase">First Delivery Date</th>
-																<th class="font-weight-bold text-muted text-uppercase">Total Requested Qty</th>
-																<th class="font-weight-bold text-muted text-uppercase">Total Requested Amount</th>
-																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
-																<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Amount</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr class="font-weight-bolder">
-																<td ><%= location %></td>
-																<td style="text-align: center;">1-5-2022</td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><p style="font-size: 15px;" class="text-info">9</p></td>
-																<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"> <p style="font-size: 15px;" class="text-info">6</p> </td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"></td>
-																<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"> </td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+
+	
+													    <div class="table-responsive">
+															<table class="table" id="formtable">
+																<thead>
+																	<tr>
+																		<th class="font-weight-bold text-muted text-uppercase">Location</th>
+																		<th class="font-weight-bold text-muted text-uppercase">First Delivery Date</th>
+																		<th class="font-weight-bold text-muted text-uppercase">Total Requested Qty</th>
+																		<th class="font-weight-bold text-muted text-uppercase">Total Requested Amount</th>
+																		<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
+																		<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Amount</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="font-weight-bolder">
+																		<td ><%= location %></td>
+																		<td style="text-align: center;">1-5-2022</td>
+																		<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"><p style="font-size: 15px;" class="text-info">9</p></td>
+																		<td class="text-success font-size-h3 font-weight-boldest" style="text-align: center;"> <p style="font-size: 15px;" class="text-info">6</p> </td>
+																		<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"></td>
+																		<td class="text-danger font-size-h3 font-weight-boldest" style="text-align: center;"> </td>
+																	</tr>
+																</tbody>
+															</table>
+													    </div>
 											</div>
 										</div>
 									
