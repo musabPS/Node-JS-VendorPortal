@@ -81,7 +81,7 @@
 											
 										  <div class="col-md-9">
 											  <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row text-white pt-6">
-												  <h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Item Fulfillment  554 </h1>
+												  <h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Item Fulfillment</h1>
 												  
 												  
 											  
@@ -102,11 +102,11 @@
 											  <div class="d-flex justify-content-between text-white pt-6">
 												  <div class="d-flex flex-column flex-root">
 													  <span class="font-weight-bolder mb-2 ">DATE</span>
-													  <span class="opacity-70">${ds.date}</span>
+													  <span class="opacity-70"><%= date %></span>
 												  </div>
 												  <div class="d-flex flex-column flex-root">
 													  <span class="font-weight-bolder mb-2">Item Receipt #</span>
-													  <span class="opacity-70">${ds.tranid}</span>
+													  <span class="opacity-70"><%= tranId %></span>
 												  </div>
 												  <div class="d-flex flex-column flex-root">
 													  <span class="font-weight-bolder mb-2">INVOICE TO.</span>
@@ -119,41 +119,16 @@
 										<!-- end: Invoice header-->
 										<!-- begin: Invoice body-->
 										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
-											<div class="col-md-9">
+											<div class="col-md-11">
+												<div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
+												<div class="col-md-12" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
+
 												<div class="table-responsive">
 													<table class="table" id="table-main">
-														<thead>
-															<tr>
-																
-																
-																
-																
-																<th class="pl-0 font-weight-bold text-muted text-uppercase">Product</th>
-                                                                <th class=" font-weight-bold text-muted text-uppercase">Delivered Quantity</th>
-                                                                <th class=" font-weight-bold text-muted text-uppercase">Order Quantity</th>
-																<th class=" font-weight-bold text-muted text-uppercase">Rate</th>
-                                                                <th class=" font-weight-bold text-muted text-uppercase">Location</th>
-																<th class=" pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
-																
-                                                                                                                                
-															</tr>
-														</thead>
-														<tbody>
-
-															<%  var totalQty=0, totalAmount=0; tableData.forEach((el)=>{  %>
-																<tr>
-																	<td class="pl-0"> <%= el.values["GROUP(item)"][0].text %></td>
-																	<td class="pl-20" > <%= el.values["SUM(quantity)"] %>  <% totalQty+=parseInt(el.values["SUM(quantity)"]) %></td>
-																	<td class="pl-20"> <%= el.values["SUM(appliedToTransaction.quantity)"] %></td>
-																	<td> <%= el.values["SUM(rate)"] %></td>
-																	<td> <%= el.values["GROUP(locationnohierarchy)"] %></td>
-																	<td class="pl-10"> <%= el.values["SUM(rate)"] * el.values["SUM(quantity)"] %>    <% totalAmount+=parseFloat(el.values["SUM(rate)"] * el.values["SUM(quantity)"]) %> </td>
-																</tr>
-																<%}) %>
 														
-														</tbody>
 													</table>
 												</div>
+											</div>
 											</div>
 										</div>
 										<!-- end: Invoice body-->
@@ -172,8 +147,8 @@
 														<tbody>
 															<tr class="font-weight-bolder">
 															
-																<td class="text-primary font-size-h3 font-weight-boldest" > <%= totalQty %></td>
-																<td class="text-primary font-size-h3 font-weight-boldest" ><%= totalAmount %></td>
+																<td class="text-primary font-size-h3 font-weight-boldest" id="totalqty"> <%= totalQty %></td>
+																<td class="text-primary font-size-h3 font-weight-boldest" id="totalamount"><%= totalAmount %></td>
 															</tr>
 														</tbody>
 													</table>
@@ -342,6 +317,132 @@
 
 
    });
+
+   $('#load_btn_container').click(function () 
+        {
+          
+           if($('.btn_loaditems').html()=='Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>')
+           {
+            $('#table_container').css('display','none');
+            $('.btn_loaditems').empty();
+            $('.btn_loaditems').append('Item Details<i class="fas fa-caret-right text-white icon-2x" style="float:right;"></i>');
+            $('#table-main').empty();
+            $('#btn_save').hide();
+            $('#btncancel').hide();
+            return
+           }
+           $('.btn_loaditems').empty();
+           $('.btn_loaditems').append('Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>');
+           $('#table_container').css('display','block');
+           $('#table-main').empty();
+           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+         
+
+           var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+              
+                var tableData='<thead style="text-align: center;">'
+                var postForm={};
+                var record=""
+               
+               
+
+               
+                postForm = { //Fetch form data
+                    
+                        };
+					
+                                var poInternalId = urlSplit[1]
+
+          
+
+           $.ajax({ 
+                type      : 'GET', //Method type
+                url       : '/itemfulfillmentForm/itemdetail&id='+poInternalId, //Your form processing file URL
+                data      : JSON.stringify(postForm), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+                                
+								console.log(data)
+                                $('#table-main').empty();
+
+                                var dataParse=data
+                                
+                                var totalQuantity=0
+                                var totalAmount=0
+
+								
+								tableData+= '<tr>'
+											
+													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
+													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Delivered Quantity</th>'
+													+' <th class="font-weight-bold text-muted text-uppercase">Order Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Locationy</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Amount</th>'
+
+													+'</tr>'
+												+'</thead>'
+												+'<tbody>'
+
+                                            for(var i=0; i<data.length; i++)
+											{
+												tableData+='<tr class="font-weight-bolder">'
+													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
+
+                                                 tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
+                                                 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(appliedToTransaction.quantity)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 recty">'+data[i].values["SUM(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(locationnohierarchy)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"]+'</td>'
+												 tableData+='</tr>'
+											
+												 totalQuantity+=parseInt(data[i].values["SUM(quantity)"])
+												 totalAmount+=parseInt(data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"])
+												}
+												 
+
+											tableData+='</tbody>'	
+
+											console.log
+
+											$('#table-main').append(tableData)
+
+                                    $('#totalqty').text(totalQuantity)
+                                    $('#totalamount').text(totalAmount)
+									$('#pointernalid').val(poInternalId)
+
+                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
+                                    //     $("#trandate option[value='']").attr('selected', true)
+                                    //     $("#customer option[value='']").attr('selected', true)
+                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
+                                    //     $(this).addClass('flaticon2-send-1');
+                                    //   ///  window.location.reload();
+                                    // event.preventDefault();
+
+                                    // if(recordType!='invoice'){
+                                    //     $('#btn_save').show();
+                                    // }
+
+                                    $('#btn_save').show();
+
+                                    // if(pageType=='view'){
+                                    //     $('#btn_save').hide();
+                                    // }
+
+                            }
+                            
+            });
+           
+
+          //fas fa-caret-down
+            
+        });
 
 
 //    $(document).ready(function(){
