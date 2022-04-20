@@ -25,6 +25,8 @@ router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
 
+const Invoice = require('../models/invoices-model')
+
 //const PurchaseRequests = require('../models/purchaseRequests')
 // const ItemFulfillments = require('../models/itemFulfillments')
 // const Invoices = require('./models/invoices')
@@ -36,11 +38,22 @@ app.use(router)
 
 
 
-router.get('/invoiceList', (req,res)=>{
-    let route = "pages/transactionTable"
-   let listName ="Invoice"
-     breadcrumbs={"noBreadcrumbs" : {name:"",link:""}};
-    res.render('index', {route,listName ,breadcrumbs}) 
+router.get('/invoiceList',async(req,res)=>{
+  
+     var data = []
+     var listName="invoice"
+    try {
+        data = await Invoice.find() 
+        console.log(data)
+        //data.purchaseRequests = purchaseRequests
+        let route = "pages/transactionTable"
+        res.render('index', { route, listName, data, moment: moment })
+    }
+    catch (e) {
+        console.log(e)
+    }
+    
   })
+
 
   module.exports = router

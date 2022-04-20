@@ -35,7 +35,7 @@ router.use(bodyParser.json());
 app.use(router)
 
 router.get('/paymentList', (req, res) => {
-    let route = "pages/transactionTable"
+    let route = "pages/paymentsTable"
     let listName = "Payment List"
     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
     res.render('index', { route, listName, breadcrumbs })

@@ -8,7 +8,7 @@
             <div class="card card-custom">
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <%= listName  %>
+                       Invoice
                         <h3 class="card-label"> </h3>
                         
                     </div> 
@@ -144,29 +144,67 @@
                         <thead>
                             <tr>
 
-                                <th title="Field #3">SO #</th> 
-                                <th title="Field #3">CUSTOMER</th>
-                                <th title="Field #4">Date</th>
-                                <th title="Field #5">Quantity</th>
-                                <th title="Field #6">Amount</th>
-                                <th title="Field #7">STATUS</th>
-                                <th title="Field #8">Action</th>
+                                <th title="Field #3">S#</th> 
+                                <th title="Field #4">PO#</th>
+                                <th title="Field #5">Date</th>
+                                <th title="Field #6">Quantity Billed</th>
+                                <th title="Field #7">Pending Amount</th>
+                                <th title="Field #8">Total Quantity</th>
+                                <th title="Field #9">Total Amount</th>
+                                <th title="Field #10">Location</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
                                
-                            <tr>
+                            <% data.forEach((el)=>{  %>
+                                <tr class="custom_hover">
+                                   
+                                    <td>1</td>
+                                    <td> <a href= "#" > <%= el.poNumber%>  </a> </td>
+                                    <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
+                                    <td><%= el.quantity %></td>
+                                    <td><%= el.amount %></td>
+                                     <td><%= el.quantity %></td>
+                                    <td><%= el.amount %></td>
+                                    <td><%= el.location %></td>
+                                     
+                                    </tr>
+                                <%}) %>
+
+                            <!-- <tr>
 
                                 <td >1</td> 
-                                <td >musav</td>
-                                <td >1-4-2000</td>
-                                <td >3</td>
-                                <td >100</td>
-                                <td>55</td>
-                                <td><a href= "#" ><i class="flaticon2-edit"></i><a>  <i class="flaticon2-rubbish-bin-delete-button"></i></td>
-                                
+                                <td >PO14000000001054CM</td>
+                                <td >3/5/2012</td>
+                                <td >60</td>
+                                <td >3000</td>
+                                <td>60</td>
+                                <td>3000</td>
+                                <td>CM00Z001</td>
                             </tr>
+                            <tr> -->
+
+                                <!-- <td >2</td> 
+                                <td >PO14000000001054CM</td>
+                                <td >3/5/2012</td>
+                                <td >60</td>
+                                <td >3000</td>
+                                <td>60</td>
+                                <td>3000</td>
+                                <td>CM00Z001</td>
+                            </tr>
+                            <tr>
+
+                                <td >3</td> 
+                                <td >PO14000000001054CM</td>
+                                <td >3/5/2012</td>
+                                <td >60</td>
+                                <td >3000</td>
+                                <td>60</td>
+                                <td>3000</td>
+                                <td>CM00Z001</td>
+                            </tr> -->
                             </tbody>
                        
                     </table>

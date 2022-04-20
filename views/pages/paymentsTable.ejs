@@ -7,7 +7,7 @@
             <div class="card card-custom">
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <h3 class="card-label">Item Fulfillment</h3>
+                        <h3 class="card-label">Payments</h3>
                     </div>
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
@@ -147,11 +147,10 @@
                         <thead>
                             <tr>
                                
-                                <th title="Field #3">IF #</th>
-                                <th title="Field #4">Date</th>
-                                <th title="Field #3">PO #</th>
-                                <th title="Field #5">Quantity</th>
-                                <th title="Field #6">Amount</th>
+                                <th title="Field #3">CHECK #</th>
+                                <th title="Field #4">DATE</th>
+                                <th title="Field #3">CHECK AMOUNT</th>
+                                <th title="Field #5">STATUS</th>
                                 
                             </tr>
                         </thead>
@@ -162,7 +161,6 @@
                                    
                                     <td> <a href= "/itemfulfillmentForm&id=<%= el.internalId %>" > <%= el.ifNumber%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
-                                    <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
                                     <td><%= el.approvalStatus %></td>
                                      

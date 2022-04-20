@@ -129,6 +129,15 @@ router.post('/purchaseRequestForm', authCheck,async (req, res) => {
 
 })
 
+
+// router.get('/paymentList', (req, res) => {
+//     let route = "pages/paymentsTable"
+//     let listName = "Payment List"
+//     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+//     res.render('index', { route, listName, breadcrumbs })
+// })
+
+
 router.get('/purchaseRequestList',authCheck, async (req, res) => {
     var data = []
     try {
@@ -144,5 +153,16 @@ router.get('/purchaseRequestList',authCheck, async (req, res) => {
     // console.log("trandata",data)
     res.render('index', { route, data, data, moment: moment })
 })
+
+
+router.get('/paymentList2',authCheck, async (req, res) => {
+    var data = []
+
+    // app.set('views', path.join(__dirname,'./demo7/views'))
+    let route = "pages/paymentsTable"
+    // console.log("trandata",data)
+    res.render('index', { route, data, data, moment: moment })
+})
+
 
 module.exports = router

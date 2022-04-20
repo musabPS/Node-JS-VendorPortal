@@ -22,7 +22,11 @@ const invoiceRouter = require('./routes/invoice-route')
 
 const billRouter = require('./routes/bill-route')
 
+const paymentRouter = require('./routes/payment-route')
+
 const updateDb = require('./routes/dbUpdate-route')
+
+
 
 app.use(session({
   secret: "keyy",
@@ -44,6 +48,8 @@ app.use(itemFulfillmentRouter)
 app.use(invoiceRouter)
 
 app.use(billRouter)
+
+app.use(paymentRouter)
 
 app.use(updateDb)
 

@@ -35,12 +35,12 @@ const invoiceSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    syncStatus:{
+    vendorName:{
         type:String,
         trim:true
     },
-    lineItems:{
-        type:Array
+    vendorIntenalId:{
+        type:Number
     }
     
 })
