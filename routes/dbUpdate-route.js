@@ -38,7 +38,7 @@ app.use(router)
 
 
 router.post('/createPurchaseRequest', async (req, res) => {
-     try {
+    try {
 
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
@@ -47,37 +47,36 @@ router.post('/createPurchaseRequest', async (req, res) => {
 
         console.log("objId", purchaseRequests._id)
 
-        let  currentDate = new Date()
-        let   currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-       let newObj={
-           success         : true,
-           currentDateTime : currentDateTime,
-           type            :  "Create",
-           mongoObjId      :  purchaseRequests._id
-  
-          }
-  
-         
-          res.send(JSON.stringify(newObj))
-     }
-     catch (e) 
-     {
-        let  currentDate = new Date()
-        let   currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-       let newObj={
-           success         : false,
-           currentDateTime : currentDateTime,
-           type            :  "Create",
-           error          :  e
-  
-          }
-  
-         
-          res.send(JSON.stringify(newObj))
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('YYYY-MM-DD HH:mm:ss');
+        let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            mongoObjId: purchaseRequests._id
+
+        }
 
 
-       console.log(e)
-     }
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            error: e
+
+        }
+
+
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
+    }
 
 })
 router.post('/updatePurchaseRequest', async (req, res) => {
@@ -100,70 +99,69 @@ router.post('/updatePurchaseRequest', async (req, res) => {
             console.log("checkresponce ", data)
         });
 
-      let  currentDate = new Date()
-      let   currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-     let newObj={
-         success         : true,
-         currentDateTime : currentDateTime,
-         type            :  "Update"
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Update"
 
-      }
+        }
 
-       
-        res.send(JSON.stringify(newObj))
+
+        res.send(JSON.stringify(response))
     }
     catch (e) {
 
-        let newObj={
-            success         :  false,
-            type            :  "Update",
-            error          :  e
-                    }
+        let response = {
+            success: false,
+            type: "Update",
+            error: e
+        }
 
-        res.send(JSON.stringify(newObj))
+        res.send(JSON.stringify(response))
     }
 })
 
 router.post('/createItemFulfillments', async (req, res) => {
     try {
 
-       console.log("reg", req.body)
-       var obj = req.body.netsuiteData[0]
-       const purchaseRequests = new itemFulfillments(obj)
-       await purchaseRequests.save();
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
+        const purchaseRequests = new itemFulfillments(obj)
+        await purchaseRequests.save();
 
-       console.log("objId", purchaseRequests._id)
+        console.log("objId", purchaseRequests._id)
 
-       let  currentDate = new Date()
-       let   currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-      let newObj={
-          success         : true,
-          currentDateTime : currentDateTime,
-          type            :  "Create",
-          mongoObjId      :  purchaseRequests._id
- 
-         }
- 
-        
-         res.send(JSON.stringify(newObj))
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            mongoObjId: purchaseRequests._id
+
+        }
+
+
+        res.send(JSON.stringify(response))
     }
-    catch (e) 
-    {
-       let  currentDate = new Date()
-       let   currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-      let newObj={
-          success         : false,
-          currentDateTime : currentDateTime,
-          type            :  "Create",
-          error          :  e
- 
-         }
- 
-        
-         res.send(JSON.stringify(newObj))
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            error: e
+
+        }
 
 
-      console.log(e)
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
     }
 
 })
