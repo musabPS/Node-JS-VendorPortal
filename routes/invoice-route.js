@@ -36,14 +36,22 @@ router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
 
+const authCheck = (req, res, next) => {
+    if (! req.session.user_id) {
+      return res.redirect('/login')
+  
+    }
+     next()
+  }
 
 
-router.get('/invoiceList',async(req,res)=>{
+
+router.get('/invoiceList',authCheck,async(req,res)=>{
   
      var data = []
      var listName="invoice"
     try {
-        data = await Invoice.find() 
+        data = await Invoice.find({vendorInternalId:req.session.user_id}) 
         console.log(data)
         //data.purchaseRequests = purchaseRequests
         let route = "pages/transactionTable"
