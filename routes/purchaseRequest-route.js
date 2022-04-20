@@ -48,10 +48,10 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
 
     var { id } = req.params
     var data = []
-    var query = { internalid: id };
+    var query = { internalId: id };
     try {
-        console.log("query", query)
-        data = await PurchaseRequests.findOne(query)
+        console.log("id", parseInt(id))
+        data = await PurchaseRequests.findOne({ internalId: parseInt(id) })
         console.log("data", data)
 
         //data.purchaseRequests = purchaseRequests
