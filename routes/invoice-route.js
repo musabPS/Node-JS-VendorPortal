@@ -56,4 +56,36 @@ router.get('/invoiceList',async(req,res)=>{
   })
 
 
+//   router.get('/invoiceForm&id=:id',async (req, res) => {
+
+
+//     var { id } = req.params
+//     var data = []
+//     var query = { internalId: id };
+//     try {
+//         console.log("query", query)
+//         data = await Invoice.findOne(query)
+//         console.log("data", data)
+
+//         var tranId   = data["invoiceNumber"]
+//         var date     = moment(data["date"]).format("MM-DD-YYYY")
+//         var totalQty = data["quantity"]
+//         var location = data["location"]
+//         var totalAmount  = 0 
+
+//         //data.purchaseRequests = purchaseRequests
+//     }
+//     catch (e) {
+//         console.log(e)
+//     }
+
+//     let route = "pages/invoiceForm"
+//     let listName = "Invoice"
+
+//        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+//        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location})
+
+// })
+
+ 
   module.exports = router

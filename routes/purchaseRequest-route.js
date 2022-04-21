@@ -77,14 +77,14 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
     let route = "pages/purchaseRequestForm"
     let listName = "Purchase Request"
-    var { id } = req.params
+    var { id } = req.params 
 
     console.log("chd", id)
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest&internalid=' + id, {
     })
         .then(function (response) {
             // console.log(response.data[0]);
-
+ 
             let tableData = response.data
             let tranId = response.data[0].values["GROUP(tranid)"]
             let location = response.data[0].values["GROUP(locationnohierarchy)"]

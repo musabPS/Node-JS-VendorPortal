@@ -135,7 +135,7 @@ var KTDatatableColumnWidthDemo = function() {
                 field: 'Actions',
                 title: 'Actions',
                 sortable: false,
-                width: 125,
+                width: 120,
                 overflow: 'visible',
                 autoHide: false,
                 template: function() {

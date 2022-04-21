@@ -40,7 +40,7 @@ define([
        // var response = context.response;
        if (context.request.method === "GET") {
 
-         log.debug("GET voidTicket", context.request.parameters.internalid);
+         log.debug("GET voidTicket", context.request.parameters);
 
          if(context.request.parameters.type=="purchaseRequest")
          {
@@ -51,11 +51,21 @@ define([
          }
          if(context.request.parameters.type=="itemRecipt")
          {
-            var id = context.request.parameters.internalid
+            var id = context.request.parameters.internalid 
            log.debug("check",getItemRecipt(id))
 
            context.response.write(getItemRecipt(id))
            return 
+         }
+
+         
+         if(context.request.parameters.type=="dashboard")
+         {
+           log.debug("getSalesByWeekForGraph()",getSalesByWeekForGraph())
+           log.debug("getItemOrderStatisticsForGraph()",getItemOrderStatisticsForGraph())
+            
+           context.response.write(getSalesByWeekForGraph())
+           return  
          }
         
            
@@ -103,6 +113,8 @@ define([
             
             context.response.write(getInternalID)
          }
+
+
 
       
 
@@ -355,6 +367,97 @@ define([
    var isFinalDataResult = JSON.parse( JSON.stringify(isFinalResult));
    return isFinalDataResult
  }
+
+ 
+    function getSalesByWeekForGraph(){
+      var salesorderSearchObj = search.create({
+         type: "salesorder",
+         filters:
+         [
+            ["type","anyof","SalesOrd"], 
+            "AND", 
+            ["salesrep","anyof","1603"], 
+            "AND", 
+            ["trandate","within","lastmonth"]
+            
+         ],
+         columns:
+         [
+            search.createColumn({
+               name: "trandate",
+               summary: "GROUP"
+            }),
+            search.createColumn({
+               name: "total",
+               summary: "SUM"
+            })
+         ]
+      });
+      
+      var data = salesorderSearchObj.run();
+      var finalResult = data.getRange(0, 999);
+      var totalSalesByWeek = JSON.stringify(finalResult)
+      log.debug("totalSalesByWeek",totalSalesByWeek)
+      return totalSalesByWeek
+
+    }
+
+    function getItemOrderStatisticsForGraph(){
+
+      var transactionSearchObj = search.create({
+         type: "transaction",
+         filters:
+         [
+            ["salesrep","anyof","1603"]
+         ],
+         columns:
+         [
+            search.createColumn({
+               name: "item",
+               summary: "GROUP",
+               label: "Item"
+            }),
+            search.createColumn({
+               name: "quantity",
+               summary: "COUNT",
+               sort: search.Sort.DESC,
+               label: "Quantity"
+            }),
+            search.createColumn({
+               name: "entity",
+               summary: "GROUP",
+               label: "Name"
+            }),
+            search.createColumn({
+               name: "amount",
+               summary: "SUM",
+               label: "Amount"
+            })
+         ]
+      });
+
+      var isData = transactionSearchObj.run();
+      var isFinalResult = isData.getRange(0, 1000);
+      var gridDataResult = JSON.parse(JSON.stringify(isFinalResult));
+
+      var data = [];
+
+      for (var i = 0; i < gridDataResult.length; i++) {
+         data.push({
+            itemName : gridDataResult[i].values["GROUP(item)"],
+            noOfOrders : gridDataResult[i].values["COUNT(quantity)"],
+            customerName : gridDataResult[i].values["GROUP(entity)"],
+            totalSales : gridDataResult[i].values["SUM(amount)"]
+         })
+      }
+
+      log.debug("top order statistics graph : ",data);
+
+      return data
+
+    }
+
+
    return {
        onRequest: onRequest
    }

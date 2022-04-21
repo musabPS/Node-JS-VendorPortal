@@ -129,7 +129,7 @@ var KTAppsUsersListDatatable = function() {
 
 						return output;
 					},
-				}, {
+		 		}, {
 					field: 'CompanyName',
 					title: 'Company Name',
 					template: function(row) {

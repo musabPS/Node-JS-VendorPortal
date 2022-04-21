@@ -13,6 +13,8 @@
 
 								<!--begin::Row-->
 								<div class="row">
+
+
 									<div class="col-xl-4">
 
 										<!--[html-partial:begin:{"id":"demo1/dist/inc/view/partials/content/widgets/stats/widget-1","page":"index"}]/-->
@@ -214,34 +216,33 @@
 											<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
 
 												<!--begin::label-->
-												<span class="font-weight-bolder display5 text-dark-75 py-4 pl-5 pr-5">
-													<span class="font-weight-normal font-size-h6 text-muted pr-1">$</span>64M</span>
+						<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
+							<span  class="font-weight-normal font-size-h6 text-muted pr-1">$</span><span id="currentWeekSales" style="font-size:large;">0</span></span>
 
-												<!--end::label-->
+						<!--end::label-->
+							
 
 												<!--begin::Chart-->
-												<div class="progress-vertical w-200px h-125px">
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="30%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="80%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 80%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="50%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 50%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="15%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 15%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="30%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="progress bg-light-primary" data-toggle="tooltip" title="70%">
-														<div class="progress-bar bg-primary" role="progressbar" style="height: 70%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-												</div>
-
-												<!--end::Chart-->
+						<div class="progress-vertical w-200px h-125px ml-20">
+							<div  id="Current_Week_title" class="progress bg-light-primary" data-toggle="tooltip">
+								<div id="Current_Week_bar" class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div  id="Last_Week_title" class="progress bg-light-danger" data-toggle="tooltip">
+								<div id="Last_Week_bar" class="progress-bar bg-danger" role="progressbar" style="height: 80%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<!-- <div id="bar_week3" class="progress bg-light-primary" data-toggle="tooltip" title="50%">
+								<div class="progress-bar bg-primary" role="progressbar" style="height: 50%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div id="bar_week4" class="progress bg-light-warning" data-toggle="tooltip" title="15%">
+								<div class="progress-bar bg-warning" role="progressbar" style="height: 15%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div> -->
+							<!-- <div class="progress bg-light-primary" data-toggle="tooltip" title="30%">
+								<div class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div class="progress bg-light-primary" data-toggle="tooltip" title="70%">
+								<div class="progress-bar bg-primary" role="progressbar" style="height: 70%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+							</div> -->
+						</div>
 											</div>
 
 											<!--end::Body-->
@@ -5448,3 +5449,54 @@
 						</div>
 
 						<!--end::Entry-->
+
+
+						<script>
+							//Weekly Sales Graph Data
+							var saleByWeekData='<%= tableData %>';
+					
+							console.log("check")
+							
+							console.log(saleByWeekData)
+							
+
+							var saleByWeekDataParsed=saleByWeekData;
+						
+							console.log("check week graph data",saleByWeekDataParsed);
+					
+					
+							var lastWeekSales = saleByWeekDataParsed[0].values['SUM(total)'];
+							var currentWeekSales = saleByWeekDataParsed[1].values['SUM(total)'];
+							var totalSales=currentWeekSales+lastWeekSales;
+					
+							let CurrentPerc=(currentWeekSales/totalSales)*100;
+							let LastPerc=(lastWeekSales/totalSales)*100;
+					
+							document.addEventListener("DOMContentLoaded", function(event) { 
+									document.getElementById('lastWeekSales').innerHTML=lastWeekSales;
+									document.getElementById('currentWeekSales').innerHTML=currentWeekSales;
+									document.getElementById('Current_Week_bar').style.height=CurrentPerc+"%";
+									document.getElementById('last_Week_bar').style.height=LastPerc+"%";
+									document.getElementById('Current_Week_title').setAttribute("title", "Item Added");
+									document.getElementById('last_Week_title').setAttribute("title", "Item Added");
+									
+							});
+					
+					
+							//Top Customer By Sales Data 
+					
+							// var topCustomersData='${ds.topCustomerBySale}';
+						
+							// console.log("checkgraphdata",JSON.parse(topCustomersData));
+							// topCustomersDataParsed=JSON.parse(topCustomersData)
+					
+							
+							// for(var i=0; i<topCustomersDataParsed.length; i++)
+							// 	{
+									
+							// 	}
+					
+					
+					
+					</script>
+					

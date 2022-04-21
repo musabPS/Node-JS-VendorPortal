@@ -145,7 +145,7 @@
                             <tr>
 
                                 <th title="Field #3">S#</th> 
-                                <th title="Field #4">PO#</th>
+                                <th title="Field #4">Invoice#</th>
                                 <th title="Field #5">Date</th>
                                 <th title="Field #6">Quantity Billed</th>
                                 <th title="Field #7">Pending Amount</th>
@@ -161,7 +161,7 @@
                                 <tr class="custom_hover">
                                    
                                     <td>1</td>
-                                    <td> <a href= "#" > <%= el.poNumber%>  </a> </td>
+                                    <td> <a href= "/invoiceForm&id=<%= el.internalId %>"  > <%= el.invoiceNumber%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
@@ -172,7 +172,7 @@
                                     </tr>
                                 <%}) %>
 
-                            <!-- <tr>
+                            <!-- <tr> 
 
                                 <td >1</td> 
                                 <td >PO14000000001054CM</td>

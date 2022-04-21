@@ -118,6 +118,13 @@
                                                 <option value="5">Partiall Recieved</option>
                                                 <option value="6">Pending Billing/Partially Received</option>
                                                 <option value="7">Close</option>
+                                                <!-- <option value="">All</option>
+                                                <option value="1">Pending</option>
+                                                <option value="2">Delivered</option>
+                                                <option value="3">Canceled</option>
+                                                <option value="4">Success</option>
+                                                <option value="5">Info</option>
+                                                <option value="6">Danger</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -149,9 +156,10 @@
                                
                                 <th title="Field #3">PO #</th>
                                 <th title="Field #4">Date</th>
-                                <th title="Field #5">Quantity</th>
-                                <th title="Field #6">Amount</th>
+                                <th title="Field #3">Quantity</th>
+                                <th title="Field #5">Amount</th>
                                 <th title="Field #6">Status</th>
+                                 
                             </tr>
                         </thead>
                         <tbody>
@@ -163,7 +171,7 @@
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
-                                    <td><%= el.status %></td>
+                                    <td>1</td>
                                      
                                     </tr>
                                 <%}) %>

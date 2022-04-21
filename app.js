@@ -4,7 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 var request = require('request')
 var session = require('express-session')
-
+const axios = require('axios');
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
@@ -76,7 +76,7 @@ app.post('/login', (req, res) => {
           "contentType" : "application/json",
           
       }
-  },
+  }, 
       (error, response, body) => {
           if (error) {
               console.log('Unable to connect to suitelet', body)
@@ -96,10 +96,23 @@ app.post('/login', (req, res) => {
 
 app.get('/', authCheck, (req, res) => {
 
-  console.log("sesssiondashboard",req.session.user_id)
+  var tableData;
+  console.log("session id",req.session.user_id)
 
-  let route = "partials/_content"
-  res.render("index", { route })
+  axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=dashboard')
+      .then(function (response) {
+          console.log(response.data);
+
+           tableData = response.data
+         // res.send(tableData)
+  
+      }) 
+      .catch(function (error) {
+          console.log("erorr", error);
+      });
+
+  let route = "partials/_content" 
+  res.render("index", { route,tableData })
 
 })
 
