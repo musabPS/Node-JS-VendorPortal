@@ -12,7 +12,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
 app.use('/', express.static(path.join(__dirname, './public')))
 
-
+const authenticateUserRouter = require('./routes/authenticateUser-route')
 
 const purchaseRequestRouter = require('./routes/purchaseRequest-route')
 
@@ -40,6 +40,7 @@ const authCheck = (req, res, next) => {
 }
 
 
+app.use(authenticateUserRouter)
 
 app.use(purchaseRequestRouter)
 
@@ -54,45 +55,6 @@ app.use(paymentRouter)
 app.use(updateDb)
 
 
-
-
-app.get('/login', (req, res) => {
-
-  let route = "pages/login"
-  res.render(route)
-})
-
-app.post('/login', (req, res) => {
-
-  console.log("check logindata",req.body)
-  req.body.type='login'
-
-  const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff"
-  request({
-      url, json: true,
-      method: "POST",
-      body: req.body,
-      headers: {
-          "contentType" : "application/json",
-          
-      }
-  }, 
-      (error, response, body) => {
-          if (error) {
-              console.log('Unable to connect to suitelet', body)
-           }
-           else {
-
-             req.session.user_id=response.body
-              console.log("sessions",req.session.user_id)
-
-            res.redirect("/") 
-          }
-
-      })
-
-
-})
 
 app.get('/', authCheck, (req, res) => {
 

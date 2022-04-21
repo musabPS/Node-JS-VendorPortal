@@ -28,6 +28,7 @@ app.use(router)
 
 const PurchaseRequests = require('../models/purchaseRequests-model')
 const itemFulfillments = require('../models/itemFulfillments-model')
+const invoice = require('../models/invoices-model')
 
 
 
@@ -128,6 +129,9 @@ router.post('/createItemFulfillments', async (req, res) => {
 
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
+
+        obj.ifNumber=obj.poNumber
+        delete obj.poNumber;
         const purchaseRequests = new itemFulfillments(obj)
         await purchaseRequests.save();
 
@@ -140,6 +144,98 @@ router.post('/createItemFulfillments', async (req, res) => {
             currentDateTime: currentDateTime,
             type: "Create",
             mongoObjId: purchaseRequests._id
+
+        }
+
+
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            error: e
+
+        }
+
+
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
+    }
+
+})
+
+router.post('/updateItemFulfillments', async (req, res) => {
+
+    var data = []
+    try {
+
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
+
+        const filter = { internalId: obj.internalId };
+        console.log("checkresponce ", filter)
+        delete obj.internalId;
+
+
+        data = itemFulfillments.updateOne(filter, obj, function (err, res) {
+            if (err) throw err;
+            console.log("1 document update", res);
+            responceData = res
+
+            console.log("checkresponce ", data)
+        });
+
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Update"
+
+        }
+
+
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+
+        let response = {
+            success: false,
+            type: "Update",
+            error: e
+        }
+
+        res.send(JSON.stringify(response))
+    }
+
+})
+
+router.post('/createbill', async (req, res) => {
+    try {
+
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
+
+        obj.ifNumber=obj.poNumber
+        delete obj.poNumber;
+        const bill = new invoice(obj)
+        await bill.save();
+
+        console.log("objId", bill._id)
+
+         let currentDate = new Date()
+         let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+         let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            mongoObjId: bill._id
 
         }
 

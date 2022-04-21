@@ -1,0 +1,575 @@
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- begin::Card-->
+								<div class="card card-custom overflow-hidden">
+									<div class="card-body p-0">
+										<!-- begin: Invoice-->
+										<!-- begin: Invoice header-->
+
+										<!-- begin acction button-->
+										<div class="row justify-content-center py-8 px-8 py-md-27 px-md-0">
+											  <div class="col-md-9 d-flex flex-column align-items-md-end px-0">
+															<!--begin:: Dropdown-->
+
+												</div>
+
+											<!-- end action-->
+                                              
+											<div class="col-md-9">
+												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
+													<h1 class="display-4 font-weight-boldest mb-2 opacity-80">Invoice</h1>
+													
+													<button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Invoice</button>
+
+                                                     <!-- 													
+													<div class="d-flex flex-column align-items-md-end px-0">
+														begin::Logo
+														<a href="#" class="mb-5">
+															<img src="assets/media/project-logos/3.png" class="h-100px rounded" alt="" />
+														</a>
+														end::Logo
+														<span class="d-flex flex-column align-items-md-end opacity-70">
+															<span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
+															<span>Mississippi 96522</span>
+														</span>
+													</div> -->
+												</div>
+												<div class="border-bottom w-100"></div>
+												<div class="d-flex justify-content-between pt-6">
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">IR #</span>
+														<span class="opacity-70"><%= tranId %></span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">PO #</span>
+														<span class="opacity-70">${ds.ponumber}</span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">BILL TO.</span>
+														<span class="opacity-70">ABC, P.O. Box 283 8562 Fusce RD.
+														<br />Fredrick Nebraska 20620</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end: Invoice header-->
+										<!-- begin: Invoice body-->
+										
+										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+											
+											<div class="col-md-11">
+
+                                                <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
+
+												<NLFORM>
+													<form method="POST">
+												<div class="table-responsive">
+                                                   
+													<td style="display:none;"><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
+													<table class="table" id="table-main">
+														<thead style="text-align: center;">
+															<tr>
+
+																<th class=" pl-0 font-weight-bold text-muted text-uppercase">Product</th>
+                                                                <th class=" font-weight-bold text-muted text-uppercase"> Quantity</th>
+																<th class=" font-weight-bold text-muted text-uppercase">Rate</th>
+																<th class=" pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
+																<!-- <th class=" pr-0 font-weight-bold text-muted text-uppercase">Add Rows</th> -->
+                                                            
+															</tr>
+														</thead>
+														
+														
+														   
+														
+													</table>
+													<!-- <input type="file" class="form-control" id="custpage_file" name="custpage_file" /> -->
+												</div>
+												<!-- <button type="submit" class="btn btn-primary" name="save" value="billdata">Save</button> -->
+														
+									</form>
+								</NLFORM>
+											</div>
+											
+										</div>
+										
+										<!-- end: Invoice body-->
+										<!-- begin: Invoice footer-->
+										<div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-9">
+												<div class="table-responsive">
+													<table class="table" id="formtable">
+														<thead>
+															<tr>
+																<th class="font-weight-bold text-muted text-uppercase">Location</th>
+																
+																<th class="font-weight-bold text-muted text-uppercase">Total  Qty</th>
+																<th class="font-weight-bold text-muted text-uppercase">Total  Amount</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr class="font-weight-bolder">
+																<td >${ds.location}</td>
+																<td class="text-danger font-size-h3 font-weight-boldest" >${ds.totalqty}</td>
+																<td class="text-danger font-size-h3 font-weight-boldest" >${ds.total}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+										</div>
+										<!-- end: Invoice footer-->
+										<!-- begin: Invoice action-->
+									<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+									
+									<div class="col-md-9">
+										<div class="d-flex justify-content-between">
+
+										
+											<!-- <button id="save" type="submit" class="btn btn-primary" name="save">Save Invoice</button> -->
+											<!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
+											<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModaldate" id="modaldate" >Attach (0)</button>
+											 										<!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark btn-hover-text-white border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
+																					 <button id="btn_saveinv"  class="btn btn-success" name="filesave" onclick="document.getElementById('filesave').click()">Save</button>
+
+										</div>
+									</div>
+								</div>
+										<!-- end: Invoice action-->
+										<!-- end: Invoice-->
+									</div>
+								
+								</div>
+								
+								<!-- end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+
+  <!-- Modal -->
+  
+ <!-- Modal -->
+ <div class="modal fade" id="myModaldate" role="dialog">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Attach File</h5>
+		
+		
+		</div>
+		<div class="modal-body">
+				<form method="POST" enctype="multipart/form-data" id="fileform" action="https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=451&deploy=1&compid=TSTDRV925863&h=47959b4023c281a13c6a&irid=26368">
+
+					<!-- <button style="display:block;width:120px; height:30px;" onclick="document.getElementById('custpage_file').click()">Your text here</button> -->
+					<!-- <button type="button"  class="btn btn-light-primary font-weight-bold"  onclick="document.getElementById('custpage_file').click()"/>Choose File </button> -->
+
+                    </br>
+					<table class="table" id="filetable">
+						<input type="number" class="custom-file-input filestyle" id="totalfiles" name="totalfiles" value=0 style="display: none;"/>
+						<tbody id="filetabletbody">	
+						</tbody>
+						    <tr>
+							 <td><input type="file" class="filestyle" id="custpage_file" name="custpage_file0"  /></td>
+							</tr>
+					</table>
+			
+				<button id="filesave" type="submit" class="btn btn-primary" name="filesave" style="display : none;">Save</button>
+
+				</form>
+		</div>
+
+		<div class="modal-footer">
+	   
+		</div>
+	</div>
+	  
+	</div>
+  </div>
+
+   <!-- END  Modal -->
+   <NLFORM>
+		<form method="POST" id="approveform">
+			<div id="approvepost" style="display: none;">
+			</div>
+		</form>
+	</NLFORM>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+
+	var selectfilerow=0
+
+ $(document).ready(function(){
+
+$('#filetable').on('change','.filestyle',function(){
+
+	
+	$(".filestyle").change(function(){
+		var $cell=$(this).parent();
+		var $row=$cell.parent();
+		selectfilerow=$row.index()
+		console.log("$row",selectfilerow);
+	})
+
+})
+
+
+
+
+});
+
+var fileList=[];
+
+function files()
+{
+	console.log("fileUpload",fileUpload)
+}
+var fileUpload = document.getElementById('filetable')
+var filetable = document.getElementById('filetable')
+var filelines=0;
+fileUpload.addEventListener('change', (event) => {
+
+	if(selectfilerow==0)
+	{
+		const files = event.target.files;
+        filelines++
+
+  var row = fileUpload.insertRow(0);
+  var cell1 = row.insertCell(0);
+             console.log("files",files)
+		//   console.log('files', files.length);
+		//   console.log('files[0]', files[0]);
+		//   console.log('files.files', files.FileList);
+			// <i class="far fa-file-pdf"></i>
+			//filename ='<td><img src="https://img.icons8.com/office/30/000000/pdf.png"/>  </td>'
+            filename = '<tr><td><input type="file" class="filestyle" id="custpage_file"  name="custpage_file'+filelines+'" /></td></tr>'
+
+		//   for(var i=0; i<files.length; i++)
+		//   {
+		// 	filename+='<tr></tr>'
+		// 	filename+='<tr><td><img src="https://img.icons8.com/office/30/000000/pdf.png"/> </td><td>'+ files[i].name+'</tr>'
+		// 	fileList.push(fileUpload.files[i])
+		//   }
+  console.log("filelist",filename)
+
+  cell1.innerHTML = filename;
+  document.getElementById('totalfiles').value=parseInt(filelines-1)
+  document.getElementById('modaldate').innerHTML = 'Attach ('+filelines+')';
+ // document.querySelector('#ShowButton').innerText = 'Hide';
+	}
+
+});
+
+// var fileform = document.getElementById('fileform')
+// fileform.addEventListener('submit',function(event) {
+
+// 	event.preventDefault();
+// 	fileList.forEach(function(file) {
+// 		//sendFile(file);
+		
+// 	});
+// })
+
+function sendFile(file)
+{
+
+	var formData=new FormData();
+	var request=new XMLHttpRequest();
+	formData.set('jvfiles',file)
+	request.open("POST", 'app/site/hosting//scriptlet.nl?script=451&deploy=1')
+	request.send(formData);
+}
+
+$(function () {
+
+	
+
+
+// 	$('#filetable> tbody > tr').not(':first').each(function(){
+//    console.log("jqury",$(this).html())
+// })
+
+	// $( "#save" ).click(function() 
+	// {
+    // $( "#filesave" ).click();
+    // });
+    counttd=0
+    sno=2
+	lines=1
+$('#table-main .table-tbody').on('click','.addformtablerows',function()
+{
+
+
+  qty=0
+   td='<tr>'
+   td+='<td>'+sno+'</td>'
+   td+='<td><select class="form-control" name="option'+lines+'">  ${ds.selectoption} </select>'
+   td+=  '</td>'                                                              
+   td+='<td><input type="text" class="form-control" name="qty'+lines+'" ></td>'   
+   td+=' <td><input type="text" class="form-control" name="rate'+lines+'" ></td>'  
+   td+= '<td><input type="text" class="form-control" name="amount'+lines+'" ></td>'                                              
+   td+='<td style="width:50px"><button type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button></td>'
+	td+='<td><button type="button" class="btn btn-light-danger font-weight-bold delrow">-</button></td> '
+   td+=  '</tr>'                                                              
+                                                               
+    // $('#table-main tbody').find('.addformtablerows').each(function(){
+
+    //     $(this).append(td);
+    // })
+
+    $.fn.eachFunction();
+    // $('#table-main tbody').append(td)
+    // var tr = $(this).prev('modeltable').find('tr:last');
+    // tr.clone(true).insertAfter(tr);
+
+    sno++
+	counttd++
+	lines++
+	$('#totalrows').val(counttd);
+});
+
+$.fn.eachFunction=function(){
+
+    $('#table-main').find('.table-tbody').each(function(){
+
+        $(this).append(td);
+})
+
+}
+
+  ///////////////
+	$('#table-main .table-tbody').on('click','.delrow',function(){       //delete buttons
+		
+		
+			$(this).parents('tr').remove();
+			counttd--
+			$('#totalrows').val(counttd);
+		sno--
+		lines--
+	});
+
+
+
+ });
+
+
+
+
+	  $(function () {
+
+		$("#checkAll").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
+	 //
+
+	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
+	 // $('#table-main tbody').append(Nodata);
+
+	 $("#modaldate").click(function () {
+
+		$('.modeltable .table-body').empty();
+		var counttd=0
+		var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+ 		     //Loop through all checked CheckBoxes in GridView.
+            $("#table-main tbody input[type=checkbox]:checked").each(function () {
+				
+                // var row = $(this).closest("tr")[0];
+				//var name = $('.txt-td').val();
+				linenumber=$(this).parents("tr").find(".linenumber").text();
+                 item =$(this).parents("tr").find(".item").text();
+                 qty =$(this).parents("tr").find(".qty").text();
+                 rate =$(this).parents("tr").find(".rate").text();
+                // amount =$(this).parents("tr").find(".amount").text();
+                // itemid=$(this).parents("tr").find(".itemid").text();
+                // linenumber=$(this).parents("tr").find(".linenumber").text();
+                 td=  '<tr>'
+                 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+				 td+= '<td><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
+				 td+= '<td><input id="modalqty" class="form-control" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+				 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+				 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+                 td+='</tr>' 
+				 counttd++ 
+				 $('.modeltable .table-body').append(td);
+            });
+			if(counttd==0)
+			{
+				$('.modeltable .table-body').append(nodata);
+			}
+
+			total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+			$('#totalcount').append(total);
+
+        })
+
+		$(".headerapprove").click(function () 
+		{
+			
+          var counttd=0
+	     //Loop through all checked CheckBoxes in GridView.
+	     $("#table-main tbody input[type=checkbox]:checked").each(function () {
+		 // var row = $(this).closest("tr")[0];
+		 //var name = $('.txt-td').val();
+		 linenumber=$(this).parents("tr").find(".linenumber").text();
+		  td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
+		  $('#approvepost').append(td);
+		  counttd++
+		 });
+		 td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
+		 $('#approvepost').append(td);
+		 total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+	       $('#approvepost').append(total);
+		 console.log("check")
+		 $("#btnapprove").click();
+		 const form  = document.getElementById('#approveform');
+         // form.addEventListener('submit', (event) => {
+           // handle the form data
+		  // form.submit();
+            // });
+	      
+         })
+   });
+
+
+
+   
+   $('#load_btn_container').click(function () 
+        {
+          
+           if($('.btn_loaditems').html()=='Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>')
+           {
+            $('#table_container').css('display','none');
+            $('.btn_loaditems').empty();
+            $('.btn_loaditems').append('Item Details<i class="fas fa-caret-right text-white icon-2x" style="float:right;"></i>');
+            $('#table-main').empty();
+            $('#btn_save').hide();
+            $('#btncancel').hide();
+            return
+           }
+           $('.btn_loaditems').empty();
+           $('.btn_loaditems').append('Item Details<i class="fas fa-caret-down text-white icon-2x" style="float:right;"></i>');
+           $('#table_container').css('display','block');
+           $('#table-main').empty();
+           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+         
+
+           var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+              
+                var tableData='<thead style="text-align: center;">'
+                var postForm={};
+                var record=""
+               
+               
+
+               
+                postForm = { //Fetch form data
+                    
+                        };
+					
+                                var poInternalId = urlSplit[1]
+
+          
+
+           $.ajax({ 
+                type      : 'GET', //Method type
+                url       : '/getItemDetail&irid='+poInternalId, //Your form processing file URL
+                data      : JSON.stringify(postForm), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+                                
+								console.log("check",data)
+                                $('#table-main').empty();
+
+                                var dataParse=data
+                                
+                                var totalQuantity=0
+                                var totalAmount=0
+
+								
+								tableData+= '<tr>'
+											
+													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
+													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase"> Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Amount</th>'
+
+													+'</tr>'
+												+'</thead>'
+												+'<tbody>'
+
+                                            for(var i=0; i<data.length; i++)
+											{
+												tableData+='<tr class="font-weight-bolder">'
+													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
+
+                                                 tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
+												 tableData+='<td class="text-center pt-7 recty">'+data[i].values["SUM(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"]+'</td>'
+												 tableData+='</tr>'
+											
+												 totalQuantity+=parseInt(data[i].values["SUM(quantity)"])
+												 totalAmount+=parseInt(data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"])
+												}
+												 
+
+											tableData+='</tbody>'	
+
+
+											$('#table-main').append(tableData)
+
+                                    $('#totalqty').text(totalQuantity)
+                                    $('#totalamount').text(totalAmount)
+									$('#pointernalid').val(poInternalId)
+
+                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
+                                    //     $("#trandate option[value='']").attr('selected', true)
+                                    //     $("#customer option[value='']").attr('selected', true)
+                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
+                                    //     $(this).addClass('flaticon2-send-1');
+                                    //   ///  window.location.reload();
+                                    // event.preventDefault();
+
+                                    // if(recordType!='invoice'){
+                                    //     $('#btn_save').show();
+                                    // }
+
+                                    $('#btn_save').show();
+
+                                    // if(pageType=='view'){
+                                    //     $('#btn_save').hide();
+                                    // }
+
+                            }
+                            
+            });
+           
+
+          //fas fa-caret-down
+            
+        });
+
+      
+
+
+
+	</script>

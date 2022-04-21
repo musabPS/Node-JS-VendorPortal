@@ -21,7 +21,6 @@ const itemFulfillmentSchema = new mongoose.Schema({
     },
     poNumber:{
         type:String,
-        required:true,
         trim:true
     },
     date:{
