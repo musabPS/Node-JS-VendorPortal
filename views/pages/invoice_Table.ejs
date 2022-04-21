@@ -144,7 +144,7 @@
                         <thead>
                             <tr>
 
-                                <th title="Field #3">S#</th> 
+                               
                                 <th title="Field #4">PO#</th>
                                 <th title="Field #5">Date</th>
                                 <th title="Field #6">Quantity Billed</th>
@@ -160,8 +160,7 @@
                             <% data.forEach((el)=>{  %>
                                 <tr class="custom_hover">
                                    
-                                    <td>1</td>
-                                    <td> <a href= "#" > <%= el.poNumber%>  </a> </td>
+                                    <td> <a href= "/invoiceForm&id=<%= el.invoiceNumber%>" > <%= el.poNumber%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>

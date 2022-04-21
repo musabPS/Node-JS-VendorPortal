@@ -1,0 +1,421 @@
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- begin::Card--> 
+								<div class="card card-custom overflow-hidden">
+									<div class="card-body p-0">
+										<!-- begin: Invoice-->
+										<!-- begin: Invoice header-->
+
+										<!-- begin acction button-->
+										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-27 px-md-0"  >
+											  <div class="col-md-11 d-flex flex-column align-items-md-end px-0">
+											
+
+
+
+												</div>
+
+											<!-- end action-->
+                                              
+											<div class="col-md-9">
+												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column fl pt-6">
+													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Invoice  </h1>
+													
+													
+												
+                                                     <!-- 													
+													<div class="d-flex flex-column align-items-md-end px-0">
+														begin::Logo
+														<a href="#" class="mb-5">
+															<img src="assets/media/project-logos/3.png" class="h-100px rounded" alt="" />
+														</a>
+														end::Logo
+														<span class="d-flex flex-column align-items-md-end opacity-70">
+															<span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
+															<span>Mississippi 96522</span>
+														</span>
+													</div> -->
+												</div>
+												<div class="border-bottom w-100"></div>
+												<div class="d-flex justify-content-between pt-6">
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2 ">DATE</span>
+														<span class="opacity-70"><%= date %></span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">Invoice #</span>
+														<span class="opacity-70"><%= tranId %></span>
+													</div>
+													<div class="d-flex flex-column flex-root">
+														<span class="font-weight-bolder mb-2">Invoice To</span>
+														<span class="opacity-70">ABC, P.O. Box 283 8562 Fusce RD.
+														<br />Fredrick Nebraska 20620</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end: Invoice header-->
+										<!-- begin: Invoice body-->
+										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-11">
+												<div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-center">Item Details<i class="fas fa-ca icon-2x" style="float: right;"></i></div>
+												<div class="col-md-12" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
+
+													<div class="table-responsive">
+														<table class="table" id="table-main">
+															<tbody>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end: Invoice body-->
+										<!-- begin: Invoice footer-->
+										<div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-11">
+
+	
+													    <div class="table-responsive">
+															<table class="table" id="formtable">
+																<thead>
+																	<tr>
+																		<th class="font-weight-bold text-muted text-uppercase">Location</th>
+																		<th class="font-weight-bold text-muted text-uppercase">Total Qty</th>
+																		<th class="font-weight-bold text-muted text-uppercase ">Total Amount</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="font-weight-bolder">
+																		<td ><%= location %></td>
+																		<td class=" font-size-h3 font-weight-boldest"  id="totalqty"></td>
+																		<td class=" font-size-h3 font-weight-boldest" id="totalamount"></td>
+																	</tr>
+																</tbody>
+															</table>
+													    </div>
+											</div>
+										</div>
+									
+										<!-- end: Invoice footer-->
+										<!-- begin: Invoice action-->
+										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+											<div class="col-md-9">
+												<div class="d-flex justify-content-between">
+
+													
+													<!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
+                                                      
+													<button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>
+													<button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Invoice</button>
+                                                   <!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark  border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
+
+                                                </div>
+											</div>
+										</div>
+										<!-- end: Invoice action-->
+										<!-- end: Invoice-->
+									</div>
+								</div>
+								<!-- end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModaldate" role="dialog">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Change Date To all Items</h5>
+		
+		
+		</div>
+		<div class="modal-body">
+			<NLFORM>
+				<form method="POST" action="/purchaseRequestForm">
+					<div id="totalcount" style="display:none;">
+
+					</div>
+					<label for="changeallitemdate">Expected Delivery Date</label>
+					<input type="date" id="changeallitemdate" class="form-control changeallitemdate" name="changeallitemdate" value="">
+					<input type="text"  id="pointernalid" name="pointernalid" value="" style="display:none;">
+		
+			<table class="table modeltable">
+				<thead>
+					<tr>
+						<th scope="col" style="display:none;">line #</th>
+						<th scope="col">Product</th>
+						<th scope="col">A.Qty</th>
+						<th scope="col">Ordered Qty</th>
+						<th scope="col">Rate</th>
+						<th scope="col">Remove</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+
+				</tbody>
+		
+			</table>
+			<button type="submit" class="btn btn-primary" name="save" value="linedate">Save</button>
+		</form>
+	</NLFORM>
+		</div>
+
+		<div class="modal-footer">
+	   
+		</div>
+	</div>
+	  
+	</div>
+  </div>
+   <!-- END  Modal -->
+   <NLFORM>
+		<form method="POST" id="approveform" >
+			<div id="approvepost" style="display: none;">
+			</div>
+		</form>
+	</NLFORM>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+<script>
+	  $(function () {
+
+		$("#checkAll").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
+	 //
+
+	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
+	 // $('#table-main tbody').append(Nodata);
+
+	 $("#modaldate").click(function () {
+
+		$('.modeltable .table-body').empty();
+		var counttd=0
+		var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+ 		     //Loop through all checked CheckBoxes in GridView.
+            $("#table-main tbody input[type=checkbox]:checked").each(function () {
+				
+                // var row = $(this).closest("tr")[0];
+				//var name = $('.txt-td').val();
+				linenumber=$(this).parents("tr").find(".linenumber").text();
+                 item =$(this).parents("tr").find(".item").text();
+                 qty =$(this).parents("tr").find(".qty").text();
+                 rate =$(this).parents("tr").find(".rate").text();
+                // amount =$(this).parents("tr").find(".amount").text();
+                // itemid=$(this).parents("tr").find(".itemid").text();
+                // linenumber=$(this).parents("tr").find(".linenumber").text();
+                 td=  '<tr>'
+                 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+				 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
+				 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+				 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
+				 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+				 
+				 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+                 td+='</tr>' 
+				 counttd++ 
+				 $('.modeltable .table-body').append(td);
+            });
+			if(counttd==0)
+			{
+				$('.modeltable .table-body').append(nodata);
+			}
+
+			total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+			$('#totalcount').append(total);
+
+        })
+		 $('.modeltable .table-body').on('click' , '#deltop',function(){
+
+			$(this).parents('tr').remove();
+			counttd--
+		 })
+
+		$(".headerapprove").click(function () 
+		{
+			
+          var counttd=0
+	     //Loop through all checked CheckBoxes in GridView.
+	     $("#table-main tbody input[type=checkbox]:checked").each(function () {
+		 // var row = $(this).closest("tr")[0];
+		 //var name = $('.txt-td').val();
+		 linenumber=$(this).parents("tr").find(".linenumber").text();
+		  td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
+		  $('#approvepost').append(td);
+		  counttd++
+		 });
+		 td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
+		 $('#approvepost').append(td);
+		 total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+	       $('#approvepost').append(total);
+		 console.log("check")
+		 $("#btnapprove").click();
+		 const form  = document.getElementById('#approveform');
+         // form.addEventListener('submit', (event) => {
+           // handle the form data
+		  // form.submit();
+            // });
+	      
+         })
+
+
+   });
+
+   $( document ).ready(function() {
+
+	var postData=
+							 {
+								 'internalID' : 26357
+							 }
+
+								$.ajax({
+										type      : 'POST', //Method type
+										headers: {  'Access-Control-Allow-Origin': 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff' },
+										url       : 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff', //Your form processing file URL
+										data      : JSON.stringify(postData), //Forms 
+										contentType: "application/json; charset=utf-8",
+										success   : function(data) 
+												{
+													console.log(data)
+													// var parseData=JSON.parse(data) 
+													// console.log("chec",data)
+												}
+												
+		                      	});
+
+
+  });
+
+  $('#load_btn_container').click(function () 
+        {
+          
+           if($('.btn_loaditems').html()=='Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>')
+           {
+            $('#table_container').css('display','none');
+            $('.btn_loaditems').empty();
+            $('.btn_loaditems').append('Item Details<i class="fas fa-ca icon-2x" style="float:right;"></i>');
+            $('#table-main').empty();
+            $('#btn_save').hide();
+            $('#btncancel').hide();
+            return
+           }
+           $('.btn_loaditems').empty();
+           $('.btn_loaditems').append('Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>');
+           $('#table_container').css('display','block');
+           $('#table-main').empty();
+           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+         
+
+           var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+              
+                var tableData='<thead style="text-align: center;">'
+                var postForm={};
+                var record=""
+               
+               
+
+               
+                postForm = { //Fetch form data
+                    
+                        };
+					
+                                var poInternalId = urlSplit[1]
+
+          
+
+           $.ajax({ 
+                type      : 'GET', //Method type
+                url       : 'invoiceForm/itemdetail&id='+poInternalId, //Your form processing file URL
+                data      : JSON.stringify(postForm), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+                                
+								console.log(data)
+                                $('#table-main').empty();
+
+                                var dataParse=data
+                                
+                                var totalQuantity=0
+                                var totalAmount=0
+
+								
+								tableData+= '<tr>'
+								            	+'<thead>'
+													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Quantity</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
+													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>'
+													+'</tr>'
+												+'</thead>'
+												+'<tbody>'
+
+                                            for(var i=0; i<data.length; i++)
+											{
+												tableData+='<tr class="font-weight-bolder">'
+                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["GROUP(item)"][0].text+'</td>' 
+												 tableData+='<td class="text-center pt-7 rate">'+data[i].values["SUM(quantity)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantity)"] * data[i].values["MAX(rate)"]+'</td>'
+												 tableData+='</tr>'
+
+												 totalQuantity+= parseInt(data[i].values["SUM(quantity)"])
+												 totalAmount+= parseFloat(data[i].values["SUM(quantity)"] * data[i].values["MAX(rate)"])
+											}
+												 
+
+											tableData+='</tbody>'	
+
+											$('#table-main').append(tableData)
+
+                                    $('#totalqty').text(totalQuantity)
+                                    $('#totalamount').text(totalAmount)
+									$('#pointernalid').val(poInternalId)
+
+                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
+                                    //     $("#trandate option[value='']").attr('selected', true)
+                                    //     $("#customer option[value='']").attr('selected', true)
+                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
+                                    //     $(this).addClass('flaticon2-send-1');
+                                    //   ///  window.location.reload();
+                                    // event.preventDefault();
+
+                                    // if(recordType!='invoice'){
+                                    //     $('#btn_save').show();
+                                    // }
+
+                                    $('#btn_save').show();
+
+                                    // if(pageType=='view'){
+                                    //     $('#btn_save').hide();
+                                    // }
+
+                            }
+                            
+            });
+           
+
+          //fas fa-caret-down
+            
+        });
+   
+	</script>					
