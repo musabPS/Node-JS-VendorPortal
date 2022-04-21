@@ -5453,18 +5453,14 @@
 
 						<script>
 							//Weekly Sales Graph Data
-							var saleByWeekData='<%= tableData %>';
-					
-							console.log("check")
-							
-							console.log(saleByWeekData)
-							
+							var saleByWeekData='<%- JSON.stringify(tableData) %>';
+							console.log("saleByWeekData", saleByWeekData)
+							console.log("saleByWeekData", saleByWeekData[0])
 
-							var saleByWeekDataParsed=saleByWeekData;
-						
-							console.log("check week graph data",saleByWeekDataParsed);
-					
-					
+							var parsedData = JSON.parse([saleByWeekData])
+							
+							console.log("saleByWeekDataparsedagain", parsedData[0])
+
 							var lastWeekSales = saleByWeekDataParsed[0].values['SUM(total)'];
 							var currentWeekSales = saleByWeekDataParsed[1].values['SUM(total)'];
 							var totalSales=currentWeekSales+lastWeekSales;

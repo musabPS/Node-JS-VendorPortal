@@ -65,19 +65,19 @@ app.get('/', authCheck, (req, res) => {
       .then(function (response) {
           console.log(response.data);
 
-           tableData = response.data
-         // res.send(tableData)
+           tableData = JSON.parse(response.data)
+           let route = "partials/_content" 
+           res.render("index", { route, tableData })
   
       }) 
       .catch(function (error) {
           console.log("erorr", error);
       });
 
-  let route = "partials/_content" 
-  res.render("index", { route,tableData })
+ 
 
 })
-
+ 
 
 
 const port = process.env.PORT || 3000
