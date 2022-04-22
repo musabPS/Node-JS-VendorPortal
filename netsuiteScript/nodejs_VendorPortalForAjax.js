@@ -64,7 +64,7 @@ define([
            log.debug("getSalesByWeekForGraph()",getSalesByWeekForGraph())
            log.debug("getItemOrderStatisticsForGraph()",getItemOrderStatisticsForGraph())
             
-           context.response.write(getSalesByWeekForGraph())
+           context.response.write(JSON.stringify(getSalesByWeekForGraph()))
            return  
          }
         
