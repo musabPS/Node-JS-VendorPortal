@@ -154,7 +154,7 @@ router.get('/billView&irid=:id',authCheck, async(req, res) => {
         console.log("chddd", req.params)
 
 
-        let route = "pages/billedDetailView"
+        let route = "pages/billDetailView"
         let listName = "Purchase Request" 
         let { id } = req.params
         let query = { internalId: id };
@@ -184,7 +184,7 @@ router.get('/billViewGetItemDetail&irid=:id',(req, res) => {
     console.log("chddd", req.params)
 
 
-    let route = "pages/billedDetailView"
+    let route = "pages/billDetailView"
     let listName = "Purchase Request"
     let { id } = req.params
 
