@@ -64,7 +64,7 @@
 										<!-- begin: Invoice body-->
 										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
 											<div class="col-md-11">
-												<div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-38px btn_loaditems text-center">Item Details<i class="fas fa-ca icon-2x" style="float: right;"></i></div>
+                                                <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-38px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
 												<div class="col-md-12" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
 
 													<div class="table-responsive">
@@ -296,7 +296,7 @@
            $('.btn_loaditems').append('Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>');
            $('#table_container').css('display','block');
            $('#table-main').empty();
-           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+           $('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
          
 
            var loc=window.location.href
