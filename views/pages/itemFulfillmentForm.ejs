@@ -145,10 +145,10 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="font-weight-bolder">
+															<tr>
 															
-																<td class="text-primary font-size-h3 font-weight-boldest" id="totalqty"> <%= totalQty %></td>
-																<td class="text-primary font-size-h3 font-weight-boldest" id="totalamount"><%= totalAmount %></td>
+																<td class="font-size-h3" id="totalqty"> </td>
+																<td class="font-size-h3" id="totalamount"></td>
 															</tr>
 														</tbody>
 													</table>
@@ -391,7 +391,7 @@
 
                                             for(var i=0; i<data.length; i++)
 											{
-												tableData+='<tr class="font-weight-bolder">'
+												tableData+='<tr>'
 													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'

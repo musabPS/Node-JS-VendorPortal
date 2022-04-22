@@ -5,10 +5,10 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const axios = require('axios');
-var nsrestlet = require('nsrestlet');
-var moment = require('moment');
-var request = require('request')
-var multer  = require('multer')();
+let nsrestlet = require('nsrestlet');
+let moment = require('moment');
+let request = require('request')
+let multer  = require('multer')();
 const FormData = require('form-data');
 const fs = require('fs');
 
@@ -49,18 +49,17 @@ const authCheck = (req, res, next) => {
 router.get('/itemFulfillmentList', authCheck, async (req, res) => {
 
 
-    var data = []
+    let data = []
     try {
-        data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
-        // data = await ItemFulfillments.findOne({internalId:"6728"})
-        console.log("check",data)
-        //data.purchaseRequests = purchaseRequests
+         data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
+         // data = await ItemFulfillments.findOne({internalId:"6728"})
+         console.log("check",data)
+      
+         let route = "pages/itemfulfillmentTable"
+         let listName = "ItemFulfillment"
 
-     let route = "pages/itemfulfillment_table"
-     let listName = "ItemFulfillment"
-
-     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-     res.render('index', { route, listName, breadcrumbs,data,moment })
+         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+         res.render('index', { route, listName, breadcrumbs,data,moment })
      }
      catch (e) {
         console.log(e)
@@ -71,28 +70,31 @@ router.get('/itemFulfillmentList', authCheck, async (req, res) => {
 router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
 
 
-    var { id } = req.params
-    var data = []
-    var query = { internalId: id };
+    let { id } = req.params
+    let data = []
+    let query = { internalId: id };
     try {
         console.log("query", query)
         data = await ItemFulfillments.findOne(query)
         console.log("data", data)
 
-        var tranId   = data["ifNumber"]
-        var date     = moment(data["date"]).format("MM-DD-YYYY")
-        var totalQty = data["quantity"]
-        var location = data["location"]
-        var totalAmount  = 0 
-        var viewBill  = "/billView&irid="+id
-        //data.purchaseRequests = purchaseRequests
-    }
+        let tranId   = data["ifNumber"]
+        let date     = moment(data["date"]).format("MM-DD-YYYY")
+        let totalQty = data["quantity"]
+        let location = data["location"]
+        let totalAmount  = 0 
+        let viewBill  = "/billView&irid="+id
+        let route = "pages/itemFulfillmentForm"
+        let listName = "Purchase Request"
+
+        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill})   
+     }
     catch (e) {
         console.log(e)
     }
 
-    let route = "pages/itemFulfillmentForm"
-    let listName = "Purchase Request"
+  
 
 
     // axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt', {
@@ -111,8 +113,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
     //         console.log("erorr", error);
        // });
 
-       breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-       res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill})
+     
 
 })
 
@@ -123,7 +124,7 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
 
     let route = "pages/purchaseRequestForm"
     let listName = "Purchase Request"
-    var { id } = req.params
+    let { id } = req.params
 
     console.log("chd", id)
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt&internalid=' + id, {
@@ -155,18 +156,18 @@ router.get('/billView&irid=:id',authCheck, async(req, res) => {
 
         let route = "pages/billedDetailView"
         let listName = "Purchase Request"
-        var { id } = req.params
-        var query = { internalId: id };
+        let { id } = req.params
+        let query = { internalId: id };
         console.log("chd", id)
         data = await ItemFulfillments.findOne(query)
         console.log("data", data)
     
-        var tranId   = data["ifNumber"]
-        var date     = moment(data["date"]).format("MM-DD-YYYY")
-        var totalQty = data["quantity"]
-        var location = data["location"]
-        var totalAmount  = data["amount"]
-        var poNumber   =  data["poNumber"]
+        let tranId   = data["ifNumber"]
+        let date     = moment(data["date"]).format("MM-DD-YYYY")
+        let totalQty = data["quantity"]
+        let location = data["location"]
+        let totalAmount  = data["amount"]
+        let poNumber   =  data["poNumber"]
 
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
         res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,poNumber})
@@ -185,7 +186,7 @@ router.get('/getItemDetail&irid=:id',(req, res) => {
 
     let route = "pages/billedDetailView"
     let listName = "Purchase Request"
-    var { id } = req.params
+    let { id } = req.params
 
     console.log("chd", id)
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt&internalid=' + id, {
@@ -213,7 +214,7 @@ router.post('/billView&irid=:id',(req, res) => {
 
     let route = "pages/billedDetailView"
     let listName = "Purchase Request"
-    var { id } = req.params
+    let { id } = req.params
 
     console.log("chd", id)
     const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid="+id
