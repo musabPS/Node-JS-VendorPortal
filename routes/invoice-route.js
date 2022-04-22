@@ -55,7 +55,7 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
         data = await Invoice.find({vendorInternalId:944}) 
         console.log(data)
         //data.purchaseRequests = purchaseRequests
-        let route = "pages/invoice_Table"
+        let route = "pages/invoiceTable"
         res.render('index', { route, listName, data, moment: moment })
     }
     catch (e) {
@@ -69,6 +69,7 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
     var { id } = req.params
     var data = []
     var listName="invoice"
+    
    try {
        data = await Invoice.findOne({ invoiceNumber: parseInt(id) }) 
        console.log(data)
