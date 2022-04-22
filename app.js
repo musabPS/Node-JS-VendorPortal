@@ -65,7 +65,7 @@ app.get('/', authCheck, (req, res) => {
       .then(function (response) {
           console.log(response.data);
 
-           tableData = JSON.parse(response.data)
+           tableData = response.data
            let route = "partials/_content" 
            res.render("index", { route, tableData })
   
