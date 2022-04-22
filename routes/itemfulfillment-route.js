@@ -224,15 +224,17 @@ router.post('/billView&irid=:id',(req, res) => {
         headers: {
             "contentType": "application/json",
         }
-    },
+       },
         (error, response, body) => {
-            if (error) {
+            if (error)
+             {
                 console.log('Unable to connect to suitelet', body)
-            }
+             }
             else 
             {
-
-                console.log("check0",response.body)         
+                console.log("check0",response.body)     
+                
+                res.redirect('/invoiceForm&id='+response.body)
             }
         })
         

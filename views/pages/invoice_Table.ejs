@@ -146,13 +146,11 @@
 
                                 <th title="Field #4">Invoice#</th>
                                 <th title="Field #5">Date</th>
-
                                 <th title="Field #4">PO#</th>
                                 <th title="Field #6">Quantity Billed</th>
                                 <th title="Field #7">PO Amount</th>
                                 <th title="Field #8">Total Quantity</th>
                                 <th title="Field #9">Total Amount</th>
-                                <th title="Field #10">Location</th>
                                 
                             </tr>
                         </thead>
@@ -164,12 +162,10 @@
                                     <td> <a href= "/invoiceForm&id=<%= el.internalId %>"  > <%= el.internalId%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
                                     <td><%= el.poNumber %> </td>
-                                    <td><%= el.billQunatity %></td>
+                                    <td><%= el.billQuantity %></td>
+                                    <td><%= el.billAmount %></td>
                                     <td><%= el.poQuantity %></td>
-                                    <td><%= el.amount %></td>
-                                     <td><%= el.quantity %></td>
-                                    <td><%= el.amount %></td>
-                                    <td><%= el.location %></td>
+                                     <td><%= el.poAmount %></td>
                                      
                                     </tr>
                                 <%}) %>

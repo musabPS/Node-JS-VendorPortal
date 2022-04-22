@@ -159,6 +159,7 @@
                                 <th title="Field #3">PO #</th>
                                 <th title="Field #5">Quantity</th>
                                 <th title="Field #6">Amount</th>
+                                <th title="Field #6">Status</th>
                                  
                             </tr>
                         </thead>
@@ -169,6 +170,7 @@
                                    
                                     <td> <a href= "/itemfulfillmentForm&id=<%= el.internalId %>" > <%= el.ifNumber%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
+                                    <td><%= el.poNumber %></td>
                                     <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>
                                     <td><%= el.approvalStatus %></td>

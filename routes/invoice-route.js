@@ -100,7 +100,7 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=invoice&internalid=' + id, {
     })
         .then(function (response) {
-            // console.log(response.data[0]);
+             console.log(response);
 
             let tableData = response.data
             let tranId = response.data[0].values["GROUP(tranid)"]
