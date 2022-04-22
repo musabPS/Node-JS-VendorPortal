@@ -79,7 +79,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
 
-             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/createbill')
+             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/createBill')
 
              log.debug("check mongoreturn on sucess", mongooseResponse)
             if (mongooseResponse.success) {
@@ -122,7 +122,7 @@ define(modules, function (record, log, search, runtime, url, https) {
 
             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updatePurchaseRequest')
 
-            mongooseResponse = JSON.parse(mongooseResponse)
+         //   mongooseResponse = JSON.parse(mongooseResponse)
 
             var Record = record.load({
                type: 'purchaseorder',
@@ -168,17 +168,27 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("newObjForMongo", newObjForMongo)
          }
 
-         if (customerRecord.type == "getvendorBillSavedSearch")
+         if (customerRecord.type == "vendorbill")
           {
-            var filterType = "ItemRcpt"
             var getPOData = getvendorBillSavedSearch(customerRecord.id)
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
 
+             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updateBill')
+
+             log.debug("check mongoreturn on sucess", mongooseResponse)
+            if (mongooseResponse.success) {
+               log.debug("check mongoreturn on sucess", mongooseResponse)
+               mongoSyncSuccessUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+
+            else {
+               log.debug("check mongoreturn", mongooseResponse)
+               mongoSyncFailUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+
             log.debug("newObjForMongo", newObjForMongo)
          }
-
-
 
       }
 
@@ -399,12 +409,12 @@ define(modules, function (record, log, search, runtime, url, https) {
          date        : getPOData[0].values["GROUP(applyingTransaction.trandate)"],
          poQuantity    : getPOData[0].values["SUM(quantity)"],
          poAmount: getPOData[0].values["SUM(amount)"],
-         billQunatity: getPOData[0].values["SUM(quantitybilled)"],
+         billQuantity: getPOData[0].values["SUM(quantitybilled)"],
          billAmount: getPOData[0].values["SUM(formulanumeric)"],
          approvalStatus: getPOData[0].values["GROUP(statusref)"][0].text,
          location: getPOData[0].values["GROUP(location)"][0].text,
          vendorName : getPOData[0].values["GROUP(vendor.entityid)"][0].text,
-         vendorIntenalId : getPOData[0].values["GROUP(vendor.internalid)"][0].text,
+         vendorInternalId : getPOData[0].values["GROUP(vendor.internalid)"][0].text,
 
       })
 

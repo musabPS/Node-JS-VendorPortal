@@ -215,34 +215,57 @@
 											<!--begin::Body-->
 											<div class="card-body d-flex align-items-center justify-content-between pt-7 flex-wrap">
 
-												<!--begin::label-->
-						<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
-							<span  class="font-weight-normal font-size-h6 text-muted pr-1">$</span><span id="currentWeekSales" style="font-size:large;">0</span></span>
-
-						<!--end::label-->
+							<!--begin::label-->
+							<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
+								<span  class="font-weight-normal font-size-h6 text-muted pr-1">$</span><span id="lastWeekSales" style="font-size: large;">0</span>
+							</span>
+	
+							<!--end::label-->
+	
+							<!--begin::label-->
+							<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
+								<span  class="font-weight-normal font-size-h6 text-muted pr-1">$</span><span id="currentWeekSales" style="font-size:large;">0</span></span>
+	
+							<!--end::label-->
+								
 							
+	<!--begin::Chart-->
+	<div class="progress-vertical w-200px h-125px ml-20">
+		<div  id="Last_Week_title" class="progress bg-light-danger" data-toggle="tooltip">
+			<div id="Last_Week_bar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+		<div  id="Current_Week_title" class="progress bg-light-primary" data-toggle="tooltip">
+			<div id="Current_Week_bar" class="progress-bar bg-primary" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+	
+		<!-- <div id="bar_week3" class="progress bg-light-primary" data-toggle="tooltip" title="50%">
+			<div class="progress-bar bg-primary" role="progressbar" style="height: 50%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+		<div id="bar_week4" class="progress bg-light-warning" data-toggle="tooltip" title="15%">
+			<div class="progress-bar bg-warning" role="progressbar" style="height: 15%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div> -->
+		<!-- <div class="progress bg-light-primary" data-toggle="tooltip" title="30%">
+			<div class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+		<div class="progress bg-light-primary" data-toggle="tooltip" title="70%">
+			<div class="progress-bar bg-primary" role="progressbar" style="height: 70%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		</div> -->
+	</div>
 
-												<!--begin::Chart-->
-						<div class="progress-vertical w-200px h-125px ml-20">
-							<div  id="Current_Week_title" class="progress bg-light-primary" data-toggle="tooltip">
-								<div id="Current_Week_bar" class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<div  id="Last_Week_title" class="progress bg-light-danger" data-toggle="tooltip">
-								<div id="Last_Week_bar" class="progress-bar bg-danger" role="progressbar" style="height: 80%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<!-- <div id="bar_week3" class="progress bg-light-primary" data-toggle="tooltip" title="50%">
-								<div class="progress-bar bg-primary" role="progressbar" style="height: 50%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<div id="bar_week4" class="progress bg-light-warning" data-toggle="tooltip" title="15%">
-								<div class="progress-bar bg-warning" role="progressbar" style="height: 15%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div> -->
-							<!-- <div class="progress bg-light-primary" data-toggle="tooltip" title="30%">
-								<div class="progress-bar bg-primary" role="progressbar" style="height: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<div class="progress bg-light-primary" data-toggle="tooltip" title="70%">
-								<div class="progress-bar bg-primary" role="progressbar" style="height: 70%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-							</div> -->
-						</div>
+	<!--end::Chart-->
+					
+	
+							<!--begin::sub-label-->
+							<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
+								<span  class="text-muted" style="font-size:smaller;">Previous Week </span></span>
+		
+								<!--end::sub-label-->
+									<!--begin::sub-label-->
+						<span class="font-weight-bolder text-dark-55 py-4 pl-5 pr-5">
+							<span class="text-muted" style="font-size:smaller;">Current Week </span></span>
+	
+							<!--end::sub-label-->
+							
 											</div>
 
 											<!--end::Body-->
@@ -5453,28 +5476,43 @@
 
 						<script>
 							//Weekly Sales Graph Data
-							var saleByWeekData='<%- JSON.stringify(tableData) %>';
+							var saleByWeekData='<%- weekData %>';
 							console.log("saleByWeekData", saleByWeekData)
-						//	console.log("saleByWeekData", saleByWeekData[0])
+							//console.log("saleByWeekData", saleByWeekData[0])
 
-						//	var parsedData = JSON.parse([saleByWeekData])
+							//Item Statistics Graph Data
+							// var itemStatisticsData='<%- itemStatistics %>';
+							// console.log("itemStatisticsData", itemStatisticsData)
+
+							var salesByWeekDataParsed = JSON.parse([saleByWeekData])
 							
-						//	console.log("saleByWeekDataparsedagain", parsedData[0])
+							// var itemStatisticsDataParsed = JSON.parse([itemStatisticsData])
 
-						//	var lastWeekSales = saleByWeekDataParsed[0].values['SUM(total)'];
-						//	var currentWeekSales = saleByWeekDataParsed[1].values['SUM(total)'];
+							
+							console.log("saleByWeekDataparsedagain", salesByWeekDataParsed[0])
+							// console.log("itemStatisticsDataparsedagain", itemStatisticsDataParsed[0])
+
+							var lastWeekSales = parseInt(salesByWeekDataParsed[0].values['SUM(total)']);
+							var currentWeekSales = parseInt(salesByWeekDataParsed[1].values['SUM(total)']);
 							var totalSales=currentWeekSales+lastWeekSales;
+
+							console.log("lastWeekSales", lastWeekSales)
+							console.log("currentWeekSales", currentWeekSales)
+							console.log("totalSales", totalSales)
 					
 							let CurrentPerc=(currentWeekSales/totalSales)*100;
 							let LastPerc=(lastWeekSales/totalSales)*100;
 					
+							console.log("CurrentPerc", CurrentPerc.toFixed())
+							console.log("LastPerc", LastPerc.toFixed())
+
 							document.addEventListener("DOMContentLoaded", function(event) { 
 									document.getElementById('lastWeekSales').innerHTML=lastWeekSales;
 									document.getElementById('currentWeekSales').innerHTML=currentWeekSales;
-									document.getElementById('Current_Week_bar').style.height=CurrentPerc+"%";
-									document.getElementById('last_Week_bar').style.height=LastPerc+"%";
-									document.getElementById('Current_Week_title').setAttribute("title", "Item Added");
-									document.getElementById('last_Week_title').setAttribute("title", "Item Added");
+									document.getElementById('Last_Week_bar').style.height=LastPerc.toFixed()+"%";
+									document.getElementById('Current_Week_bar').style.height=CurrentPerc.toFixed()+"%";
+									// document.getElementById('Current_Week_title').setAttribute("title", "Item Added");
+									// document.getElementById('last_Week_title').setAttribute("title", "Item Added");
 									
 							});
 					

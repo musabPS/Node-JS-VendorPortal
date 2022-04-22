@@ -58,23 +58,25 @@ app.use(updateDb)
 
 app.get('/', authCheck, (req, res) => {
 
-  var tableData;
-  console.log("session id",req.session.user_id)
+  var weekData;
+  var itemStatistics;
+  var userId= req.session.user_id;
+  console.log("session id",userId)
 
   axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=dashboard')
       .then(function (response) {
-          console.log(response.data);
+        weekData = JSON.parse(response.data[0].salesByWeekData)
+        itemStatistics = JSON.parse(response.data[0].itemStatisticsData)
+          console.log(weekData);
+          console.log(itemStatistics);
 
-           tableData = response.data
+          // tableData = JSON.parse(response.data)
            let route = "partials/_content" 
-           res.render("index", { route, tableData })
-  
+           res.render("index", { route, weekData, itemStatistics, userId })
       }) 
       .catch(function (error) {
           console.log("erorr", error);
       });
-
- 
 
 })
  
