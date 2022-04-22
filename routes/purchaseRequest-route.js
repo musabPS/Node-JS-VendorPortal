@@ -54,21 +54,23 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
         data = await PurchaseRequests.findOne({ internalId: parseInt(id) })
         console.log("data", data)
 
+        let route = "pages/purchaseRequestForm"
+        let listName = "Payment List"
+
+        let tranId = data.poNumber
+        let location = data.location
+        let date = data.date
+        date = moment(new Date(date)).format('MM-DD-YYYY')
+    
+        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+        res.render('index', { route, listName, breadcrumbs, tranId, location, date })
+
         //data.purchaseRequests = purchaseRequests
     }
     catch (e) {
         console.log(e)
     }
-    let route = "pages/purchaseRequestForm"
-    let listName = "Payment List"
-
-    let tranId = data.poNumber
-    let location = data.location
-    let date = data.date
-    date = moment(new Date(date)).format('MM-DD-YYYY')
-
-    breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-    res.render('index', { route, listName, breadcrumbs, tranId, location, date })
+   
 })
 router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
@@ -140,18 +142,20 @@ router.post('/purchaseRequestForm', authCheck,async (req, res) => {
 
 router.get('/purchaseRequestList',authCheck, async (req, res) => {
     var data = []
-    try {
+    try 
+    {
+
         data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).lean()
         console.log(req.session.user_id)
-        //data.purchaseRequests = purchaseRequests
+        let route = "pages/table"
+       
+        res.render('index', { route, data, data, moment: moment }) 
+      
     }
     catch (e) {
         console.log(e)
     }
-    // app.set('views', path.join(__dirname,'./demo7/views'))
-    let route = "pages/table"
-    // console.log("trandata",data)
-    res.render('index', { route, data, data, moment: moment })
+   
 })
 
 

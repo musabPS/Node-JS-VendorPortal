@@ -163,14 +163,15 @@
 																	</tr>
 																</thead>
 																<tbody>
-																	<tr class="font-weight-bolder">
+																	<tr class="">
 																		<td ><%= location %></td>
-																		<!-- <td style="text-align: center;">1-5-2022</td>
-																		<td class=" font-size-h3 font-weight-boldest" style="text-align: center;"><p style="font-size: 15px;" >9</p></td>
-																		<td class=" font-size-h3 font-weight-boldest" style="text-align: center;"> <p style="font-size: 15px;" >6</p> </td>
-																		<td class=" font-size-h3 font-weight-boldest" style="text-align: center;"></td>
-																		<td class=" font-size-h3 font-weight-boldest" style="text-align: center;"> </td> -->
-																	</tr>
+																		<td style="text-align: center;">1-5-2022</td>
+																		<td class=" font-size-h6 " style="text-align: center;" id="totalqty"></td>
+																		<td class=" font-size-h6 " style="text-align: center;" id="totalamount">  </td>
+																		<td class=" font-size-h6 " style="text-align: center;" id="totalacceptedquantity"></td>
+																		<td class=" font-size-h6" style="text-align: center;" id="totalaccetedamount"> </td>
+																	</tr>     
+																	
 																</tbody>
 															</table>
 													    </div>
@@ -266,11 +267,11 @@
 
 
 <script>
+
+
 	  $(function () {
 
-		$("#checkAll").click(function(){
-        $('input:checkbox').not(this).prop('checked', this.checked);
-        });
+		
 
 	 //
 
@@ -351,15 +352,7 @@
 
    });
 
-   $( document ).ready(function() {
-
-	$("#checkAll").click(function(){
-        $('input:checkbox').not(this).prop('checked', this.checked);
-        });
-
-
-
-  });
+ 
 
   $('#load_btn_container').click(function () 
         {
@@ -414,8 +407,10 @@
 
                                 var dataParse=data
                                 
-                                var totalQuantity=0
-                                var totalAmount=0
+                                var totalQuantity = 0
+                                var totalAmount = 0
+								var totalAcceptedQuantity = 0
+								var totalAcceptedAmount   =  0
 
 								
 								tableData+= '<tr>'
@@ -438,19 +433,26 @@
 
                                             for(var i=0; i<data.length; i++)
 											{
-												tableData+='<tr class="font-weight-bolder">'
+												tableData+='<tr>'
 												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>'
-												 tableData+='<td class="pl-0 pt-7 linenumber" name='+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
-                                                 tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
-                                                 tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
-                                                 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 recty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 rate">'+data[i].values["MAX(rate)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
+												 tableData+='<td class="pl-0  linenumber" name='+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
+                                                 tableData+='<td class="pl-0  txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="text-center  qty">'+data[i].values["SUM(quantity)"]+'</td>' 
+                                                 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
+												 tableData+='<td class="text-center  recty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
+												 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
+												 tableData+='<td class="text-center  rate">'+data[i].values["MAX(rate)"]+'</td>'
+												 tableData+='<td class="text-center  accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
+												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
+												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
 												 tableData+='</tr>'
+
+
+												 totalQuantity+=parseInt(data[i].values["SUM(quantity)"])
+												 totalAmount+=Number(data[i].values["SUM(quantity)"]*data[i].values["MAX(rate)"])
+												 totalAcceptedQuantity+=parseInt(data[i].values["SUM(custcol_pointstarvendor_originalqty)"])
+												 totalAcceptedAmount+= Number(data[i].values["MAX(rate)"] * data[i].values["SUM(custcol_pointstarvendor_originalqty)"] )
+
 											}
 												 
 
@@ -460,7 +462,11 @@
 
                                     $('#totalqty').text(totalQuantity)
                                     $('#totalamount').text(totalAmount)
+									$('#totalacceptedquantity').text(totalAcceptedQuantity)
+									$('#totalaccetedamount').text(totalAcceptedAmount)
 									$('#pointernalid').val(poInternalId)
+									
+
 
                                     //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
                                     //     $("#trandate option[value='']").attr('selected', true)
@@ -487,6 +493,13 @@
 
           //fas fa-caret-down
             
+        });
+
+
+		$("#checkAll").click(function(){
+
+			alert("dd")
+        $('input:checkbox').not(this).prop('checked', this.checked);
         });
    
 	</script>					
