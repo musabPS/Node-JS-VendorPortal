@@ -86,6 +86,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
         let viewBill  = "/billView&irid="+id
         let route = "pages/itemFulfillmentForm"
         let listName = "Purchase Request"
+       
 
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
         res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill})   
@@ -168,9 +169,10 @@ router.get('/billView&irid=:id',authCheck, async(req, res) => {
         let location = data["location"]
         let totalAmount  = data["amount"]
         let poNumber   =  data["poNumber"]
+        let fileUpload= "uploadFile&irid="+id
 
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,poNumber})
+        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,poNumber,fileUpload})
     }
 
     catch(e)
@@ -238,6 +240,59 @@ router.post('/billView&irid=:id',(req, res) => {
                 res.redirect('/invoiceForm&id='+response.body)
             }
         })
+        
+
+})
+
+router.post('/uploadFile&irid=:id',multer.single('fileFieldName'),(req, res) => {
+
+    console.log("chddd", req.body)
+
+    const fileRecievedFromClient = req.file; //File Object sent in 'fileFieldName' field in multipart/form-data
+    console.log(req.file)
+
+     let form = new FormData();
+    form.append('fileFieldName', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
+
+    let route = "pages/billDetailView"
+    let listName = "Purchase Request"
+    let { id } = req.params
+
+    axios.post("https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=fileUpload&irid="+id, form, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${form._boundary}`
+            }
+        }).then((responseFromServer2) => {
+
+
+            console.log("responseFromServer2",responseFromServer2)
+            res.send("SUCCESS")
+        }).catch((err) => {
+            res.send("ERROR")
+        })
+
+    // console.log("chd", id)
+    // const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid="+id
+    // request({
+    //     url, json: true,
+    //     method: "POST",
+    //     body: req.body,
+    //     headers: {
+    //         "contentType": "application/json",
+    //     }
+    //    },
+    //     (error, response, body) => {
+    //         if (error)
+    //          {
+    //             console.log('Unable to connect to suitelet', body)
+    //          }
+    //         else 
+    //         {
+    //             console.log("check0",response.body)     
+                
+    //             res.redirect('/invoiceForm&id='+response.body)
+    //         }
+    //     })
         
 
 })

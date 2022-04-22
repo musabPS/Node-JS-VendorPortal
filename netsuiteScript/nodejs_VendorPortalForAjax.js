@@ -445,6 +445,12 @@ define([
         ],
         columns:
         [
+         search.createColumn({
+            name: "line",
+            summary: "GROUP",
+            sort: search.Sort.ASC,
+            label: "Line ID"
+         }),
            search.createColumn({
              name: "item",
              summary: "GROUP",
