@@ -63,10 +63,31 @@ define([
          {
            log.debug("getSalesByWeekForGraph()",getSalesByWeekForGraph())
            log.debug("getItemOrderStatisticsForGraph()",getItemOrderStatisticsForGraph())
-            
-           context.response.write(JSON.stringify(getSalesByWeekForGraph()))
+
+           var graphsData = [];
+
+           graphsData.push({
+              salesByWeekData : JSON.stringify(getSalesByWeekForGraph()),
+              itemStatisticsData : JSON.stringify(getItemOrderStatisticsForGraph())
+           })
+
+           log.debug("graphsData",JSON.stringify(graphsData))
+
+           context.response.write(JSON.stringify(graphsData))
            return  
          }
+
+         if(context.request.parameters.type=="invoice")
+         {
+            var id = context.request.parameters.internalid
+           log.debug("check",getInvoice(id))
+
+           context.response.write(getInvoice(id))
+           return 
+         }
+
+
+
         
            
           // var username=context.request.parameters.username
@@ -408,54 +429,107 @@ define([
          type: "transaction",
          filters:
          [
-            ["salesrep","anyof","1603"]
+            ["vendor.internalid","anyof","944"]
          ],
          columns:
          [
             search.createColumn({
                name: "item",
-               summary: "GROUP",
-               label: "Item"
+               summary: "GROUP"
             }),
             search.createColumn({
                name: "quantity",
-               summary: "COUNT",
-               sort: search.Sort.DESC,
-               label: "Quantity"
-            }),
-            search.createColumn({
-               name: "entity",
-               summary: "GROUP",
-               label: "Name"
+               summary: "SUM",
+               sort: search.Sort.DESC
             }),
             search.createColumn({
                name: "amount",
-               summary: "SUM",
-               label: "Amount"
+               summary: "SUM"
             })
          ]
       });
+    
+      var data = transactionSearchObj.run();
+      var finalResult = data.getRange(0, 1000);
+      var gridDataResult = JSON.stringify(finalResult);
 
-      var isData = transactionSearchObj.run();
-      var isFinalResult = isData.getRange(0, 1000);
-      var gridDataResult = JSON.parse(JSON.stringify(isFinalResult));
+      // var data = [];
 
-      var data = [];
+      // for (var i = 0; i < gridDataResult.length; i++) {
+      //    data.push({
+      //       itemName : gridDataResult[i].values["GROUP(item)"],
+      //       noOfOrders : gridDataResult[i].values["SUM(quantity)"],
+      //       totalSales : gridDataResult[i].values["SUM(amount)"]
+      //    })
+      // }
 
-      for (var i = 0; i < gridDataResult.length; i++) {
-         data.push({
-            itemName : gridDataResult[i].values["GROUP(item)"],
-            noOfOrders : gridDataResult[i].values["COUNT(quantity)"],
-            customerName : gridDataResult[i].values["GROUP(entity)"],
-            totalSales : gridDataResult[i].values["SUM(amount)"]
-         })
-      }
+      log.debug("top order statistics graph : ",gridDataResult);
 
-      log.debug("top order statistics graph : ",data);
-
-      return data
+      return gridDataResult
 
     }
+
+    function getInvoice(id)
+ {
+
+   var vendorbillSearchObj = search.create({
+      type: "vendorbill",
+      filters:
+      [
+         ["type","anyof","VendBill"], 
+         "AND", 
+         ["mainline","is","F"], 
+         "AND", 
+         ["internalid","anyof",id]
+      ],
+      columns:
+      [
+         search.createColumn({
+            name: "internalid",
+            summary: "GROUP",
+            label: "internalId"
+         }),
+         search.createColumn({
+            name: "tranid",
+            summary: "GROUP",
+            label: "Bill Number"
+         }),
+         search.createColumn({
+            name: "trandate",
+            summary: "GROUP",
+            label: "date"
+         }),
+         search.createColumn({
+            name: "item",
+            summary: "GROUP",
+            label: "Item"
+         }),
+         search.createColumn({
+            name: "quantity",
+            summary: "SUM",
+            label: "Quantity"
+         }),
+         search.createColumn({
+            name: "amount",
+            summary: "SUM",
+            label: "Amount"
+         }),
+         search.createColumn({
+            name: "rate",
+            summary: "MAX",
+            label: "Item Rate"
+         })
+      ]
+   });
+
+   var isData = vendorbillSearchObj.run();
+   var isFinalResult = isData.getRange(0, 1000);
+   var isFinalResult = JSON.stringify(isFinalResult);
+   return isFinalResult
+
+ }
+
+
 
 
    return {
