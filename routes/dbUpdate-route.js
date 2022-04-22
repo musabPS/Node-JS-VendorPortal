@@ -222,8 +222,6 @@ router.post('/createbill', async (req, res) => {
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
 
-        obj.ifNumber=obj.poNumber
-        delete obj.poNumber;
         const bill = new invoice(obj)
         await bill.save();
 

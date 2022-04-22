@@ -84,7 +84,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
         var totalQty = data["quantity"]
         var location = data["location"]
         var totalAmount  = 0 
-
+        var viewBill  = "/billView&irid="+id
         //data.purchaseRequests = purchaseRequests
     }
     catch (e) {
@@ -112,7 +112,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
        // });
 
        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-       res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location})
+       res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill})
 
 })
 
@@ -145,31 +145,37 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
 
 })
 
-router.get('/billView&irid=:id',authCheck,(req, res) => {
-
-    console.log("chddd", req.params)
+router.get('/billView&irid=:id',authCheck, async(req, res) => {
 
 
-    let route = "pages/billedDetailView"
-    let listName = "Purchase Request"
-    var { id } = req.params
+    try 
+    {
+        console.log("chddd", req.params)
 
-    console.log("chd", id)
-    axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt&internalid=' + id, {
-    })
-        .then(function (response) {
-             console.log(response.data);
 
-            let tableData = response.data
-            let tranId = response.data[0].values["GROUP(tranid)"]
-            let location = response.data[0].values["GROUP(locationnohierarchy)"]
-            let date = response.data[0].values["GROUP(trandate)"]
-            breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-             res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
-        })
-        .catch(function (error) {
-            console.log("erorr", error);
-        });
+        let route = "pages/billedDetailView"
+        let listName = "Purchase Request"
+        var { id } = req.params
+        var query = { internalId: id };
+        console.log("chd", id)
+        data = await ItemFulfillments.findOne(query)
+        console.log("data", data)
+    
+        var tranId   = data["ifNumber"]
+        var date     = moment(data["date"]).format("MM-DD-YYYY")
+        var totalQty = data["quantity"]
+        var location = data["location"]
+        var totalAmount  = data["amount"]
+        var poNumber   =  data["poNumber"]
+
+        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,poNumber})
+    }
+
+    catch(e)
+     {
+        console.log("Error",e)
+     }
 
 })
 router.get('/getItemDetail&irid=:id',(req, res) => {
@@ -210,23 +216,25 @@ router.post('/billView&irid=:id',(req, res) => {
     var { id } = req.params
 
     console.log("chd", id)
-    // const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=451&deploy=1&compid=TSTDRV925863&h=47959b4023c281a13c6a&username=Alexander%20Valley%20Vineyards,944&irid=26368"
-    // request({
-    //     url, json: true,
-    //     method: "POST",
-    //     body: req.body,
-    //     headers: {
-    //         "User-Agent": "Mozilla/5.0",
-    //     }
-    // },
-    //     (error, response, body) => {
-    //         if (error) {
-    //             console.log('Unable to connect to suitelet', body)
-    //         }
-    //         else {
-    //             console.log(`response ${response}`)
-    //         }
-    //     })
+    const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid="+id
+    request({
+        url, json: true,
+        method: "POST",
+        body: req.body,
+        headers: {
+            "contentType": "application/json",
+        }
+    },
+        (error, response, body) => {
+            if (error) {
+                console.log('Unable to connect to suitelet', body)
+            }
+            else 
+            {
+
+                console.log("check0",response.body)         
+            }
+        })
         
 
 })

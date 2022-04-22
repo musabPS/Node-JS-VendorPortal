@@ -144,13 +144,12 @@
                         <thead>
                             <tr>
 
-                                <th title="Field #3">S#</th> 
                                 <th title="Field #4">Invoice#</th>
-                               
-                                <th title="Field #4">PO#</th>
                                 <th title="Field #5">Date</th>
+
+                                <th title="Field #4">PO#</th>
                                 <th title="Field #6">Quantity Billed</th>
-                                <th title="Field #7">Pending Amount</th>
+                                <th title="Field #7">PO Amount</th>
                                 <th title="Field #8">Total Quantity</th>
                                 <th title="Field #9">Total Amount</th>
                                 <th title="Field #10">Location</th>
@@ -162,10 +161,11 @@
                             <% data.forEach((el)=>{  %>
                                 <tr class="custom_hover">
                                    
-                                    <td>1</td>
-                                    <td> <a href= "/invoiceForm&id=<%= el.internalId %>"  > <%= el.invoiceNumber%>  </a> </td>
+                                    <td> <a href= "/invoiceForm&id=<%= el.internalId %>"  > <%= el.internalId%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
-                                    <td><%= el.quantity %></td>
+                                    <td><%= el.poNumber %> </td>
+                                    <td><%= el.billQunatity %></td>
+                                    <td><%= el.poQuantity %></td>
                                     <td><%= el.amount %></td>
                                      <td><%= el.quantity %></td>
                                     <td><%= el.amount %></td>

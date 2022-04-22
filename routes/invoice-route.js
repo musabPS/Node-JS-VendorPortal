@@ -50,8 +50,9 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
   
      var data = []
      var listName="invoice"
+     console.log("check",req.session.user_id)
     try {
-        data = await Invoice.find({vendorInternalId:req.session.user_id}) 
+        data = await Invoice.find({vendorInternalId:944}) 
         console.log(data)
         //data.purchaseRequests = purchaseRequests
         let route = "pages/invoice_Table"
@@ -72,7 +73,7 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
        data = await Invoice.findOne({ invoiceNumber: parseInt(id) }) 
        console.log(data)
        var date = moment(data.date).format("DD-MMM-YYYY")
-    //    var date = data.date
+     //    var date = data.date
        var tranId = data.invoiceNumber
        var location = data.location
        console.log(data.date)
@@ -116,36 +117,4 @@ router.get('/invoiceList',authCheck,async(req,res)=>{
 })
 
 
-//   router.get('/invoiceForm&id=:id',async (req, res) => {
-
-
-//     var { id } = req.params
-//     var data = []
-//     var query = { internalId: id };
-//     try {
-//         console.log("query", query)
-//         data = await Invoice.findOne(query)
-//         console.log("data", data)
-
-//         var tranId   = data["invoiceNumber"]
-//         var date     = moment(data["date"]).format("MM-DD-YYYY")
-//         var totalQty = data["quantity"]
-//         var location = data["location"]
-//         var totalAmount  = 0 
-
-//         //data.purchaseRequests = purchaseRequests
-//     }
-//     catch (e) {
-//         console.log(e)
-//     }
-
-//     let route = "pages/invoiceForm"
-//     let listName = "Invoice"
-
-//        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-//        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location})
-
-// })
-
- 
   module.exports = router
