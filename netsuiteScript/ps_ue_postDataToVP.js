@@ -122,7 +122,7 @@ define(modules, function (record, log, search, runtime, url, https) {
 
             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updatePurchaseRequest')
 
-            mongooseResponse = JSON.parse(mongooseResponse)
+         //   mongooseResponse = JSON.parse(mongooseResponse)
 
             var Record = record.load({
                type: 'purchaseorder',
