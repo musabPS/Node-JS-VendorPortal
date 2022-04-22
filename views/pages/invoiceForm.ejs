@@ -64,7 +64,7 @@
 										<!-- begin: Invoice body-->
 										<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
 											<div class="col-md-11">
-												<div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-center">Item Details<i class="fas fa-ca icon-2x" style="float: right;"></i></div>
+                                                <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-38px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
 												<div class="col-md-12" id="table_container" style="box-shadow: 0 0 10px 0 rgba(34, 30, 30, 0.178); display: none; padding-bottom: 10px;" >
 
 													<div class="table-responsive">
@@ -92,10 +92,10 @@
 																	</tr>
 																</thead>
 																<tbody>
-																	<tr class="font-weight-bolder">
+																	<tr class="">
 																		<td ><%= location %></td>
-																		<td class=" font-size-h3 font-weight-boldest"  id="totalqty"></td>
-																		<td class=" font-size-h3 font-weight-boldest" id="totalamount"></td>
+																		<td class=" font-size-h3"  id="totalqty"></td>
+																		<td class=" font-size-h3" id="totalamount"></td>
 																	</tr>
 																</tbody>
 															</table>
@@ -277,30 +277,7 @@
 
    });
 
-   $( document ).ready(function() {
-
-	var postData=
-							 {
-								 'internalID' : 26357
-							 }
-
-								$.ajax({
-										type      : 'POST', //Method type
-										headers: {  'Access-Control-Allow-Origin': 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff' },
-										url       : 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff', //Your form processing file URL
-										data      : JSON.stringify(postData), //Forms 
-										contentType: "application/json; charset=utf-8",
-										success   : function(data) 
-												{
-													console.log(data)
-													// var parseData=JSON.parse(data) 
-													// console.log("chec",data)
-												}
-												
-		                      	});
-
-
-  });
+ 
 
   $('#load_btn_container').click(function () 
         {
@@ -319,7 +296,7 @@
            $('.btn_loaditems').append('Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>');
            $('#table_container').css('display','block');
            $('#table-main').empty();
-           $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
+           $('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
          
 
            var loc=window.location.href
@@ -371,7 +348,7 @@
 
                                             for(var i=0; i<data.length; i++)
 											{
-												tableData+='<tr class="font-weight-bolder">'
+												tableData+='<tr>'
                                                  tableData+='<td class="text-center pt-7 qty">'+data[i].values["GROUP(item)"][0].text+'</td>' 
 												 tableData+='<td class="text-center pt-7 rate">'+data[i].values["SUM(quantity)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'

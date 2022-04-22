@@ -54,6 +54,7 @@ router.post('/login', (req, res) => {
       else {
 
         req.session.user_id = response.body
+        console.log("check0",response.body)
 
         res.redirect("/")
       }

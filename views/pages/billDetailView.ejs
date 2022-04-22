@@ -48,7 +48,7 @@
 													</div>
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2">PO #</span>
-														<span class="opacity-70">${ds.ponumber}</span>
+														<span class="opacity-70"><%= poNumber %></span>
 													</div>
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2">BILL TO.</span>
@@ -65,7 +65,7 @@
 											
 											<div class="col-md-11">
 
-                                                <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-35px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
+                                                <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-38px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
 
 												<NLFORM>
 													<form method="POST">
@@ -73,17 +73,7 @@
                                                    
 													<td style="display:none;"><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
 													<table class="table" id="table-main">
-														<thead style="text-align: center;">
-															<tr>
-
-																<th class=" pl-0 font-weight-bold text-muted text-uppercase">Product</th>
-                                                                <th class=" font-weight-bold text-muted text-uppercase"> Quantity</th>
-																<th class=" font-weight-bold text-muted text-uppercase">Rate</th>
-																<th class=" pr-0 font-weight-bold text-muted text-uppercase">Amount</th>
-																<!-- <th class=" pr-0 font-weight-bold text-muted text-uppercase">Add Rows</th> -->
-                                                            
-															</tr>
-														</thead>
+									
 														
 														
 														   
@@ -114,10 +104,10 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="font-weight-bolder">
-																<td >${ds.location}</td>
-																<td class="text-danger font-size-h3 font-weight-boldest" >${ds.totalqty}</td>
-																<td class="text-danger font-size-h3 font-weight-boldest" >${ds.total}</td>
+															<tr class="">
+																<td ><%= location %></td>
+																<td class="font-size-h3" > <%= totalQty %></td>
+																<td class="font-size-h3" ><%=totalAmount%></td>
 															</tr>
 														</tbody>
 													</table>
@@ -170,7 +160,7 @@
 		
 		</div>
 		<div class="modal-body">
-				<form method="POST" enctype="multipart/form-data" id="fileform" action="https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=451&deploy=1&compid=TSTDRV925863&h=47959b4023c281a13c6a&irid=26368">
+				<form method="POST" enctype="multipart/form-data" id="fileform" >
 
 					<!-- <button style="display:block;width:120px; height:30px;" onclick="document.getElementById('custpage_file').click()">Your text here</button> -->
 					<!-- <button type="button"  class="btn btn-light-primary font-weight-bold"  onclick="document.getElementById('custpage_file').click()"/>Choose File </button> -->
@@ -489,7 +479,7 @@ $.fn.eachFunction=function(){
 
            $.ajax({ 
                 type      : 'GET', //Method type
-                url       : '/getItemDetail&irid='+poInternalId, //Your form processing file URL
+                url       : '/billViewGetItemDetail&irid='+poInternalId, //Your form processing file URL 
                 data      : JSON.stringify(postForm), //Forms name
                 contentType: "application/json; charset=utf-8",
                 success   : function(data) 
@@ -518,7 +508,7 @@ $.fn.eachFunction=function(){
 
                                             for(var i=0; i<data.length; i++)
 											{
-												tableData+='<tr class="font-weight-bolder">'
+												tableData+='<tr>'
 													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'

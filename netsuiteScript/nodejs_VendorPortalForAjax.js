@@ -135,6 +135,202 @@ define([
             context.response.write(getInternalID)
          }
 
+         if(context.request.parameters.type == "createBill")
+         {     
+            log.debug("createinvoicet",context.request.parameters)
+            var fileListId='';
+			
+			 log.debug("files",context.request.files)
+			 if(Object.keys(context.request.files).length>0)  
+			 {
+               for(var files=0; files<=context.request.parameters.totalfiles; files++)
+            {
+               var fileObj = context.request.files["custpage_file"+files];
+               
+               fileObj.folder = 1045;
+               var fileId = fileObj.save();
+               fileListId+=fileId+','
+            }
+
+            fileListId = fileListId.substring(0, fileListId.length - 1);
+               
+            log.debug("checkfilesid",fileListId)
+
+            }
+
+            var setitem=[]
+			var Record = record.load({
+				type: 'itemreceipt',
+				id: context.request.parameters.irid,
+			 isDynamic: true
+			 });
+
+			 var tranid= Record.getValue({fieldId:"createdfrom"})
+			 var name= Record.getText({fieldId:"entity"})
+			 var date= Record.getValue({fieldId:"trandate"})
+			 var lines = Record.getLineCount({ sublistId: "item"});
+			 var itemData = []
+		
+			
+			 for (var i = 0; i < lines; i++) {
+  
+				itemData.push({
+  
+					 'item': Record.getSublistValue({
+						 "sublistId": 'item',
+						 "fieldId": 'item',
+						 "line": i
+					 }),
+					 'qty': Record.getSublistText({
+						 "sublistId": 'item',
+						 "fieldId": 'quantity',
+						 "line": i
+					 }),
+				 })
+			 }
+
+			 log.debug("checkfilesid",fileListId)
+
+          var transformRecordPromise = record.transform.promise({
+			   fromType: "purchaseorder",
+			   fromId: tranid,
+			   toType: "vendorbill",
+			   isDynamic: true,
+			   });
+
+          transformRecordPromise.then(function(recordObject) {
+            recordObject.setValue({fieldId:'memo',value:'created by vendor'})
+           
+            for(var i=0;i<itemData.length;i++)
+            { 
+               var lines = recordObject.getLineCount({ sublistId: 'item' });
+               //log.debug("lines in top",lines)
+               for(var j=0; j<lines;j++)
+               {
+
+                  recordObject.selectLine({ sublistId:'item' ,line:j });
+                  vendorBillitem=recordObject.getCurrentSublistValue({ sublistId:'item' ,fieldId:'item'})
+                
+               //	log.debug("before match",vendorBillitem+'j'+j)
+                  if(itemData[i].item==vendorBillitem)
+                  {
+                     //  log.debug("on mathv",vendorBillitem+'set quanttity'+parseInt(itemData[i].qty))
+                      setitem.push(vendorBillitem)
+                      recordObject.setCurrentSublistValue({ sublistId:'item' ,fieldId:'quantity' ,value: parseInt(itemData[i].qty) });
+                      //set billed on item receipt
+                      var index = Record.findSublistLineWithValue({sublistId: "item",
+                      fieldId: "item",
+                      value: vendorBillitem});
+                      Record.selectLine({ sublistId:'item' ,line:index });
+                      Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'custcol_psvendorbilledquantity' ,value: parseInt(itemData[i].qty) });
+                      //set billed item end								  Record.commitLine({sublistId: 'item'});
+                      //  Record.setCurrentSublistValue({"sublistId": 'item',"fieldId": 'custcol_psvendorbilledquantity',}),
+                     
+                      recordObject.commitLine({sublistId: 'item'});
+                  }
+                  else
+                  {
+                     //log.debug("on else",'j'+setitem.indexOf(vendorBillitem))
+                     var setitemscheck=setitem.indexOf(vendorBillitem)
+                     if(setitemscheck<0)
+                     {
+                        recordObject.setCurrentSublistValue({ sublistId:'item' ,fieldId:'quantity' ,value: 0 });
+                        recordObject.commitLine({sublistId: 'item'});
+                     }
+                     // log.debug("set items ceheck",setitemscheck)
+                     // log.debug("set 0 no match",vendorBillitem+'j'+j)
+                                            
+                  }
+               }
+            }
+
+            recordId =   recordObject.save({
+               enableSourcing: true
+            });
+
+           
+
+            log.debug("checkid",recordId)
+            Record.save({
+               enableSourcing: true
+            });
+
+            context.response.write(JSON.stringify(recordId))
+
+
+
+            var vnbillobject = record.load({
+               type: 'vendorbill',
+               id:recordId,
+               isDynamic: true,
+            });
+
+            var lines = vnbillobject.getLineCount({ sublistId: 'item' });
+            //log.debug("itemcheck after insert",lines)
+
+            for(var k=0;k<lines;k++)
+            {
+               vnbillobject.selectLine({ sublistId:'item' ,line:k });
+              vendorBillitem=vnbillobject.getCurrentSublistValue({ sublistId:'item' ,fieldId:'quantity'})
+               if(vendorBillitem==0)
+               { 
+                  vnbillobject.removeLine({sublistId: "item", line: k});
+                 k--
+                 lines--
+               }
+            }
+            saveId=vnbillobject.save();
+
+
+            log.debug("checkidsaveid",saveId)
+           
+          
+            
+
+           //   redirect.toSuitelet({
+           // 	scriptId: 'customscript_ps_vendor_billeddetailview',
+             // 	deploymentId: 'customdeploy_ps_vendor_billeddetailview',
+            //    parameters: {
+            // 		'username' : username,
+            // 		'billno'   : saveId,
+            // 		'fileid'   : fileListId
+            // 	}
+            //   });
+
+            // 		  log.debug("billno",fileId)
+            //        var id = record.attach({
+            //        record: {
+            //            type: 'file',
+            //            id: fileId
+            //        },
+            //        to: {
+            //            type: 'vendorbill',
+            //            id: saveId
+            //        }
+            //    });
+      
+          // Add any other needed logic that shouldn't execute until
+          // after the record is transformed.
+      
+          log.debug({
+          title: 'Record saved',
+          //details: 'Id of new record: ' + recordId
+          });
+      
+         }, function(e) {
+      
+         log.error({
+         title: e.name,
+         details: e.message
+         });
+         });
+
+
+
+         }
+
+
+
 
 
       

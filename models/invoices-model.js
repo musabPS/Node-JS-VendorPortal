@@ -6,24 +6,33 @@ const invoiceSchema = new mongoose.Schema({
         trim:true,
         required : true
     },
-    invoiceNumber: {
+    billNo: {
         type: String,
         trim:true
     },
     poNumber:{
         type:String,
-        required:true,
         trim:true
     },
     date:{
         type: Date
     },
-    quantity:{
+    poQuantity:{
         type:Number,
         default:0,
         min:0
     },
-    amount:{
+    poAmount:{
+        type:Number,
+        default:0,
+        min:0,
+    },
+    billQuantity:{
+        type:Number,
+        default:0,
+        min:0
+    },
+    billAmount:{
         type:Number,
         default:0,
         min:0,
@@ -39,7 +48,7 @@ const invoiceSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    vendorIntenalId:{
+    vendorInternalId:{
         type:Number
     }
     

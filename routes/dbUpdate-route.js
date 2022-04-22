@@ -216,14 +216,12 @@ router.post('/updateItemFulfillments', async (req, res) => {
 
 })
 
-router.post('/createbill', async (req, res) => {
+router.post('/createBill', async (req, res) => {
     try {
 
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
 
-        obj.ifNumber=obj.poNumber
-        delete obj.poNumber;
         const bill = new invoice(obj)
         await bill.save();
 
@@ -249,6 +247,57 @@ router.post('/createbill', async (req, res) => {
             success: false,
             currentDateTime: currentDateTime,
             type: "Create",
+            error: e
+
+        }
+
+
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
+    }
+
+})
+
+router.post('/updateBill', async (req, res) => {
+    try {
+
+         console.log("reg", req.body)
+         var obj = req.body.netsuiteData[0]
+         const filter = { internalId: obj.internalId };
+         console.log("checkresponce ", filter)
+         delete obj.internalId;
+
+         data = invoice.updateOne(filter, obj, function (err, res) {
+            if (err) throw err;
+            console.log("1 document update", res);
+            responceData = res
+
+            console.log("checkresponce ", data)
+        });
+
+        
+
+         let currentDate = new Date()
+         let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+         let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "update",
+
+        }
+
+
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "update",
             error: e
 
         }
