@@ -229,7 +229,7 @@
 		
 			<table class="table modeltable">
 				<thead>
-					<tr>
+					<tr> 
 						<th scope="col" style="display:none;">line #</th>
 						<th scope="col">Product</th>
 						<th scope="col">A.Qty</th>
@@ -414,9 +414,9 @@
 
 								
 								tableData+= '<tr>'
-											 +'<th data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check">'
+											 +'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
 												+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
-													+'<input type="checkbox" id="checkAll">&nbsp;<span></span></label></span></th>'
+													+'<input type="checkbox"  id="checkboxAll">&nbsp;<span></span></label></span></th>'
 													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
 													+'<th class="text-center font-weight-bold text-muted text-uppercase">Requested Quantity</th>'
@@ -436,7 +436,7 @@
 												tableData+='<tr>'
 												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>'
 												 tableData+='<td class="pl-0  linenumber" name='+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
-                                                 tableData+='<td class="pl-0  txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
+                                                 tableData+='<td class="pl-0  txt-td item" name=item'+i+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
                                                  tableData+='<td class="text-center  qty">'+data[i].values["SUM(quantity)"]+'</td>' 
                                                  tableData+='<td class="text-center  accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
 												 tableData+='<td class="text-center  recty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
@@ -485,21 +485,60 @@
                                     // if(pageType=='view'){
                                     //     $('#btn_save').hide();
                                     // }
-
+									$.fn.checkFunction();
                             }
-                            
+							
+             
             });
            
 
           //fas fa-caret-down
+
+	
+               
             
         });
 
+		
+		$(document).ready(function(){
+		$.fn.checkFunction=function(){
+			console.log("checkeddddd");
 
-		$("#checkAll").click(function(){
+				$(".table #checkboxAll").change(function(event){
+					console.log("dadadad")
+			if (this.checked){
+				alert("Check lag geya jee");
+			} else {
+				alert("Check laga hi nhi yr");
+			}
+});
 
-			alert("dd")
-        $('input:checkbox').not(this).prop('checked', this.checked);
-        });
+				
+		}
+	});
+
+
+			// 		$(document).ready(function() {
+
+
+			// 	$('#assets').on('click', 'span', function() {
+			// 		var $e = $(this).parent();
+			// 		if($e.attr('class') === 'asset_value') {
+			// 			var val = $(this).html();
+			// 			$e.html('<input type="text" value="'+val+'" />');
+			// 			var $newE = $e.find('input');
+			// 			$newE.focus();
+			// 		}
+			// 		$newE.on('blur', function() {
+			// 			$(this).parent().html('<span>'+$(this).val()+'</span>');
+			// 		});
+			// 	});
+			// });​
+
+		// $("#checkAll").click(function(){
+
+		// 	alert("dd")
+        // $('input:checkbox').not(this).prop('checked', this.checked);
+        // });
    
 	</script>					
