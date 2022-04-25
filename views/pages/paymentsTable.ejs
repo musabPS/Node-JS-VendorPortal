@@ -188,11 +188,11 @@ var KTDatatableChildDataLocalDemo = function() {
 						return '<span>' + row.billNumber+ '</span>';
 					},
 				}, {
-					field: 'date',
+					field: 'billDate',
 					title: 'Date',
 					width: 100,
                     template: function(row) {
-						return '<span>' + moment( row.date).format("MM-DD-YYYY")+ '</span>';
+						return '<span>' + moment( row.billDate).format("MM-DD-YYYY")+ '</span>';
 					},
 				}, 
 				  {

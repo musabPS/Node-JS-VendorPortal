@@ -64,7 +64,7 @@ router.get('/paymentList', async (req, res) => {
             i+=parseInt(subList.length)
         }
 
-        console.log("checkData",peymentDataarray[0].Orders)
+        console.log("checkData",peymentDataarray[0])
 
 
 peymentDataarray= JSON.stringify(peymentDataarray)
