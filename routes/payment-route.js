@@ -27,18 +27,36 @@ app.use(router)
 
 //const PurchaseRequests = require('../models/purchaseRequests')
 // const ItemFulfillments = require('../models/itemFulfillments')
-// const Invoices = require('./models/invoices')
+ const payments = require('../models/payments-model')
 
 
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
 
-router.get('/paymentList', (req, res) => {
-    let route = "pages/paymentsTable"
-    let listName = "Payment List"
-    breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-    res.render('index', { route, listName, breadcrumbs })
+router.get('/paymentList', async (req, res) => {
+
+    var data=[]
+
+
+    try {
+        data =  await payments.find({vendorInternalId:req.session.user_id}) 
+        // data = await ItemFulfillments.findOne({internalId:"6728"})
+        console.log("check",data)
+     
+        let route = "pages/paymentsTable"
+        let listName = "Payment List"
+        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
+        res.render('index', { route, listName, breadcrumbs,data })
+    }
+    catch (e) {
+       console.log(e)
+    }
+
+
+
+
+   
 })
 
 module.exports = router

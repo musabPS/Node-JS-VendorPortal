@@ -135,6 +135,30 @@ define([
             context.response.write(getInternalID)
          }
 
+         if(context.request.parameters.type == "fileUpload")
+         {
+            log.debug("createinvoicet",context.request.parameters)
+            var fileListId='';
+			
+			 log.debug("files",context.request.files)
+			 if(Object.keys(context.request.files).length>0)  
+			 {
+               for(var files=0; files<=context.request.parameters.totalfiles; files++)
+            {
+               var fileObj = context.request.files["custpage_file"+files];
+               
+               fileObj.folder = 1045;
+               var fileId = fileObj.save();
+               fileListId+=fileId+','
+            }
+
+            fileListId = fileListId.substring(0, fileListId.length - 1);
+               
+            log.debug("checkfilesid",fileListId)
+
+            }
+         }
+
          if(context.request.parameters.type == "createBill")
          {     
             log.debug("createinvoicet",context.request.parameters)
@@ -358,6 +382,13 @@ define([
      ],
      columns:
      [
+      search.createColumn({
+         name: "line",
+         summary: "GROUP",
+         sort: search.Sort.ASC,
+         label: "Line ID"
+      }),
+
         search.createColumn({
            name: "item",
            summary: "GROUP",

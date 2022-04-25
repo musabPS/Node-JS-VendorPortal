@@ -103,7 +103,7 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
 router.post('/purchaseRequestForm', authCheck,async (req, res) => {
     console.log(req.body)
-    console.log(req.params)
+    console.log(req.params) 
     var { id } = req.params
 
     let route = "pages/purchaseRequestForm"
