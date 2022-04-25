@@ -40,14 +40,13 @@ router.get('/paymentList', async (req, res) => {
 
 
     try {
-        data =  await payments.find({vendorInternalId:req.session.user_id}) 
-        // data = await ItemFulfillments.findOne({internalId:"6728"})
+        data =  await payments.find({}) 
         console.log("check",data)
      
         let route = "pages/paymentsTable"
         let listName = "Payment List"
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs,data })
+        res.render('index', { route, listName, breadcrumbs,data,moment })
     }
     catch (e) {
        console.log(e)

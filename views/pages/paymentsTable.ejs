@@ -149,8 +149,8 @@
                                
                                 <th title="Field #3">CHECK #</th>
                                 <th title="Field #4">DATE</th>
+                                <th title="Field #3">Bill #</th>
                                 <th title="Field #3">CHECK AMOUNT</th>
-                                <th title="Field #5">STATUS</th>
                                 
                             </tr>
                         </thead>
@@ -159,10 +159,10 @@
                             <% data.forEach((el)=>{  %>
                                 <tr class="custom_hover">
                                    
-                                    <td> <a href= "/itemfulfillmentForm&id=<%= el.internalId %>" > <%= el.ifNumber%>  </a> </td>
+                                    <td>  <%= el.billPaymentNumber%>  </a> </td>
                                     <td><%= moment(el.date).format('MM-DD-YYYY') %> </td>
+                                    <td><%= el.billNumber %></td>
                                     <td><%= el.amount %></td>
-                                    <td><%= el.approvalStatus %></td>
                                      
                                     </tr>
                                 <%}) %>
