@@ -28,9 +28,13 @@ const billPaymentSchema = new mongoose.Schema({
      },
      billPaymentNumber:{
         type:String,
+        trim:true,
     },
     billNumber:{
         type:String,
+    },
+    billAmount:{
+        type:Number,
     },
      syncStatus:{
          type:Number,

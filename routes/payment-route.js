@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 var nsrestlet = require('nsrestlet');
 var moment = require('moment');
-
+var where = require("lodash.where");
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
@@ -37,16 +37,42 @@ app.use(router)
 router.get('/paymentList', async (req, res) => {
 
     var data=[]
+    let peymentDataarray=[]
+    let subList=[]
 
 
     try {
         data =  await payments.find({}) 
-        console.log("check",data)
+        console.log("check",data[0])
+        var filterData={}
+
+
+        for(var i=0; i <data.length;  i++)
+        {
+
+            subList =  where(data, {"billPaymentNumber": data[i].billPaymentNumber})
+
+            peymentDataarray.push({
+                'RecordID':i,
+                'Check#': data[i].billPaymentNumber,
+                'Date': moment(data[i].date).format("MM-DD-YYYY") ,
+                'CheckAmount': data[i].amount,
+                'Orders':subList,
+                'Status' :4
+              })
+
+            i+=parseInt(subList.length)
+        }
+
+        console.log("checkData",peymentDataarray[0].Orders)
+
+
+peymentDataarray= JSON.stringify(peymentDataarray)
      
         let route = "pages/paymentsTable"
         let listName = "Payment List"
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs,data,moment })
+        res.render('index', { route, listName, breadcrumbs,data,moment,peymentDataarray,moment})
     }
     catch (e) {
        console.log(e)
