@@ -13,7 +13,7 @@
 										<!-- begin: Invoice header-->
 
 										<!-- begin acction button-->
-										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-27 px-md-0"  >
+										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 px-md-0"  >
 											  <div class="col-md-11 d-flex flex-column align-items-md-end px-0">
 															<!--begin::Dropdown-->
 											<div class="dropdown dropdown-inline mr-2">
@@ -121,9 +121,8 @@
 														<span class="opacity-70"><%= tranId %></span>
 													</div>
 													<div class="d-flex flex-column flex-root">
-														<span class="font-weight-bolder mb-2">INVOICE TO.</span>
-														<span class="opacity-70">ABC, P.O. Box 283 8562 Fusce RD.
-														<br />Fredrick Nebraska 20620</span>
+														<span class="font-weight-bolder mb-2">Location.</span>
+														<span class="opacity-70"><%= location %></span>
 													</div>
 												</div>
 											</div>
@@ -154,8 +153,6 @@
 															<table class="table" id="formtable">
 																<thead>
 																	<tr>
-																		<th class="font-weight-bold text-muted text-uppercase">Location</th>
-																		<th class="font-weight-bold text-muted text-uppercase">First Delivery Date</th>
 																		<th class="font-weight-bold text-muted text-uppercase">Total Requested Qty</th>
 																		<th class="font-weight-bold text-muted text-uppercase">Total Requested Amount</th>
 																		<th class="font-weight-bold text-muted text-uppercase ">Total Accepted Qty</th>
@@ -164,8 +161,6 @@
 																</thead>
 																<tbody>
 																	<tr class="">
-																		<td ><%= location %></td>
-																		<td style="text-align: center;">1-5-2022</td>
 																		<td class=" font-size-h6 " style="text-align: center;" id="totalqty"></td>
 																		<td class=" font-size-h6 " style="text-align: center;" id="totalamount">  </td>
 																		<td class=" font-size-h6 " style="text-align: center;" id="totalacceptedquantity"></td>
@@ -264,11 +259,13 @@
 	</NLFORM>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.js"></script>
+
 
 
 <script>
 
-
+var dataParse ="";
 	  $(function () {
 
 		
@@ -405,7 +402,7 @@
 								console.log(data)
                                 $('#table-main').empty();
 
-                                var dataParse=data
+                                 dataParse=data
                                 
                                 var totalQuantity = 0
                                 var totalAmount = 0
@@ -434,16 +431,16 @@
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
-												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox">&nbsp;<span></span></label></span></td>'
+												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
 												 tableData+='<td class="pl-0  linenumber" name='+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
                                                  tableData+='<td class="pl-0  txt-td item" name=item'+i+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
                                                  tableData+='<td class="text-center  qty">'+data[i].values["SUM(quantity)"]+'</td>' 
-                                                 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
+                                                 tableData+='<td class="text-center  accqty"  name=qty'+i+'>'+data[i].values["SUM(custcol_pointstarvendor_originalqty)"]+'</td>'
 												 tableData+='<td class="text-center  recty">'+data[i].values["SUM(quantityshiprecv)"]+'</td>'
 												 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
 												 tableData+='<td class="text-center  rate">'+data[i].values["MAX(rate)"]+'</td>'
 												 tableData+='<td class="text-center  accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
-												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
+												 tableData+='<td class="text-center  date" name=date'+i+'>'+data[i].values["GROUP(expectedreceiptdate)"]+'</td>'
 												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
 												 tableData+='</tr>'
 
@@ -501,20 +498,49 @@
 
 		
 		$(document).ready(function(){
+
 		$.fn.checkFunction=function(){
 			console.log("checkeddddd");
 
-				$(".table #checkboxAll").change(function(event){
+// 				$(".table #checkboxAll").change(function(event){
+// 					console.log("dadadad")
+// 			if (this.checked){
+// 				alert("Check lag geya jee");
+// 			} else {
+// 				alert("Check laga hi nhi yr");
+// 			}
+// });
+
+				$(".table #checkbox-solo").change(function(event){
 					console.log("dadadad")
+					var quantity = $(this).parents('tr').find('td:eq(4)').text();
+					var date = $(this).parents('tr').find('td:eq(9)').text();
+
 			if (this.checked){
-				alert("Check lag geya jee");
+
+				$(this).parents('tr').find('td:eq(4)').html('<input  name="quantity" type="number" value='+quantity+' >');
+				$(this).parents('tr').find('td:eq(9)').html('<input type="date" name="date" value='+moment(date).format("YYYY-MM-DD")+' >')
+
 			} else {
-				alert("Check laga hi nhi yr");
+
+				var quantity22 = $(this).parents('tr').find('input[name="quantity"]').val();
+				var date22 = $(this).parents('tr').find('input[name="date"]').val();
+
+				$(this).parents('tr').find('td:eq(4)').text(quantity22);
+				$(this).parents('tr').find('td:eq(9)').text(date22);
+
+				$(this).parents('tr').val(quantity22);
+				$(this).parents('tr').val(date22);
+				
 			}
 });
 
-				
+		
 		}
+
+		
+
+
 	});
 
 
