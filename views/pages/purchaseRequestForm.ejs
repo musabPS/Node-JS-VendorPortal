@@ -90,26 +90,20 @@
 												</div>
 
 											<!-- end action-->
-                                              
+											
 											<div class="col-md-9">
-												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column fl pt-6">
-													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >PO Request  </h1>
+												
+												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column fl pt-6"> 
+													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >PO Request <span id="updatestatus"> <i class="flaticon2-correct text-success icon-2x"></i> </span>  </h1>  
 													
 													
 												
-                                                     <!-- 													
-													<div class="d-flex flex-column align-items-md-end px-0">
-														begin::Logo
-														<a href="#" class="mb-5">
-															<img src="assets/media/project-logos/3.png" class="h-100px rounded" alt="" />
-														</a>
-														end::Logo
-														<span class="d-flex flex-column align-items-md-end opacity-70">
-															<span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
-															<span>Mississippi 96522</span>
-														</span>
-													</div> -->
+                                                     													
+													<div id="updatespinner" class="d-flex flex-column align-items-md-center px-0">
+														<div class="spinner spinner-primary spinner-lg mr-15"></div>
+													</div>
 												</div>
+												
 												<div class="border-bottom w-100"></div>
 												<div class="d-flex justify-content-between pt-6">
 													<div class="d-flex flex-column flex-root">
@@ -265,54 +259,16 @@
 
 <script>
 
+               var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+
 var dataParse ="";
 	  $(function () {
 
 		
 
-	 //
-
-	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
-	 // $('#table-main tbody').append(Nodata);
-
-	//  $("#modaldate").click(function () {
-
-	// 	$('.modeltable .table-body').empty();
-	// 	var counttd=0
-	// 	var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
- 	// 	     //Loop through all checked CheckBoxes in GridView.
-    //         $("#table-main tbody input[type=checkbox]:checked").each(function () {
-				
-    //             // var row = $(this).closest("tr")[0];
-	// 			//var name = $('.txt-td').val();
-	// 			linenumber=$(this).parents("tr").find(".linenumber").text();
-    //              item =$(this).parents("tr").find(".item").text();
-    //              qty =$(this).parents("tr").find(".qty").text();
-    //              rate =$(this).parents("tr").find(".rate").text();
-    //             // amount =$(this).parents("tr").find(".amount").text();
-    //             // itemid=$(this).parents("tr").find(".itemid").text();
-    //             // linenumber=$(this).parents("tr").find(".linenumber").text();
-    //              td=  '<tr>'
-    //              td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
-	// 			 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
-	// 			 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
-	// 			 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
-	// 			 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
-				 
-	// 			 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
-    //              td+='</tr>' 
-	// 			 counttd++ 
-	// 			 $('.modeltable .table-body').append(td);
-    //         });
-	// 		if(counttd==0)
-	// 		{
-	// 			$('.modeltable .table-body').append(nodata);
-	// 		}
-
-	// 		total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-	// 		$('#totalcount').append(total);
-
-    //     })
 		 $('.modeltable .table-body').on('click' , '#deltop',function(){
 
 			$(this).parents('tr').remove();
@@ -351,61 +307,55 @@ var dataParse ="";
 
    $("#save").click(function () {
 
+	$('#updatespinner').append('<div class="spinner spinner-primary spinner-lg mr-15"></div>');
+
    $('.modeltable .table-body').empty();
      var counttd=0
 	 var poObject={}
 	 var dataArray=[]
      var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
-	  //Loop through all checked CheckBoxes in GridView.
+
 	 $("#table-main tbody input[type=checkbox]:checked").each(function () {
 		
-		// var row = $(this).closest("tr")[0];
-		//var name = $('.txt-td').val();
-		linenumber=$(this).parents("tr").find(".linenumber").name();
+	
+		linenumber=$(this).parents("tr").find(".linenumber ").text()
 		 item =$(this).parents("tr").find(".item").text();
-		 qty =$(this).parents("tr").find(".qty").text();
+		 qty =$(this).parents("tr").find(".inputquantity").val();
 		 rate =$(this).parents("tr").find(".rate").text();
-		// amount =$(this).parents("tr").find(".amount").text();
-		// itemid=$(this).parents("tr").find(".itemid").text();
-		// linenumber=$(this).parents("tr").find(".linenumber").text();
+		 date =$(this).parents("tr").find(".inputdate").val();
+		
+		dataArray.push({
+			item       :  item,
+			quantity   :  qty,
+			date       :  date,
+			lineId     : linenumber-1
+		})
+ 
+		console.log("dataArray",dataArray)
 
-		//linenumberName=$(this).parents("tr").find("td name").text();
-
-		console.log("linenumberName",linenumber)
-
-		linenumberkey  =         "linenumber"+counttd
-		itemkey        =        "item"+counttd
-     
-
-		poObject  =
-		{
-			linenumber : parseInt(counttd)+1,
-			item       :  item
-		}
-
-		poObject.linenumber=poObject.linenumber+counttd
-
-		console.log("neobj",poObject)
-		 
-		 td=  '<tr>'
-		 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
-		 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
-		 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
-		 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
-		 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
-		 
-		 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
-		 td+='</tr>' 
-		 counttd++ 
-		 $('.modeltable .table-body').append(td);
 	});
-	if(counttd==0)
-	{
-		$('.modeltable .table-body').append(nodata);
+	poObject={
+		save       :  "lineDate",
+		internalId : urlSplit[1],
+		data       : dataArray
 	}
 
-	total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-	$('#totalcount').append(total);
+	$.ajax({ 
+                type      : 'POST', //Method type
+                url       : '/purchaseRequestForm', //Your form processing file URL
+                data      : JSON.stringify(poObject), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+								console.log(data)
+								$('#updatestatus').show();
+								$('#updatespinner').empty();
+    
+                            }
+							
+             
+            });
+
 
 })
 
@@ -431,10 +381,7 @@ var dataParse ="";
            $('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
          
 
-           var loc=window.location.href
-                var url = new URL(loc).href;
-                urlSplit=url.split('=')
-                console.log("url",urlSplit)
+         
               
                 var tableData='<thead style="text-align: center;">'
                 var postForm={};
@@ -559,17 +506,20 @@ var dataParse ="";
 		
 		$(document).ready(function(){
 
-		$.fn.checkFunction=function(){
+			$('#updatestatus').hide();
+			$('#updatespinner').empty();
+
+		 $.fn.checkFunction=function(){
 			console.log("checkeddddd");
 
-// 				$(".table #checkboxAll").change(function(event){
-// 					console.log("dadadad")
-// 			if (this.checked){
-// 				alert("Check lag geya jee");
-// 			} else {
-// 				alert("Check laga hi nhi yr");
-// 			}
-// });
+			// $(".table #checkboxAll").change(function(event){
+			// 	console.log("dadadad")
+			// if (this.checked){
+			// 	alert("Check lag geya jee");
+			// 	} else {
+			// 	alert("Check laga hi nhi yr");
+			// }
+			// });
 
 				$(".table #checkbox-solo").change(function(event){
 					console.log("dadadad")
@@ -578,8 +528,8 @@ var dataParse ="";
 
 			if (this.checked){
 
-				$(this).parents('tr').find('td:eq(4)').html('<input  name="quantity" type="number" value='+quantity+' >');
-				$(this).parents('tr').find('td:eq(9)').html('<input type="date" name="date" value='+moment(date).format("YYYY-MM-DD")+' >')
+				$(this).parents('tr').find('td:eq(4)').html('<input class="inputquantity form-control"  name="quantity" type="number" value='+quantity+' >');
+				$(this).parents('tr').find('td:eq(9)').html('<input class="inputdate form-control" type="date" name="date" value='+moment(date).format("YYYY-MM-DD")+' >')
 
 			} else {
 
@@ -603,28 +553,6 @@ var dataParse ="";
 
 	});
 
-
-			// 		$(document).ready(function() {
-
-
-			// 	$('#assets').on('click', 'span', function() {
-			// 		var $e = $(this).parent();
-			// 		if($e.attr('class') === 'asset_value') {
-			// 			var val = $(this).html();
-			// 			$e.html('<input type="text" value="'+val+'" />');
-			// 			var $newE = $e.find('input');
-			// 			$newE.focus();
-			// 		}
-			// 		$newE.on('blur', function() {
-			// 			$(this).parent().html('<span>'+$(this).val()+'</span>');
-			// 		});
-			// 	});
-			// });​
-
-		// $("#checkAll").click(function(){
-
-		// 	alert("dd")
-        // $('input:checkbox').not(this).prop('checked', this.checked);
-        // });
+;
    
 	</script>					

@@ -14,12 +14,14 @@ var KTDatatablesExtensionsScroller = function() {
 			scroller: true,
 			columns: [
 				{data: 'RecordID', visible: false},
-				{data: 'internalId'},
+				{data: 'poNumber'},
+				{data: 'date'},
 				{data: 'quantity'},
 				{data: 'amount'},
 				{data: 'status'},
 			
 			],
+			
 			
 		});
 	};

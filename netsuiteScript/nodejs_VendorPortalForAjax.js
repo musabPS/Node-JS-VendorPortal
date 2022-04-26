@@ -97,9 +97,9 @@ define([
           
           // handleGetRequest(context, model.getHeaderInfo(context.request.parameters.poid), model.getTableData(context.request.parameters.poid), context.request.parameters.poid,username)
        }
+
        if (context.request.method === "POST")  
        {
-        log.debug("POST voidTicket parameters","POSt");
          log.debug("POST voidTicket parameters", context.request.parameters);
          log.debug("POST voidTicket body", context.request.body);
          var parseBody= JSON.parse( context.request.body)
@@ -108,22 +108,16 @@ define([
          var lineCount=parseBody.linenumbertop
          var selectedLine=[]
          log.debug("selectlinein loop", parseBody.save)
-         if(parseBody.save=="linedate")
+         if(parseBody.save=="lineDate")
          {
-            log.debug("selectlinein loop", "sss")
-            for(var i=0; i<lineCount; i++)
-            {
-                 var lin=parseBody["linenumber"+i]
-                 log.debug("selectlinein loop", lin)
-                 selectedLine.push(parseInt(lin-1))
+            saveId = updateSelectRow(parseBody.internalId,parseBody.data)
+           
+            var saveObj={
+               internalId : saveId
             }
-            if(parseBody.changeallitemdate)
-            {
-               formattedDateString = format.format({ value: date,type: format.Type.DATE});
-     
-            }
-
-            updateSelectRow(internalId,formattedDateString,selectedLine,parseBody.linenumbertop,parseBody)
+            log.debug("saveID",saveObj)
+            context.response.write( JSON.stringify(saveObj))
+            return 
          }
 
          if(parseBody.type=="login")
@@ -352,15 +346,7 @@ define([
 
 
          }
-
-
-
-
-
-      
-
-       //  context.response.write("jj")
-        // return;
+ 
        }
       
    }
@@ -542,7 +528,7 @@ define([
         var isFinalResult = JSON.stringify(isFinalResult);
         return isFinalResult
  }
- function updateSelectRow(internalId,date,lines,totalline,data)
+ function updateSelectRow(internalId,data)
  {
    
      var Record = record.load({
@@ -550,47 +536,65 @@ define([
          id: internalId,
       isDynamic: true
       });
-           log.audit("checkqty",data)
-           log.audit("checkqty",lines)
+          
 
           var itemlines = Record.getLineCount({ sublistId: "item"});
+
+
+
+          for(i=0; i <data.length; i++)
+          {
+              log.debug("line:data.lineId",data[i].lineId)
+              Record.selectLine({ sublistId:'item' , line: data[i].lineId });
+              newDate=new Date(moment(new Date(data[i].date), "M/D/YYYY").add(1, 'days'))
+              log.audit("newDate",newDate);
+              Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'expectedreceiptdate' ,value: newDate }); 
+              Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'custcol_pointstarvendor_originalqty' ,value:data[i].quantity});
+              Record.commitLine({sublistId: 'item'});  
+          }
+          var saveid=  Record.save();
+          log.debug("save",saveid)
+
+          
+          return saveid
+
       
-      for(var i=0; i<itemlines; i++)
-      {
-         log.audit("checkqtyinloop",i)
-            //Record.setSublistText({ sublistId:'item',fieldId:'expectedreceiptdate' ,line:i })
+      // for(var i=0; i<itemlines; i++)
+      // {
+      //    log.audit("checkqtyinloop",i)
+      //       //Record.setSublistText({ sublistId:'item',fieldId:'expectedreceiptdate' ,line:i })
            
-            for(var j=0;j<lines.length;j++)
-            {
-             log.audit("checkqtyinloop",i+'-'+lines[j]+'-qty'+data["qty"+i])
-               if(i==lines[j])
-               {
-                 log.audit("incondition",i+'-'+lines[j])
-                Record.selectLine({ sublistId:'item' ,line:i });
-                if(date)
-                { 
-                  // log.audit("cheekcdate",Date.parse(date))
-                 //  log.audit("new Date(date)",new Date(date+1))
+      //       for(var j=0;j<lines.length;j++)
+      //       {
+      //        log.audit("checkqtyinloop",i+'-'+lines[j]+'-qty'+data["qty"+i])
+      //          if(i==lines[j])
+      //          {
+      //            log.audit("incondition",i+'-'+lines[j])
+      //           Record.selectLine({ sublistId:'item' ,line:i });
+      //           if(date)
+      //           { 
+      //             // log.audit("cheekcdate",Date.parse(date))
+      //            //  log.audit("new Date(date)",new Date(date+1))
                   
                    
-                  // var newdate = format.format({value: date,    type: format.Type.DATE});
-                  // newDate=new Date(date).setDate(1);
-                 //  var new_date = moment.moment(date, "M/D/YYYY").add(2, 'days');
-                   //log.audit("dateChange",moment(new Date(date), "M/D/YYYY").add(2, 'days'))
-                   newDate=new Date(moment(new Date(date), "M/D/YYYY").add(1, 'days'))
-                  log.audit("newDate",newDate);
-                   Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'expectedreceiptdate' ,value: newDate });}  
+      //             // var newdate = format.format({value: date,    type: format.Type.DATE});
+      //             // newDate=new Date(date).setDate(1);
+      //            //  var new_date = moment.moment(date, "M/D/YYYY").add(2, 'days');
+      //              //log.audit("dateChange",moment(new Date(date), "M/D/YYYY").add(2, 'days'))
+      //              newDate=new Date(moment(new Date(date), "M/D/YYYY").add(1, 'days'))
+      //             log.audit("newDate",newDate);
+      //              Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'expectedreceiptdate' ,value: newDate });}  
 
-                 Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'custcol_pointstarvendor_originalqty' ,value:data["qty"+i]});
-                Record.commitLine({sublistId: 'item'});
-               }
-            }
-            Record.setValue({fieldId : 'custbody_pointstarvendor_accept', value: true})
-            Record.setValue({fieldId : 'custbody_ps_vendor_isreject', value: false})
-      }
+      //            Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'custcol_pointstarvendor_originalqty' ,value:data["qty"+i]});
+      //           Record.commitLine({sublistId: 'item'});
+      //          }
+      //       }
+      //       Record.setValue({fieldId : 'custbody_pointstarvendor_accept', value: true})
+      //       Record.setValue({fieldId : 'custbody_ps_vendor_isreject', value: false})
+      // }
 
-    var saveid=  Record.save();
-      log.debug("save",saveid)
+   // var saveid=  Record.save();
+     // log.debug("save",saveid)
  }
 
  function getVendorDataSavedSEarch(name,password)  //login

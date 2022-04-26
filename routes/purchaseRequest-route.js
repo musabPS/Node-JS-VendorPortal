@@ -101,13 +101,17 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
 })
 
-router.post('/purchaseRequestForm', authCheck,async (req, res) => {
+router.post('/purchaseRequestForm',async (req, res) => {
+
+    
     console.log(req.body)
     console.log(req.params) 
     var { id } = req.params
 
-    let route = "pages/purchaseRequestForm"
-    let listName = "Payment List"
+   
+
+    // let route = "pages/purchaseRequestForm"
+    // let listName = "Payment List"
     const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff"
     request({
         url, json: true,
@@ -122,12 +126,13 @@ router.post('/purchaseRequestForm', authCheck,async (req, res) => {
                 console.log('Unable to connect to suitelet', body)
             }
             else {
-                console.log(`response ${response}`)
+                console.log(response.body)
+                res.send(response.body)
             }
         })
         var query = { internalId: id };
     
-        res.redirect('/purchaseRequestForm&id='+req.body.pointernalid)
+        
 
 })
 
@@ -166,24 +171,28 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
 
         data = await PurchaseRequests.find({vendorInternalId:944}).lean()
         console.log(req.session.user_id)
+        console.log(data);
 
         var finalData=[]
         var dataCollection={}
+        var recordsTotal=data.length
+        var recordsFiltered = data.length
 
-        for(var i=0; i<2; i++){
+        for(var i=0; i<data.length; i++){
             finalData.push({
-                RecordID : i,
-                internalId : data[i].internalId,
-                quantity : data[i].quantity,
-                amount : data[i].amount,
+                RecordID   :   i,
+                poNumber   : '<a href=/purchaseRequestForm&id='+data[i].internalId+' > '+data[i].poNumber+'  </a> ' ,
+                date   : moment(data[i].date).format("MM-DD-YY") ,
+                quantity   : data[i].quantity,
+                amount     : data[i].amount,
                 vendorAcceptQuantity : data[i].vendorAcceptQuantity,
-                status : 4
+                status     : data[i].status
             })
         }
        
         dataCollection = {
-            recordsTotal : 2,
-            recordsFiltered : 2,
+            recordsTotal : recordsTotal,
+            recordsFiltered : recordsFiltered,
             data : finalData
         }
 
