@@ -183,7 +183,7 @@
 													<!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
                                                       
 													<button type="button" class="btn btn-light-primary font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>
-													<button type="button" class="btn btn-primary font-weight-bold" onclick="window.print();">Print Invoice</button>
+													<button type="button" id="save" class="btn btn-primary font-weight-bold" >save</button>
                                                    <!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark  border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
 
                                                 </div>
@@ -275,44 +275,44 @@ var dataParse ="";
 	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
 	 // $('#table-main tbody').append(Nodata);
 
-	 $("#modaldate").click(function () {
+	//  $("#modaldate").click(function () {
 
-		$('.modeltable .table-body').empty();
-		var counttd=0
-		var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
- 		     //Loop through all checked CheckBoxes in GridView.
-            $("#table-main tbody input[type=checkbox]:checked").each(function () {
+	// 	$('.modeltable .table-body').empty();
+	// 	var counttd=0
+	// 	var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+ 	// 	     //Loop through all checked CheckBoxes in GridView.
+    //         $("#table-main tbody input[type=checkbox]:checked").each(function () {
 				
-                // var row = $(this).closest("tr")[0];
-				//var name = $('.txt-td').val();
-				linenumber=$(this).parents("tr").find(".linenumber").text();
-                 item =$(this).parents("tr").find(".item").text();
-                 qty =$(this).parents("tr").find(".qty").text();
-                 rate =$(this).parents("tr").find(".rate").text();
-                // amount =$(this).parents("tr").find(".amount").text();
-                // itemid=$(this).parents("tr").find(".itemid").text();
-                // linenumber=$(this).parents("tr").find(".linenumber").text();
-                 td=  '<tr>'
-                 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
-				 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
-				 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
-				 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
-				 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+    //             // var row = $(this).closest("tr")[0];
+	// 			//var name = $('.txt-td').val();
+	// 			linenumber=$(this).parents("tr").find(".linenumber").text();
+    //              item =$(this).parents("tr").find(".item").text();
+    //              qty =$(this).parents("tr").find(".qty").text();
+    //              rate =$(this).parents("tr").find(".rate").text();
+    //             // amount =$(this).parents("tr").find(".amount").text();
+    //             // itemid=$(this).parents("tr").find(".itemid").text();
+    //             // linenumber=$(this).parents("tr").find(".linenumber").text();
+    //              td=  '<tr>'
+    //              td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+	// 			 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
+	// 			 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+	// 			 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
+	// 			 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
 				 
-				 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
-                 td+='</tr>' 
-				 counttd++ 
-				 $('.modeltable .table-body').append(td);
-            });
-			if(counttd==0)
-			{
-				$('.modeltable .table-body').append(nodata);
-			}
+	// 			 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+    //              td+='</tr>' 
+	// 			 counttd++ 
+	// 			 $('.modeltable .table-body').append(td);
+    //         });
+	// 		if(counttd==0)
+	// 		{
+	// 			$('.modeltable .table-body').append(nodata);
+	// 		}
 
-			total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-			$('#totalcount').append(total);
+	// 		total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+	// 		$('#totalcount').append(total);
 
-        })
+    //     })
 		 $('.modeltable .table-body').on('click' , '#deltop',function(){
 
 			$(this).parents('tr').remove();
@@ -348,6 +348,66 @@ var dataParse ="";
 
 
    });
+
+   $("#save").click(function () {
+
+   $('.modeltable .table-body').empty();
+     var counttd=0
+	 var poObject={}
+	 var dataArray=[]
+     var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
+	  //Loop through all checked CheckBoxes in GridView.
+	 $("#table-main tbody input[type=checkbox]:checked").each(function () {
+		
+		// var row = $(this).closest("tr")[0];
+		//var name = $('.txt-td').val();
+		linenumber=$(this).parents("tr").find(".linenumber").name();
+		 item =$(this).parents("tr").find(".item").text();
+		 qty =$(this).parents("tr").find(".qty").text();
+		 rate =$(this).parents("tr").find(".rate").text();
+		// amount =$(this).parents("tr").find(".amount").text();
+		// itemid=$(this).parents("tr").find(".itemid").text();
+		// linenumber=$(this).parents("tr").find(".linenumber").text();
+
+		//linenumberName=$(this).parents("tr").find("td name").text();
+
+		console.log("linenumberName",linenumber)
+
+		linenumberkey  =         "linenumber"+counttd
+		itemkey        =        "item"+counttd
+     
+
+		poObject  =
+		{
+			linenumber : parseInt(counttd)+1,
+			item       :  item
+		}
+
+		poObject.linenumber=poObject.linenumber+counttd
+
+		console.log("neobj",poObject)
+		 
+		 td=  '<tr>'
+		 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
+		 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
+		 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
+		 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
+		 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
+		 
+		 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
+		 td+='</tr>' 
+		 counttd++ 
+		 $('.modeltable .table-body').append(td);
+	});
+	if(counttd==0)
+	{
+		$('.modeltable .table-body').append(nodata);
+	}
+
+	total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
+	$('#totalcount').append(total);
+
+})
 
  
 
