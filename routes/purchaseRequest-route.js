@@ -85,7 +85,7 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest&internalid=' + id, {
     })
         .then(function (response) {
-            // console.log(response.data[0]);
+            // console.log(response.data[0]); 
  
             let tableData = response.data
             let tranId = response.data[0].values["GROUP(tranid)"]
@@ -140,7 +140,7 @@ router.post('/purchaseRequestForm', authCheck,async (req, res) => {
 // })
 
 
-router.get('/purchaseRequestList',authCheck, async (req, res) => {
+router.get('/purchaseRequestList', async (req, res) => {
     var data = []
     try 
     {
@@ -157,6 +157,47 @@ router.get('/purchaseRequestList',authCheck, async (req, res) => {
     }
    
 })
+
+
+router.get('/purchaseRequestListAjax', async (req, res) => {
+    var data = []
+    try 
+    {
+
+        data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).lean()
+        console.log(req.session.user_id)
+
+        var finalData=[]
+        var dataCollection={}
+
+        for(var i=0; i<2; i++){
+            finalData.push({
+                RecordID : i,
+                internalId : data[i].internalId,
+                quantity : data[i].quantity,
+                amount : data[i].amount,
+                vendorAcceptQuantity : data[i].vendorAcceptQuantity
+            })
+        }
+       
+        dataCollection = {
+            recordsTotal : 2,
+            recordsFiltered : 2,
+            data : finalData
+        }
+
+        console.log(data);
+
+        res.send(dataCollection) 
+      
+    }
+    catch (e) {
+        console.log(e)
+    }
+   
+})
+
+
 
 
 router.get('/paymentList2',authCheck, async (req, res) => {
