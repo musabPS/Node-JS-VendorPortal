@@ -29,6 +29,8 @@ app.use(router)
 const PurchaseRequests = require('../models/purchaseRequests-model')
 const itemFulfillments = require('../models/itemFulfillments-model')
 const invoice = require('../models/invoices-model')
+const payments = require('../models/payments-model')
+
 
 
 
@@ -308,6 +310,52 @@ router.post('/updateBill', async (req, res) => {
 
         console.log(e)
     }
+
+})
+
+router.post('/createpayment',async(req,res)=>{
+
+    try {
+
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
+
+        const bill = new payments(obj)
+        await bill.save();
+
+        console.log("objId", bill._id)
+
+         let currentDate = new Date()
+         let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+         let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            mongoObjId: bill._id
+
+        }
+
+
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            error: e
+
+        }
+
+
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
+    }
+ 
 
 })
 
