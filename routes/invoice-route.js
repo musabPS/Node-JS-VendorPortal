@@ -54,10 +54,51 @@ router.get('/invoiceList', authCheck, async (req, res) => {
   console.log("check", req.session.user_id)
   try {
     data = await Invoice.find({ vendorInternalId: 944 })
-    console.log(data)
+  
     //data.purchaseRequests = purchaseRequests
     let route = "pages/invoiceTable"
     res.render('index', { route, listName, data, moment: moment })
+  }
+  catch (e) {
+    console.log(e)
+  }
+
+})
+
+router.get('/invoiceListAjax', authCheck, async (req, res) => {
+
+  var data = []
+  var listName = "invoice"
+  console.log("check", req.session.user_id)
+  try {
+    data = await Invoice.find({ vendorInternalId: 944 })
+    var finalData=[]
+    var dataCollection={}
+    var recordsTotal=data.length
+    var recordsFiltered = data.length
+ 
+   for(var i=0; i<data.length; i++){
+       finalData.push({
+           RecordID   :   i,
+           poNumber   : '<a href=/invoiceForm&id='+data[i].internalId+' > '+data[i].poNumber+'  </a> ' ,
+           date   : moment(data[i].date).format("MM-DD-YY") ,
+           quantity   : data[i].poQuantity,
+           amount     : data[i].poAmount,
+           billQuantity     : data[i].billQuantity,
+           billAmount     : data[i].billAmount,
+       })
+   }
+
+   dataCollection = {
+       recordsTotal : recordsTotal,
+       recordsFiltered : recordsFiltered,
+       data : finalData
+   }
+   console.log("dadad",dataCollection)
+
+   res.send(dataCollection) 
+    //data.purchaseRequests = purchaseRequests
+   
   }
   catch (e) {
     console.log(e)

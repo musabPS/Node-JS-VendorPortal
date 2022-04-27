@@ -111,11 +111,11 @@ define([
          if(parseBody.save=="lineDate")
          {
             saveId = updateSelectRow(parseBody.internalId,parseBody.data)
-           
+            log.debug("saveID",saveId)
             var saveObj={
                internalId : saveId
             }
-            log.debug("saveID",saveObj)
+
             context.response.write( JSON.stringify(saveObj))
             return 
          }
@@ -546,9 +546,13 @@ define([
           {
               log.debug("line:data.lineId",data[i].lineId)
               Record.selectLine({ sublistId:'item' , line: data[i].lineId });
-              newDate=new Date(moment(new Date(data[i].date), "M/D/YYYY").add(1, 'days'))
-              log.audit("newDate",newDate);
-              Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'expectedreceiptdate' ,value: newDate }); 
+              if(data[i].date)
+              {
+               newDate=new Date(moment(new Date(data[i].date), "M/D/YYYY").add(1, 'days'))
+               log.audit("newDate",newDate);
+               Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'expectedreceiptdate' ,value: newDate }); 
+              }
+              
               Record.setCurrentSublistValue({ sublistId:'item' ,fieldId:'custcol_pointstarvendor_originalqty' ,value:data[i].quantity});
               Record.commitLine({sublistId: 'item'});  
           }

@@ -199,40 +199,7 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
         console.log(data);
 
 
-        var obj={
-            
-            "recordsTotal": 2,
-            "recordsFiltered": 2,
-            "data": [
-                {
-                    "RecordID": 1,
-                    "OrderID": "64616-103",
-                    "Country": "Brazil",
-                    "ShipCity": "S\u00e3o F\u00e9lix do Xingu",
-                    "ShipAddress": "698 Oriole Pass",
-                    "CompanyAgent": "Hayes Boule",
-                    "CompanyName": "Casper-Kerluke",
-                    "ShipDate": "10/15/2017",
-                    "Status": 5,
-                    "Type": 1,
-                    "Actions": null
-                  
-                },
-                {
-                    "RecordID": 2,
-                    "OrderID": "54868-3377",
-                    "Country": "Vietnam",
-                    "ShipCity": "Bi\u0300nh Minh",
-                    "ShipAddress": "8998 Delaware Court",
-                    "CompanyAgent": "Humbert Bresnen",
-                    "CompanyName": "Hodkiewicz and Sons",
-                    "ShipDate": "4/24/2016",
-                    "Status": 2,
-                    "Type": 2,
-                    "Actions": null
-                }
-            ]
-        }
+       
 
         res.send(dataCollection) 
       

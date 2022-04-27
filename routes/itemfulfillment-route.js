@@ -67,6 +67,48 @@ router.get('/itemFulfillmentList', authCheck, async (req, res) => {
 
 })
 
+router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
+
+    let data = []
+
+
+
+    try {
+         data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
+         // data = await ItemFulfillments.findOne({internalId:"6728"})
+         console.log("check",data)
+
+         var finalData=[]
+         var dataCollection={}
+         var recordsTotal=data.length
+         var recordsFiltered = data.length
+      
+        for(var i=0; i<data.length; i++){
+            finalData.push({
+                RecordID   :   i,
+                ifNumber   : '<a href=/itemFulfillmentForm&id='+data[i].internalId+' > '+data[i].ifNumber+'  </a> ' ,
+                date   : moment(data[i].date).format("MM-DD-YY") ,
+                quantity   : data[i].quantity,
+                amount     : data[i].amount,
+            })
+        }
+
+        dataCollection = {
+            recordsTotal : recordsTotal,
+            recordsFiltered : recordsFiltered,
+            data : finalData
+        }
+
+        res.send(dataCollection) 
+
+     }
+     catch (e) {
+        console.log(e)
+     }
+
+
+})
+
 router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
 
 
