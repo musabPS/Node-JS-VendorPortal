@@ -177,7 +177,18 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
         var dataCollection={}
         var recordsTotal=data.length
         var recordsFiltered = data.length
+        const statusObject=
+        {
 
+            "Pending Bill" : 1,
+            "Pending Receipt" : 2,
+            "Pending Supervisor Approval" : 3,
+            "Fully Billed" : 4,
+            "Partially Received": 5,
+            "Pending Billing/Partially Received" : 6,
+            "Closed" : 7
+        }
+// console.log("data[i].status",statusObject[data[0].status])
         for(var i=0; i<data.length; i++){
             finalData.push({
                 RecordID   :   i,
@@ -186,7 +197,7 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
                 quantity   : data[i].quantity,
                 amount     : data[i].amount,
                 vendorAcceptQuantity : data[i].vendorAcceptQuantity,
-                status     : data[i].status
+                status     : statusObject[data[i].status]
             })
         }
        
@@ -196,7 +207,7 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
             data : finalData
         }
 
-        console.log(data);
+       // console.log(data);
 
 
        

@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 var nsrestlet = require('nsrestlet');
 var moment = require('moment');
+let request = require('request')
 
 const app = express()
 
@@ -215,11 +216,10 @@ router.post('/invoiceView&irid=:id', (req, res) => {
       }
       else {
         console.log("check0", response.body)
-
+        res.redirect('/invoiceForm&id=' + response.body)
 
       }
     })
-  res.redirect('/invoiceForm&id=' + response.body)
 
 })
 

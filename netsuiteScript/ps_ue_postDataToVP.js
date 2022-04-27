@@ -34,7 +34,6 @@ define(modules, function (record, log, search, runtime, url, https) {
    
                var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/createPurchaseRequest')
    
-               mongooseResponse = JSON.parse(mongooseResponse)
    
                if (mongooseResponse.success) {
                   mongoSyncSuccessUpdate('purchaseorder', customerRecord.id, mongooseResponse)
@@ -99,8 +98,8 @@ define(modules, function (record, log, search, runtime, url, https) {
             var filterType = "ItemRcpt"
             var getPOData = getPaymentSavedSearch(customerRecord.id)
             log.debug("checkpo", getPOData)
-            //var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
-
+            var newObjForMongo = generateMongoDBObject(getPOData)
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/createpayment')
             log.debug("newObjForMongo", newObjForMongo)
          }
 
@@ -110,6 +109,7 @@ define(modules, function (record, log, search, runtime, url, https) {
 
       if (context.type == 'edit') {
 
+         log.debug("checktype",customerRecord.type)
 
          if (customerRecord.type == "purchaseorder") {
             var filterType = "PurchOrd"
@@ -122,7 +122,6 @@ define(modules, function (record, log, search, runtime, url, https) {
 
             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updatePurchaseRequest')
 
-         //   mongooseResponse = JSON.parse(mongooseResponse)
 
             var Record = record.load({
                type: 'purchaseorder',
@@ -132,7 +131,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             if (mongooseResponse.success) {
                Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_issync', value: true })
                Record.setValue({ fieldId: 'custbody_nodejs_vendorportalfield_upd', value: '1' })
-               Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_syncdatet', value: new Date(mongooseResponse.currentDateTime) })
+               Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_syncdatet', value: mongooseResponse.currentDateTime})
                Record.save();
             }
 
@@ -422,67 +421,88 @@ define(modules, function (record, log, search, runtime, url, https) {
    }
 
    function getPaymentSavedSearch(internalId) {
-      var transactionSearchObj = search.create({
-         type: "transaction",
+      var vendorpaymentSearchObj = search.create({
+         type: "vendorpayment",
          filters:
-            [
-               ["type", "anyof", "VendBill", "VendPymt"],
-               "AND",
-               ["internalid", "anyof", internalId],
-               "AND",
-               ["applyingtransaction.internalid", "noneof", "@NONE@"]
-            ],
+         [
+            ["type","anyof","VendPymt"], 
+            "AND", 
+            ["mainline","is","F"], 
+            "AND", 
+            ["internalid","anyof",internalId]
+         ],
          columns:
-            [
-               search.createColumn({ name: "trandate", label: "Bill Date" }),
-               search.createColumn({ name: "internalid", label: "Bill internalid" }),
-               search.createColumn({ name: "tranid", label: "Invoice Number" }),
-               search.createColumn({ name: "entity", label: "Name" }),
-               search.createColumn({ name: "amount", label: "Bill Amount" }),
-               search.createColumn({
-                  name: "trandate",
-                  join: "applyingTransaction",
-                  label: "Payment Date"
-               }),
-               search.createColumn({
-                  name: "internalid",
-                  join: "applyingTransaction",
-                  label: "Bill payment internalid"
-               }),
-               search.createColumn({
-                  name: "tranid",
-                  join: "applyingTransaction",
-                  label: "Invoice Payment Number"
-               }),
-               search.createColumn({ name: "applyinglinkamount", label: "Payment Amount" }),
-               search.createColumn({
-                  name: "formulacurrency",
-                  formula: "{amount}-{applyinglinkamount}",
-                  label: "Bill Payment Amount"
-               }),
-               search.createColumn({ name: "statusref", label: "Status" })
-            ]
+         [
+            search.createColumn({
+               name: "internalid",
+               summary: "GROUP",
+               label: "Internal ID"
+            }),
+            search.createColumn({
+               name: "tranid",
+               summary: "GROUP",
+               label: "Document Number"
+            }),
+            search.createColumn({
+               name: "trandate",
+               summary: "GROUP",
+               label: "Date"
+            }),
+            search.createColumn({
+               name: "appliedtotransaction",
+               summary: "GROUP",
+               label: "Applied To Transaction"
+            }),
+            search.createColumn({
+               name: "debitamount",
+               summary: "SUM",
+               label: "Amount (Debit)"
+            }),
+            search.createColumn({
+               name: "entity",
+               summary: "GROUP",
+               label: "Name"
+            }),
+            search.createColumn({
+               name: "internalid",
+               join: "vendor",
+               summary: "GROUP",
+               label: "Internal ID"
+            }),
+            search.createColumn({
+               name: "amount",
+               join: "appliedToTransaction",
+               summary: "SUM",
+               label: "Amount"
+            }),
+            search.createColumn({
+               name: "trandate",
+               join: "appliedToTransaction",
+               summary: "GROUP",
+               label: "Date"
+            })
+         ]
       });
 
-      var isData = transactionSearchObj.run();
+      var isData = vendorpaymentSearchObj.run();
       var isFinalResult = isData.getRange(0, 1000);
       var gridDataResult = JSON.parse(JSON.stringify(isFinalResult));
-
+      return gridDataResult
    }
 
-   function generateNewObject_forgetvendorPaymentSavedSearch(getPOData) {
+   function generateMongoDBObject(getPOData) {
       var newObj = []
 
       newObj.push({
-         internalid   : getPOData[0].values["GROUP(applyingTransaction.internalid)"][0].value,
-         poNumber     : getPOData[0].values["GROUP(tranid)"],
-         date         : getPOData[0].values["GROUP(applyingTransaction.trandate)"],
-         quantity     : getPOData[0].values["SUM(quantity)"],
-         status       : getPOData[0].values["GROUP(statusref)"][0].text,
-         poAmount     : getPOData[0].values["SUM(amount)"][0].text,
-         billQunatity : getPOData[0].values["SUM(quantitybilled)"],
-         location     : getPOData[0].values["GROUP(location)"][0].text,
-         billNo       : getPOData[0].values["GROUP(applyingTransaction.tranid)"][0].text,
+         internalId         : getPOData[0].values["GROUP(internalid)"][0].value,
+         billPaymentNumber  : getPOData[0].values["GROUP(tranid)"],
+         date               : getPOData[0].values["GROUP(trandate)"],
+         billNumber         : getPOData[0].values["GROUP(appliedtotransaction)"][0].text,
+         amount             : getPOData[0].values["SUM(debitamount)"],
+         vendorName         : getPOData[0].values["GROUP(entity)"][0].text,
+         vendorInternalId   : getPOData[0].values["GROUP(entity)"][0].value,
+         billAmount         : getPOData[0].values["SUM(appliedToTransaction.amount)"],
+         billDate           : getPOData[0].values["GROUP(appliedToTransaction.trandate)"],
 
       })
 
@@ -520,7 +540,7 @@ define(modules, function (record, log, search, runtime, url, https) {
          Record.setValue({ fieldId: 'custbody_nodejs_vendorportalfield_upd', value: '0' })
       }
 
-      Record.setText({ fieldId: 'custbody_nodejs_vendorportal_syncdatet', text: new Date(mongooseResponse.currentDateTime) })
+      Record.setText({ fieldId: 'custbody_nodejs_vendorportal_syncdatet', text: mongooseResponse.currentDateTime })
       Record.setValue({ fieldId: 'custbody_nodejs_vendorportalfield_obj', value: mongooseResponse.mongoObjId })
 
       Record.save();

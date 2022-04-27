@@ -479,7 +479,7 @@ $.fn.eachFunction=function(){
 
            $.ajax({ 
                 type      : 'GET', //Method type
-                url       : '/billViewGetItemDetail&irid='+poInternalId, //Your form processing file URL 
+                url       : '/invoiceViewGetItemDetail&irid='+poInternalId, //Your form processing file URL 
                 data      : JSON.stringify(postForm), //Forms name
                 contentType: "application/json; charset=utf-8",
                 success   : function(data) 

@@ -125,7 +125,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
         let totalQty = data["quantity"]
         let location = data["location"]
         let totalAmount  = 0 
-        let viewBill  = "/billView&irid="+id
+        let viewBill  = "/invoiceView&irid="+id
         let route = "pages/itemFulfillmentForm"
         let listName = "Purchase Request"
        

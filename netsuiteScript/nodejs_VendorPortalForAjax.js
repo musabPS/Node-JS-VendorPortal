@@ -229,7 +229,7 @@ define([
                   recordObject.selectLine({ sublistId:'item' ,line:j });
                   vendorBillitem=recordObject.getCurrentSublistValue({ sublistId:'item' ,fieldId:'item'})
                 
-               //	log.debug("before match",vendorBillitem+'j'+j)
+                //	log.debug("before match",vendorBillitem+'j'+j)
                   if(itemData[i].item==vendorBillitem)
                   {
                      //  log.debug("on mathv",vendorBillitem+'set quanttity'+parseInt(itemData[i].qty))
