@@ -303,8 +303,8 @@ var dataParse ="";
    $("#save").click(function () {
 
 	$('#updatespinner').show();
+	$('#updatestatus').hide();
 	
-
    $('.modeltable .table-body').empty();
      var counttd=0
 	 var poObject={}
@@ -375,6 +375,7 @@ var dataParse ="";
            $('.btn_loaditems').empty();
            $('.btn_loaditems').append('Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>');
            $('#table_container').css('display','block');
+		   
            $('#table-main').empty();
            $('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
          
@@ -435,6 +436,16 @@ var dataParse ="";
 
                                             for(var i=0; i<data.length; i++)
 											{
+												var date = data[i].values["GROUP(expectedreceiptdate)"]
+
+												if(!date){
+													date='';
+												}
+												else {
+													date=moment(date).format("YYYY-MM-DD");
+											}
+
+
 												tableData+='<tr>'
 												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
 												 tableData+='<td class="pl-0  linenumber" name='+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
@@ -445,7 +456,7 @@ var dataParse ="";
 												 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
 												 tableData+='<td class="text-center  rate">'+data[i].values["MAX(rate)"]+'</td>'
 												 tableData+='<td class="text-center  accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
-												 tableData+='<td class="text-center  date" name=date'+i+'>'+ moment(data[i].values["GROUP(expectedreceiptdate)"]).format("YYYY-MM-DD")+'</td>' 
+												 tableData+='<td class="text-center  date" name=date'+i+'>'+date+'</td>' 
 												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
 												 tableData+='</tr>'
 

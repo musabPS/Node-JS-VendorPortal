@@ -220,47 +220,46 @@ router.post('/updateItemFulfillments', async (req, res) => {
 
 router.post('/createBill', async (req, res) => {
 
-    res.send("hh")
-    // try {
+    try {
 
-    //     console.log("reg", req.body)
-    //     var obj = req.body.netsuiteData[0]
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
 
-    //     const bill = new invoice(obj)
-    //     await bill.save();
+        const bill = new invoice(obj)
+        await bill.save();
 
-    //     console.log("objId", bill._id)
+        console.log("objId", bill._id)
 
-    //      let currentDate = new Date()
-    //      let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-    //      let response = {
-    //         success: true,
-    //         currentDateTime: currentDateTime,
-    //         type: "Create",
-    //         mongoObjId: bill._id
+         let currentDate = new Date()
+         let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+         let response = {
+            success: true,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            mongoObjId: bill._id
 
-    //     }
-
-
-    //     res.send(JSON.stringify(response))
-    // }
-    // catch (e) {
-    //     let currentDate = new Date()
-    //     let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
-    //     let response = {
-    //         success: false,
-    //         currentDateTime: currentDateTime,
-    //         type: "Create",
-    //         error: e
-
-    //     }
+        }
 
 
-    //     res.send(JSON.stringify(response))
+        res.send(JSON.stringify(response))
+    }
+    catch (e) {
+        let currentDate = new Date()
+        let currentDateTime = moment(currentDate).format('MM/DD/YYYY hh:mm:ss A');
+        let response = {
+            success: false,
+            currentDateTime: currentDateTime,
+            type: "Create",
+            error: e
+
+        }
 
 
-    //     console.log(e)
-    // }
+        res.send(JSON.stringify(response))
+
+
+        console.log(e)
+    }
 
 })
 

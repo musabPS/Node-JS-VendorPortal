@@ -13,7 +13,7 @@ const upload = multer({ dest: 'uploads/' })
 const app = express()
 const FormData = require('form-data');
 const fs = require('fs');
-
+var stream = require('stream');
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
@@ -202,7 +202,7 @@ router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,
   console.log(req.file)
   let form = new FormData();
   //form.append('custpage_file0',this.new_attachments)
-  form.append('fieldname', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
+  // form.append('fieldname', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
 
   console.log("chddd", req.body)
   console.log("req.file", req.file)
@@ -213,39 +213,78 @@ router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,
   const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid=" + id
 
 
-  axios.post(url, form, {
-            headers: {
-                'Content-Type': `multipart/form-data; boundary=${form._boundary()}`
-            }
-        }).then((responseFromServer2) => {
-            res.send("SUCCESS")
-        }).catch((err) => {
-            res.send("ERROR")
-        })
+  // axios.post(url, form, {
+  //           headers: {
+  //               'Content-Type': `multipart/form-data; boundary=${form._boundary()}`
+  //           }
+  //       }).then((responseFromServer2) => {
 
+          
+  //           res.send("SUCCESS")
+  //       }).catch((err) => {
+  //           res.send("ERROR")
+  //       })
 
-  // request({
-  //   url, json: true,
-  //   method: "POST",
-  //   body:req.file,
-  //   headers: {
-  //     "contentType": "multipart/form-data",
-  //   }
-  // },
-  //   (error, response, body) => {
-  //     if (error) {
-  //       console.log('Unable to connect to suitelet', body)
-  //       res.send("error")
+  let bufferStream = new stream.PassThrough();
+  bufferStream.end(req.file.buffer);
+  request({
+    url, json: true,
+    method: "POST",
+    body:req.file,
+    headers: {
+      "contentType": "multipart/form-data",
+    }
+  },
+    (error, response, body) => {
+      if (error) {
+        console.log('Unable to connect to suitelet', body)
+        res.send("error")
     
-  //     }
-  //     else {
-  //       console.log("check0", response.body)
-  //       res.redirect('/invoiceForm&id=' + response.body)
+      }
+      else {
+        console.log("check0", response.body)
+        res.redirect('/invoiceForm&id=' + response.body)
 
-  //     }
-  //   })
+      }
+    })
+
 
 })
+
+function uploadAttachedFiles(auth, file, folderId) {
+  log(`uploadAttachedFiles() ... `, fileName);
+  drive = google.drive({ version: 'v3', auth });
+
+  log(`checking if file && file.length > 0 file = ${file}... `, fileName);
+  if (file && file.length > 0) {
+      for (var i = 0; i < file.length; i++) {
+          drive = google.drive({ version: 'v3', auth })
+          let bufferStream = new stream.PassThrough();
+          bufferStream.end(file[i].buffer);
+          drive = google.drive({ version: 'v3', auth })
+          drive.files.create({
+              media: {
+                  mimeType: ["image/png", "image/jpeg", 'application/pdf'],
+                  body: bufferStream
+              },
+              resource: {
+                  name: file[i].originalname,
+                  // if you want to store the file in the root, remove this parents
+                  parents: [folderId]
+              },
+              fields: 'id',
+          }).then(function (resp) {
+              console.log(resp, 'resp');
+          }).catch(function (error) {
+              console.log(error);
+          })
+
+
+
+      }
+  }
+
+}
 
 router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
 
