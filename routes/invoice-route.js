@@ -8,8 +8,11 @@ const axios = require('axios');
 var nsrestlet = require('nsrestlet');
 var moment = require('moment');
 let request = require('request')
-
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const app = express()
+const FormData = require('form-data');
+const fs = require('fs');
 
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
@@ -192,34 +195,55 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
 
 })
 
-router.post('/invoiceView&irid=:id', (req, res) => {
+router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,next) => {
+
+
+  const fileRecievedFromClient = req.file; //File Object sent in 'fileFieldName' field in multipart/form-data
+  console.log(req.file)
+  let form = new FormData();
+  //form.append('custpage_file0',this.new_attachments)
+  form.append('fieldname', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
 
   console.log("chddd", req.body)
+  console.log("req.file", req.file)
 
   let { id } = req.params
 
   console.log("chd", id)
   const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid=" + id
-  request({
-    url, json: true,
-    method: "POST",
-    body: req.body,
-    headers: {
-      "contentType": "application/json",
-    }
-  },
-    (error, response, body) => {
-      if (error) {
-        console.log('Unable to connect to suitelet', body)
-        res.send("error")
-    
-      }
-      else {
-        console.log("check0", response.body)
-        res.redirect('/invoiceForm&id=' + response.body)
 
-      }
-    })
+
+  axios.post(url, form, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${form._boundary()}`
+            }
+        }).then((responseFromServer2) => {
+            res.send("SUCCESS")
+        }).catch((err) => {
+            res.send("ERROR")
+        })
+
+
+  // request({
+  //   url, json: true,
+  //   method: "POST",
+  //   body:req.file,
+  //   headers: {
+  //     "contentType": "multipart/form-data",
+  //   }
+  // },
+  //   (error, response, body) => {
+  //     if (error) {
+  //       console.log('Unable to connect to suitelet', body)
+  //       res.send("error")
+    
+  //     }
+  //     else {
+  //       console.log("check0", response.body)
+  //       res.redirect('/invoiceForm&id=' + response.body)
+
+  //     }
+  //   })
 
 })
 
