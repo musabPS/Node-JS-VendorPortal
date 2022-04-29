@@ -493,9 +493,11 @@ $.fn.eachFunction=function(){
                                 var totalQuantity=0
                                 var totalAmount=0
 
-								
+								 
 								tableData+= '<tr>'
-											
+													+'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
+													+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
+													+'<input type="checkbox"  id="checkboxAll">&nbsp;<span></span></label></span></th>'
 													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
 													+'<th class="text-center font-weight-bold text-muted text-uppercase"> Quantity</th>'
@@ -509,6 +511,7 @@ $.fn.eachFunction=function(){
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
+													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
 													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
@@ -549,6 +552,7 @@ $.fn.eachFunction=function(){
                                     //     $('#btn_save').hide();
                                     // }
 
+									$.fn.checkFunction();
                             }
                             
             });
@@ -560,6 +564,36 @@ $.fn.eachFunction=function(){
 
       
 
+		$(document).ready(function(){
+		
+		$.fn.checkFunction=function(){
+			console.log("checkeddddd");
 
+				$(".table #checkbox-solo").change(function(event){
+					console.log("dadadad")
+					var billedQuantity = $(this).parents('tr').find('td:eq(3)').text();
+					
+
+			if (this.checked){
+
+				$(this).parents('tr').find('td:eq(3)').html('<input class="inputquantity form-control"  name="quantity" type="number" value='+billedQuantity+' min="0">');
+			
+
+			} else {
+
+				var quantity2 = $(this).parents('tr').find('input[name="quantity"]').val();
+				
+				$(this).parents('tr').find('td:eq(3)').text(quantity2);
+				
+
+				$(this).parents('tr').val(quantity2);
+				
+				
+			}
+});
+
+		
+		}
+	});
 
 	</script>

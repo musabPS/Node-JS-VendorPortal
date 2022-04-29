@@ -7,7 +7,7 @@
    'N/record',
    'N/log',
    'N/search',
-   'N/runtime',
+   'N/runtime', 
    'N/url',
    'N/https'
 ];
@@ -297,10 +297,6 @@ define(modules, function (record, log, search, runtime, url, https) {
          vendorInternalId: getPOData[0].values["GROUP(vendor.internalid)"][0].value,
          vendorName: getPOData[0].values["GROUP(vendor.entityid)"],
          vendorAccept: vendorAccept
-
-
-
-
       })
 
       return newObj
@@ -398,9 +394,6 @@ define(modules, function (record, log, search, runtime, url, https) {
 
    function generateNewObject_forgetvendorBillSavedSearch(getPOData) {
       var newObj = []
-
-     
-
       newObj.push({
          internalId   : getPOData[0].values["GROUP(applyingTransaction.internalid)"][0].value,
          billNo       : getPOData[0].values["GROUP(applyingTransaction.tranid)"],
@@ -425,7 +418,7 @@ define(modules, function (record, log, search, runtime, url, https) {
          type: "vendorpayment",
          filters:
          [
-            ["type","anyof","VendPymt"], 
+            ["type","anyof","VendPymt"],  
             "AND", 
             ["mainline","is","F"], 
             "AND", 
