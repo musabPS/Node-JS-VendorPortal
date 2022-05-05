@@ -76,6 +76,9 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
   console.log("check", req.session.user_id)
   try {
     data = await Invoice.find({ vendorInternalId: 944 })
+
+    // console.log("data",data)
+
     var finalData=[]
     var dataCollection={}
     var recordsTotal=data.length
@@ -90,6 +93,7 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
            amount     : data[i].poAmount,
            billQuantity     : data[i].billQuantity,
            billAmount     : data[i].billAmount,
+           status : data[i].approvalStatus
        })
    }
 
@@ -98,7 +102,8 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
        recordsFiltered : recordsFiltered,
        data : finalData
    }
-   console.log("dadad",dataCollection)
+  //  console.log("dadad",dataCollection)
+  //console.log("final data",finalData)
 
    res.send(dataCollection) 
     //data.purchaseRequests = purchaseRequests
@@ -123,10 +128,11 @@ router.get('/invoiceForm&id=:id', async (req, res) => {
     //    var date = data.date
     var tranId = data.invoiceNumber
     var location = data.location
+    var status = data.approvalStatus
     console.log(data.date)
     //data.purchaseRequests = purchaseRequests
     let route = "pages/invoiceForm"
-    res.render('index', { route, listName, data, moment: moment, date, tranId, location })
+    res.render('index', { route, listName, data, moment: moment, date, tranId, location, status })
   }
   catch (e) {
     console.log(e)

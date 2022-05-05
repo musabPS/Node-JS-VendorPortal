@@ -76,7 +76,6 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
     try {
          data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
          // data = await ItemFulfillments.findOne({internalId:"6728"})
-         console.log("check",data)
 
          var finalData=[]
          var dataCollection={}
@@ -90,6 +89,7 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
                 date   : moment(data[i].date).format("MM-DD-YY") ,
                 quantity   : data[i].quantity,
                 amount     : data[i].amount,
+                status : data[i].status
             })
         }
 
@@ -115,23 +115,25 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
     let { id } = req.params
     let data = []
     let query = { internalId: id };
-    try {
+    try {   
         console.log("query", query)
         data = await ItemFulfillments.findOne(query)
         console.log("data", data)
 
         let tranId   = data["ifNumber"]
-        let date     = moment(data["date"]).format("MM-DD-YYYY")
+        let date     = moment(data["date"]).format("MM-DD-YYYY") 
         let totalQty = data["quantity"]
         let location = data["location"]
+        let status = data["approvalStatus"]
         let totalAmount  = 0 
         let viewBill  = "/invoiceView&irid="+id
         let route = "pages/itemFulfillmentForm"
         let listName = "Purchase Request"
        
+        console.log(route)
 
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill})   
+        res.render('index', { route, listName, breadcrumbs,tranId,date,totalQty,totalAmount,location,viewBill, status})   
      }
     catch (e) {
         console.log(e)

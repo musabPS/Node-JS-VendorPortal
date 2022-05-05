@@ -534,36 +534,16 @@ $.fn.eachFunction=function(){
                                     $('#totalamount').text(totalAmount)
 									$('#pointernalid').val(poInternalId)
 
-                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                    //     $("#trandate option[value='']").attr('selected', true)
-                                    //     $("#customer option[value='']").attr('selected', true)
-                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
-                                    //     $(this).addClass('flaticon2-send-1');
-                                    //   ///  window.location.reload();
-                                    // event.preventDefault();
-
-                                    // if(recordType!='invoice'){
-                                    //     $('#btn_save').show();
-                                    // }
-
                                     $('#btn_save').show();
-
-                                    // if(pageType=='view'){
-                                    //     $('#btn_save').hide();
-                                    // }
 
 									$.fn.checkFunction();
                             }
                             
             });
-           
-
-          //fas fa-caret-down
-            
+         
         });
 
       
-
 		$(document).ready(function(){
 		
 		$.fn.checkFunction=function(){
@@ -584,8 +564,6 @@ $.fn.eachFunction=function(){
 				var quantity2 = $(this).parents('tr').find('input[name="quantity"]').val();
 				
 				$(this).parents('tr').find('td:eq(3)').text(quantity2);
-				
-
 				$(this).parents('tr').val(quantity2);
 				
 				

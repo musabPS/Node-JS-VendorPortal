@@ -60,10 +60,11 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
         let tranId = data.poNumber
         let location = data.location
         let date = data.date
+        let status = data.status
         date = moment(new Date(date)).format('MM-DD-YYYY')
     
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs, tranId, location, date })
+        res.render('index', { route, listName, breadcrumbs, tranId, location, date, status })
 
         //data.purchaseRequests = purchaseRequests
     }
