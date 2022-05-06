@@ -42,7 +42,7 @@ router.get('/paymentList', async (req, res) => {
 
 
     try {
-        data =  await payments.find({}) 
+        data =  await payments.find({}).sort({date: -1})
         console.log("check",data[0])
         var filterData={}
 
@@ -71,8 +71,8 @@ peymentDataarray= JSON.stringify(peymentDataarray)
      
         let route = "pages/paymentsTable"
         let listName = "Payment List"
-        breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs,data,moment,peymentDataarray,moment})
+        let breadcrumb = { name1 : "Payments List", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
+        res.render('index', { route, listName, breadcrumb, data,moment,peymentDataarray,moment})
     }
     catch (e) {
        console.log(e)

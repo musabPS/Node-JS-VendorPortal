@@ -61,7 +61,7 @@ router.post('/createPurchaseRequest', async (req, res) => {
         }
 
 
-        res.send(JSON.stringify(response))
+        res.send(JSON.stringify(response)) 
     }
     catch (e) {
         let currentDate = new Date()

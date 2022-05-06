@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const itemFulfillmentSchema = new mongoose.Schema({
-    internalId: {
+    internalid: {
         type: Number,
         trim:true,
         required : true
