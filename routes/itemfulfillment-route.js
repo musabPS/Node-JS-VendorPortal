@@ -51,16 +51,15 @@ router.get('/itemFulfillmentList', authCheck, async (req, res) => {
 
     let data = []
     try {
-        data =  await ItemFulfillments.find()
-        //  data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}).sort({date: -1})
+         data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
          // data = await ItemFulfillments.findOne({internalId:"6728"})
          console.log("check",data)
       
          let route = "pages/itemfulfillmentTable"
          let listName = "ItemFulfillment"
-         let breadcrumb = { name1 : "Item Fulfillment List", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
 
-         res.render('index', { route, listName,data,moment,breadcrumb})
+         breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
+         res.render('index', { route, listName, breadcrumb,data,moment })
      }
      catch (e) {
         console.log(e)
@@ -75,33 +74,32 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
 
 
     try {
-        data =  await ItemFulfillments.find().sort({date: -1})
-        //  data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
+         data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
          // data = await ItemFulfillments.findOne({internalId:"6728"})
+         console.log("check",data)
 
          var finalData=[]
          var dataCollection={}
          var recordsTotal=data.length
          var recordsFiltered = data.length
-      
+         console.log(data[0].internalId)
+
         for(var i=0; i<data.length; i++){
+
+            
             finalData.push({
                 RecordID   :   i,
-                ifNumber   : '<a href=/itemFulfillmentForm&id='+data[i].internalid+' > '+data[i].ifNumber+'  </a> ' ,
+                ifNumber   : '<a href=/itemFulfillmentForm&id='+data[i].internalId+' > '+data[i].ifNumber+'  </a> ' ,
                 date   : moment(data[i].date).format("MM-DD-YY") ,
                 quantity   : data[i].quantity,
                 amount     : data[i].amount,
-                status : data[i].approvalStatus,
             })
         }
 
-        console.log("final Data",finalData)
-
-        dataCollection = {
+         dataCollection = { 
             recordsTotal : recordsTotal,
             recordsFiltered : recordsFiltered,
-            data : finalData,
-            breadcrumb : { name1 : "Item Fulfillment List", link1 : "#", name2 : "Item Fulfillment List", link2 : "#" }
+            data : finalData
         }
 
         res.send(dataCollection) 
@@ -120,25 +118,23 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
     let { id } = req.params
     let data = []
     let query = { internalId: id };
-    try {   
+    try {
         console.log("query", query)
         data = await ItemFulfillments.findOne(query)
         console.log("data", data)
 
         let tranId   = data["ifNumber"]
-        let date     = moment(data["date"]).format("MM-DD-YYYY") 
+        let date     = moment(data["date"]).format("MM-DD-YYYY")
         let totalQty = data["quantity"]
         let location = data["location"]
-        let status = data["approvalStatus"]
         let totalAmount  = 0 
         let viewBill  = "/invoiceView&irid="+id
         let route = "pages/itemFulfillmentForm"
         let listName = "Purchase Request"
-        let breadcrumb = { name1 : "Item Fulfillment List", link1 : "ItemFulfillmentList", name2 : ">Item Fulfillment Form", link2 : "#", name3 : "Home" }
-       
-        console.log(route)
+        let status = data["approvalStatus"]
 
-        res.render('index', { route, listName, breadcrumb,tranId,date,totalQty,totalAmount,location,viewBill, status})   
+        breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
+        res.render('index', { route, listName, breadcrumb,tranId,date,totalQty,totalAmount,location,viewBill,status})   
      }
     catch (e) {
         console.log(e)
@@ -186,9 +182,9 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
             let tranId = response.data[0].values["GROUP(tranid)"]
             let location = response.data[0].values["GROUP(locationnohierarchy)"]
             let date = response.data[0].values["GROUP(trandate)"]
-            let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/"}
+            breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
             res.send(tableData)
-            //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
+           
         })
         .catch(function (error) {
             console.log("erorr", error);
