@@ -164,7 +164,7 @@ router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
       let location = response.data[0].values["GROUP(locationnohierarchy)"]
       let date = response.data[0].values["GROUP(trandate)"]
       let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
-      res.send(tableData,breadcrumb)
+      res.send(tableData)
       //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
     })
     .catch(function (error) {
@@ -321,7 +321,7 @@ router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
       let date = response.data[0].values["GROUP(trandate)"]
       breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } }; 
      let breadcrumb = { name1 : "t", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
-      res.send(tableData,breadcrumb)
+      res.send(tableData)
     })
     .catch(function (error) {
       console.log("erorr", error);

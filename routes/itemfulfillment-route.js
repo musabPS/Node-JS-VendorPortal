@@ -187,7 +187,7 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
             let location = response.data[0].values["GROUP(locationnohierarchy)"]
             let date = response.data[0].values["GROUP(trandate)"]
             let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/"}
-            res.send(tableData,breadcrumb)
+            res.send(tableData)
             //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
         })
         .catch(function (error) {

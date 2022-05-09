@@ -92,15 +92,13 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest&internalid=' + id, {
     })
         .then(function (response) {
-             console.log(response.data[0]); 
+            // console.log(response.data[0]); 
  
             let tableData = response.data
             let tranId = response.data[0].values["GROUP(tranid)"]
             let location = response.data[0].values["GROUP(locationnohierarchy)"]
             let date = response.data[0].values["GROUP(trandate)"]
-          //  res.send(tableData,breadcrumb)
-
-            res.status(200).send((tableData,breadcrumb));
+            res.send(tableData)
             //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
         })
         .catch(function (error) {
@@ -247,3 +245,4 @@ router.get('/paymentList2',authCheck, async (req, res) => {
 
 
 module.exports = router
+

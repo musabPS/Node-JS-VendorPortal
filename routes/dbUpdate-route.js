@@ -126,6 +126,45 @@ router.post('/updatePurchaseRequest', async (req, res) => {
     }
 })
 
+
+router.post('/DeletePurchaseRequest', async (req, res) => {
+    var data = []
+    try {
+
+        console.log("reg", req.body)
+        var obj = req.body.netsuiteData[0]
+
+        const filter = { internalId: obj.internalId };
+        console.log("checkresponce ", filter)
+        // delete obj.internalId;
+
+
+        // data = PurchaseRequests.updateOne(filter, obj, function (err, res) {
+        //     if (err) throw err;
+        //     console.log("1 document update", res);
+        //     responceData = res
+
+        //     console.log("checkresponce ", data)
+        // });
+
+         // Delete the document by its _id
+        await PurchaseRequests.deleteOne({ internalId : internalId });
+
+        res.send()
+    }
+    catch (e) {
+
+        // let response = {
+        //     success: false,
+        //     type: "Delete",
+        //     error: e
+        // }
+
+        res.send(JSON.stringify("Error Delete!"))
+    }
+})
+
+
 router.post('/createItemFulfillments', async (req, res) => {
     try {
 
@@ -359,5 +398,6 @@ router.post('/createpayment',async(req,res)=>{
  
 
 })
+
 
 module.exports = router
