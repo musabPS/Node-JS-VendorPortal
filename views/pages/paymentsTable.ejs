@@ -233,6 +233,7 @@ var KTDatatableChildDataLocalDemo = function() {
 
 			pagination: true,
 
+
 			detail: {
 				title: 'Load sub table',
 				content: subTableInit,
@@ -257,10 +258,13 @@ var KTDatatableChildDataLocalDemo = function() {
 				}, {
 					field: 'Date',
 					title: 'Date',
+					sortable: true,
 				}, {
 					field: 'CheckAmount',
 					title: 'Check Amount',
 				}, ],
+
+				"order": [[ 2, "desc" ]]
 		});
 		console.log("check",dataJSONArray)
 
@@ -292,7 +296,5 @@ jQuery(document).ready(function() {
     } );
 	KTDatatableChildDataLocalDemo.init();
 });
-
-       
 
 		</script>		
