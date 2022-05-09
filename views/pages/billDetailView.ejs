@@ -160,7 +160,7 @@
 		
 		</div>
 		<div class="modal-body">
-				<form method="POST" enctype="multipart/form-data" id="fileform">
+				<form method="POST" enctype="multipart/form-data" id="fileform" action="<%-netsuieFileUpload%>">
 
 					<!-- <button style="display:block;width:120px; height:30px;" onclick="document.getElementById('custpage_file').click()">Your text here</button> -->
 					<!-- <button type="button"  class="btn btn-light-primary font-weight-bold"  onclick="document.getElementById('custpage_file').click()"/>Choose File </button> -->
@@ -199,6 +199,19 @@
 
 
 <script>
+
+
+
+
+
+
+
+
+                var loc=window.location.href
+                var url = new URL(loc).href;
+                urlSplit=url.split('=')
+                console.log("url",urlSplit)
+              
 
 	var selectfilerow=0
 
@@ -457,11 +470,7 @@ $.fn.eachFunction=function(){
            $('#table-main').append('<div class="col-md-10"><p text-xl-left></p> <p style="text-align: center">Please wait.. </p><p></p> <div style=" " class=" spinner spinner-primary spinner-lg mr-45  spinner-center"></div>   </div>');
          
 
-           var loc=window.location.href
-                var url = new URL(loc).href;
-                urlSplit=url.split('=')
-                console.log("url",urlSplit)
-              
+         
                 var tableData='<thead style="text-align: center;">'
                 var postForm={};
                 var record=""
@@ -551,15 +560,42 @@ $.fn.eachFunction=function(){
 
                             }
                             
-            });
+            }); 
+
+   
+		
+		
            
 
           //fas fa-caret-down
             
         });
+		  
+		// $('#filesave').click(function () 
+        // {
 
+		// 	var poInternalId = urlSplit[1]
+		// 	var fd = new FormData();
+        //     var files = $('#custpage_file0')[0].files[0]
+		// 	fd.append('file',files)
+
+		// 	console.log(files)
+		
+		// 	$.ajax({ 
+		// 			type      : 'POST', //Method type
+		// 			url       : 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+poInternalId,  
+		// 			data      :  files,
+		// 			contentType: false,
+        //             processData: false,
+		// 			success   : function(data) 
+		// 						{
+		// 							console.log("check",data)
+								
+		// 						}
+	
+		// 		});
       
-
+		// });
 
 
 	</script>

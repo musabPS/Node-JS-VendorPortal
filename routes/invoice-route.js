@@ -184,9 +184,10 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
     let totalAmount = data["amount"]
     let poNumber = data["poNumber"]
     let fileUpload = "uploadFile&irid=" + id
+    let netsuieFileUpload = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+id
 
     breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-    res.render('index', { route, listName, breadcrumbs, tranId, date, totalQty, totalAmount, location, poNumber, fileUpload })
+    res.render('index', { route, listName, breadcrumbs, tranId, date, totalQty, totalAmount, location, poNumber, fileUpload, netsuieFileUpload })
   }
 
   catch (e) {
@@ -201,12 +202,12 @@ router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,
   const fileRecievedFromClient = req.file; //File Object sent in 'fileFieldName' field in multipart/form-data
   console.log(req.file)
   let form = new FormData();
-  //form.append('custpage_file0',this.new_attachments)
+  form.append('custpage_file0',req.file)
   // form.append('fieldname', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
 
   console.log("chddd", req.body)
   console.log("req.file", req.file)
-
+ 
   let { id } = req.params
 
   console.log("chd", id)
@@ -230,7 +231,7 @@ router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,
   request({
     url, json: true,
     method: "POST",
-    body:req.file,
+    body:form,
     headers: {
       "contentType": "multipart/form-data",
     }
