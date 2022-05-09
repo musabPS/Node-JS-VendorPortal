@@ -74,14 +74,14 @@
 										  </div>
 
 
-
+ 
 											  </div>
 
 										  <!-- end action-->
-											
+											 
 										  <div class="col-md-9">
 											  <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row pt-6">
-												  <h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Item Fulfillment</h1>
+												  <h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Item Fulfillment <br> <span class="label label-lg font-weight-bold label-light-primary label-inline"> <%= status %> </h1>
 												  
 												  
 											  
@@ -376,7 +376,9 @@
 
 								
 								tableData+= '<tr>'
-											
+													+'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
+													+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
+													+'<input type="checkbox"  id="checkboxAll">&nbsp;<span></span></label></span></th>'
 													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
 													+'<th class="text-center font-weight-bold text-muted text-uppercase">Delivered Quantity</th>'
@@ -386,12 +388,13 @@
 													+'<th class="font-weight-bold text-muted text-uppercase">Amount</th>'
 
 													+'</tr>'
-												+'</thead>'
+												+'</thead>'  
 												+'<tbody>'
 
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
+													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
 													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
@@ -404,7 +407,7 @@
 											
 												 totalQuantity+=parseInt(data[i].values["SUM(quantity)"])
 												 totalAmount+=parseInt(data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"])
-												}
+												} 
 												 
 
 											tableData+='</tbody>'	

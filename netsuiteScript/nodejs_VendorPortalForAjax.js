@@ -253,7 +253,7 @@ define([
             log.debug("checkidsaveid",saveId)
            
           
-            context.response.write("<script> window.open('http://localhost:3000/invoiceForm&id="+saveId+"'); </script>")
+            context.response.write("<script> window.open('http://localhost:3000/invoiceForm&id="+saveId+"','_self'); </script>")
             log.debug("checkidsaveid",saveId)
           
                     filesIdarray=fileListId.split(",")

@@ -25,7 +25,7 @@
                                               
 											<div class="col-md-9">
 												<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column fl pt-6">
-													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Invoice  </h1>
+													<h1 class="display-4 font-weight-boldest mb-10 opacity-80" >Invoice <br> <span class="label label-lg font-weight-bold label-light-primary label-inline"> <%= status %>  </span> </h1>
 													
 													
 												
@@ -45,7 +45,7 @@
 												<div class="border-bottom w-100"></div>
 												<div class="d-flex justify-content-between pt-6">
 													<div class="d-flex flex-column flex-root">
-														<span class="font-weight-bolder mb-2 ">DATE</span>
+														<span class="font-weight-bolder mb-2 ">Date</span>
 														<span class="opacity-70"><%= date %></span>
 													</div>
 													<div class="d-flex flex-column flex-root">
@@ -338,8 +338,11 @@
 								
 								tableData+= '<tr>'
 								            	+'<thead>'
+													+'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
+													+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
+													+'<input type="checkbox"  id="checkboxAll">&nbsp;<span></span></label></span></th>'
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
-													+'<th class="text-center font-weight-bold text-muted text-uppercase">Quantity</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Billed Quantity</th>'
 													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
 													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>'
 													+'</tr>'
@@ -349,6 +352,7 @@
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
+												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
                                                  tableData+='<td class="text-center pt-7 qty">'+data[i].values["GROUP(item)"][0].text+'</td>' 
 												 tableData+='<td class="text-center pt-7 rate">'+data[i].values["SUM(quantity)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'
@@ -386,13 +390,46 @@
                                     //     $('#btn_save').hide();
                                     // }
 
+									$.fn.checkFunction();
+
                             }
                             
             });
-           
-
-          //fas fa-caret-down
+        
             
         });
    
+		$(document).ready(function(){
+		
+		$.fn.checkFunction=function(){
+			console.log("checkeddddd");
+
+				$(".table #checkbox-solo").change(function(event){
+					console.log("dadadad")
+					var billedQuantity = $(this).parents('tr').find('td:eq(2)').text();
+					
+
+			if (this.checked){
+
+				$(this).parents('tr').find('td:eq(2)').html('<input class="inputquantity form-control"  name="quantity" type="number" value='+billedQuantity+' min="0">');
+			
+
+			} else {
+
+				var quantity2 = $(this).parents('tr').find('input[name="quantity"]').val();
+				
+				$(this).parents('tr').find('td:eq(2)').text(quantity2);
+				
+
+				$(this).parents('tr').val(quantity2);
+				
+				
+			}
+});
+
+		
+		}
+	});
+
+
 	</script>					

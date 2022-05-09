@@ -102,12 +102,13 @@
                             <tr>
 
                                 <th title="Field #4">Invoice#</th>
-                                <th title="Field #5">Date</th>
                                 <th title="Field #4">PO#</th>
+                                <th title="Field #5">Date</th>
                                 <th title="Field #6">Quantity Billed</th>
                                 <th title="Field #7">PO Amount</th>
                                 <th title="Field #8">Total Quantity</th>
                                 <th title="Field #9">Total Amount</th>
+								<th title="Field #10">status</th>
                                 
                             </tr>
                         </thead>
@@ -151,13 +152,13 @@ var KTDatatablesExtensionButtons = function() {
 					targets: 6,
 					render: function(data, type, full, meta) {
 						var status = {
-							1: {'title': 'Pending', 'class': 'label-light-primary'},
-							2: {'title': 'Delivered', 'class': ' label-light-danger'},
-							3: {'title': 'Canceled', 'class': ' label-light-primary'},
-							4: {'title': 'Success', 'class': ' label-light-success'},
-							5: {'title': 'Info', 'class': ' label-light-info'},
-							6: {'title': 'Danger', 'class': ' label-light-danger'},
-							7: {'title': 'Warning', 'class': ' label-light-warning'},
+							1: {'title': 'Pending Bill', 'class': 'label-light-primary'},
+							2: {'title': 'Pending Receipt', 'class': ' label-light-danger'},
+							3: {'title': 'Pending Supervisor Approval', 'class': ' label-light-primary'},
+							4: {'title': 'Fully Billed', 'class': ' label-light-success'},
+							5: {'title': 'Partially Received', 'class': ' label-light-info'},
+							6: {'title': 'Pending Billing/Partially Received', 'class': ' label-light-danger'},
+							7: {'title': 'Closed', 'class': ' label-light-warning'},
 						};
 						if (typeof status[data] === 'undefined') {
 							return data;
@@ -296,7 +297,7 @@ var KTDatatablesExtensionButtons = function() {
 			initTable2();
 		},
 
-	};
+	}; 
 
 }();
 
@@ -390,14 +391,36 @@ var KTDatatablesExtensionsScroller = function() {
 			scroller: true,
 			columns: [
 				{data: 'RecordID', visible: false},
+				{data: 'poNumber'},
 				{data: 'date'},
-                {data: 'poNumber'},
 				{data: 'quantity'},
-				{data: 'amount'},
+				{data: 'amount'}, 
                 {data: 'billQuantity'},
                 {data: 'billAmount'},
+				{data: 'status'}, 
 			
-			],
+			],columnDefs: [
+				
+				{
+					width: '75px',
+					targets: -1,
+					render: function(data, type, full, meta) {
+						var status = {
+							'Pending Bill': {'title': 'Pending Bill', 'class': 'label-light-primary'},
+							'Pending Receipt': {'title': 'Pending Receipt', 'class': ' label-light-danger'},
+							'Pending Supervisor Approval': {'title': 'Pending Supervisor Approval', 'class': ' label-light-primary'},
+							'Fully Billed': {'title': 'Fully Billed', 'class': ' label-light-success'},
+							'Partially Received': {'title': 'Partially Received', 'class': ' label-light-info'},
+							'Pending Billing/Partially Received': {'title': 'Pending Billing/Partially Received', 'class': ' label-light-danger'},
+							'Closed': {'title': 'Closed', 'class': ' label-light-warning'},
+						};
+						if (typeof status[data] === 'undefined') {
+							return data;
+						}
+						return '<span class="label label-lg font-weight-bold' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+					}
+				}
+			]
 			
 			
 		});

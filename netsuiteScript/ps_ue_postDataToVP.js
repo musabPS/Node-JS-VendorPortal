@@ -7,7 +7,7 @@
    'N/record',
    'N/log',
    'N/search',
-   'N/runtime',
+   'N/runtime', 
    'N/url',
    'N/https'
 ];
@@ -191,6 +191,102 @@ define(modules, function (record, log, search, runtime, url, https) {
 
       }
 
+
+      if (context.type == 'delete') {
+
+         log.debug("checktype",customerRecord.type)
+
+         if (customerRecord.type == "purchaseorder") {
+            var filterType = "PurchOrd"
+            var getPOData = getSavedSearchData(customerRecord.type, filterType, customerRecord.id)
+            log.debug("checkpo", getPOData)
+            var newObjForMongo = generateNewObject(getPOData)
+
+            log.debug("newObjForMongo", newObjForMongo)
+
+
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updatePurchaseRequest')
+
+
+            var Record = record.load({
+               type: 'purchaseorder',
+               id: customerRecord.id,
+            });
+
+            if (mongooseResponse.success) {
+               Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_issync', value: true })
+               Record.setValue({ fieldId: 'custbody_nodejs_vendorportalfield_upd', value: '1' })
+               Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_syncdatet', value: mongooseResponse.currentDateTime})
+               Record.save();
+            }
+
+            else {
+               Record.setValue({ fieldId: 'custbody_nodejs_vendorportal_issync', value: false })
+               Record.setValue({ fieldId: 'custbody_nodejsvendorportal_syncerror', value: mongooseResponse.error })
+               Record.save();
+
+            }
+
+            log.debug("newObjForMongo", mongooseResponse.success)
+            return
+
+         }
+
+         if (customerRecord.type == "itemreceipt") {
+            var filterType = "ItemRcpt"
+            var getPOData = getSavedSearchData(customerRecord.type, filterType, customerRecord.id)
+            log.debug("checkpo", getPOData)
+            var newObjForMongo = generateNewObject(getPOData)
+
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updateItemFulfillments')
+
+            if (mongooseResponse.success) {
+               log.debug("check mongoreturn on sucess", mongooseResponse)
+               mongoSyncSuccessUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+
+            else {
+               log.debug("check mongoreturn", mongooseResponse)
+               mongoSyncFailUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+            log.debug("newObjForMongo", newObjForMongo)
+         }
+
+         if (customerRecord.type == "vendorbill")
+          {
+            var getPOData = getvendorBillSavedSearch(customerRecord.id)
+            log.debug("checkpo", getPOData)
+            var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
+
+             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://b795-2400-adc1-18f-5d00-ddb2-d56b-53ee-7e2f.ngrok.io/updateBill')
+
+             log.debug("check mongoreturn on sucess", mongooseResponse)
+            if (mongooseResponse.success) {
+               log.debug("check mongoreturn on sucess", mongooseResponse)
+               mongoSyncSuccessUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+
+            else {
+               log.debug("check mongoreturn", mongooseResponse)
+               mongoSyncFailUpdate(customerRecord.type, customerRecord.id, mongooseResponse)
+            }
+
+            log.debug("newObjForMongo", newObjForMongo)
+         }
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
       var customerRecord = context.newRecord;
       // if (customerRecord.getValue('salesrep')) {
       //     var call = record.create({
@@ -297,10 +393,6 @@ define(modules, function (record, log, search, runtime, url, https) {
          vendorInternalId: getPOData[0].values["GROUP(vendor.internalid)"][0].value,
          vendorName: getPOData[0].values["GROUP(vendor.entityid)"],
          vendorAccept: vendorAccept
-
-
-
-
       })
 
       return newObj
@@ -398,9 +490,6 @@ define(modules, function (record, log, search, runtime, url, https) {
 
    function generateNewObject_forgetvendorBillSavedSearch(getPOData) {
       var newObj = []
-
-     
-
       newObj.push({
          internalId   : getPOData[0].values["GROUP(applyingTransaction.internalid)"][0].value,
          billNo       : getPOData[0].values["GROUP(applyingTransaction.tranid)"],
@@ -425,7 +514,7 @@ define(modules, function (record, log, search, runtime, url, https) {
          type: "vendorpayment",
          filters:
          [
-            ["type","anyof","VendPymt"], 
+            ["type","anyof","VendPymt"],  
             "AND", 
             ["mainline","is","F"], 
             "AND", 

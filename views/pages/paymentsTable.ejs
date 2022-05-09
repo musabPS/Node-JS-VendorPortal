@@ -287,6 +287,9 @@ var KTDatatableChildDataLocalDemo = function() {
 }();
 
 jQuery(document).ready(function() {
+	$('#kt_datatable').DataTable( {
+        "order": [[ 1, "desc" ]]
+    } );
 	KTDatatableChildDataLocalDemo.init();
 });
 

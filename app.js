@@ -72,7 +72,8 @@ app.get('/', authCheck, (req, res) => {
 
           // tableData = JSON.parse(response.data)
            let route = "partials/_content" 
-           res.render("index", { route, weekData, itemStatistics, userId })
+           let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "", name3 : "", link3 : "#"}
+           res.render("index", { route, weekData, itemStatistics, userId, breadcrumb })
       }) 
       .catch(function (error) {
           console.log("erorr", error);

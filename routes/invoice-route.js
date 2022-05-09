@@ -57,11 +57,14 @@ router.get('/invoiceList', authCheck, async (req, res) => {
   var listName = "invoice"
   console.log("check", req.session.user_id)
   try {
-    data = await Invoice.find({ vendorInternalId: 944 })
+    data = await Invoice.find({ vendorInternalId: 944 }).sort({date: -1})
+    // data = await Invoice.find({ vendorInternalId: 944 },{"sort" : ['datefield', 'desc']})
+    //data = await Invoice.find({ vendorInternalId: 944 }).sort({datefield: -1})
   
     //data.purchaseRequests = purchaseRequests
-    let route = "pages/invoiceTable"
-    res.render('index', { route, listName, data, moment: moment })
+    let route = "pages/invoiceTable" 
+    let breadcrumb = { name1 : "Invoice List", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/"}
+    res.render('index', { route, listName, data,breadcrumb, moment: moment })
   }
   catch (e) {
     console.log(e)
@@ -75,7 +78,10 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
   var listName = "invoice"
   console.log("check", req.session.user_id)
   try {
-    data = await Invoice.find({ vendorInternalId: 944 })
+    data = await Invoice.find({ vendorInternalId: 944 }).sort({date: -1})
+
+    // console.log("data",data)
+
     var finalData=[]
     var dataCollection={}
     var recordsTotal=data.length
@@ -90,6 +96,7 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
            amount     : data[i].poAmount,
            billQuantity     : data[i].billQuantity,
            billAmount     : data[i].billAmount,
+           status : data[i].approvalStatus
        })
    }
 
@@ -98,7 +105,8 @@ router.get('/invoiceListAjax', authCheck, async (req, res) => {
        recordsFiltered : recordsFiltered,
        data : finalData
    }
-   console.log("dadad",dataCollection)
+  //  console.log("dadad",dataCollection)
+  //console.log("final data",finalData)
 
    res.send(dataCollection) 
     //data.purchaseRequests = purchaseRequests
@@ -123,10 +131,12 @@ router.get('/invoiceForm&id=:id', async (req, res) => {
     //    var date = data.date
     var tranId = data.invoiceNumber
     var location = data.location
+    var status = data.approvalStatus
+    let breadcrumb = { name1 : "Invoice List", link1 : "/invoiceList", name2 : ">Invoice Form", link2 : "#", name3 : "Home>", link3 : "/" }
     console.log(data.date)
     //data.purchaseRequests = purchaseRequests
     let route = "pages/invoiceForm"
-    res.render('index', { route, listName, data, moment: moment, date, tranId, location })
+    res.render('index', { route, listName, data, breadcrumb, moment: moment, date, tranId, location, status })
   }
   catch (e) {
     console.log(e)
@@ -153,8 +163,8 @@ router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
       let tranId = response.data[0].values["GROUP(tranid)"]
       let location = response.data[0].values["GROUP(locationnohierarchy)"]
       let date = response.data[0].values["GROUP(trandate)"]
-      breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-      res.send(tableData)
+      let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
+      res.send(tableData,breadcrumb)
       //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
     })
     .catch(function (error) {
@@ -183,14 +193,17 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
     let location = data["location"]
     let totalAmount = data["amount"]
     let poNumber = data["poNumber"]
-    let fileUpload = "uploadFile&irid=" + id
     let netsuieFileUpload = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+id
 
-    breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-    res.render('index', { route, listName, breadcrumbs, tranId, date, totalQty, totalAmount, location, poNumber, fileUpload, netsuieFileUpload })
+    breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
+     res.render('index', { route, listName, breadcrumb, tranId, date, totalQty, totalAmount, location, poNumber, netsuieFileUpload })
+    // let breadcrumb = { name1 : "Invoice List", link1 : ">invoiceList", name2 : ">Invoice Form", link2 : "#", name3 : "Home>", link3 : "/" }
+  
+  //  res.render('index', { route, listName, breadcrumb, tranId, date, totalQty, totalAmount, location, poNumber, fileUpload })
   }
 
-  catch (e) {
+  catch (e) 
+  {
     console.log("Error", e)
   }
 
@@ -306,8 +319,9 @@ router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
       let tranId = response.data[0].values["GROUP(tranid)"]
       let location = response.data[0].values["GROUP(locationnohierarchy)"]
       let date = response.data[0].values["GROUP(trandate)"]
-      breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-      res.send(tableData)
+      breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } }; 
+     let breadcrumb = { name1 : "t", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
+      res.send(tableData,breadcrumb)
     })
     .catch(function (error) {
       console.log("erorr", error);

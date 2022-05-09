@@ -56,14 +56,18 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
 
         let route = "pages/purchaseRequestForm"
         let listName = "Payment List"
+        let breadcrumb = { name1 : "Purchase Request List", link1 : "/purchaseRequestList", name2 : ">Purchase Request Form", link2 : "#",name3 : "Home>", link3 : "/" }
+        
 
         let tranId = data.poNumber
         let location = data.location
         let date = data.date
+        let status = data.status
+        
         date = moment(new Date(date)).format('MM-DD-YYYY')
     
         breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-        res.render('index', { route, listName, breadcrumbs, tranId, location, date })
+        res.render('index', { route, listName, breadcrumb, tranId, location, date, status })
 
         //data.purchaseRequests = purchaseRequests
     }
@@ -79,20 +83,24 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
 
     let route = "pages/purchaseRequestForm"
     let listName = "Purchase Request"
+    
+    let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/"}
+
     var { id } = req.params 
 
     console.log("chd", id)
     axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest&internalid=' + id, {
     })
         .then(function (response) {
-            // console.log(response.data[0]); 
+             console.log(response.data[0]); 
  
             let tableData = response.data
             let tranId = response.data[0].values["GROUP(tranid)"]
             let location = response.data[0].values["GROUP(locationnohierarchy)"]
             let date = response.data[0].values["GROUP(trandate)"]
-            breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
-            res.send(tableData)
+          //  res.send(tableData,breadcrumb)
+
+            res.status(200).send((tableData,breadcrumb));
             //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
         })
         .catch(function (error) {
@@ -150,11 +158,12 @@ router.get('/purchaseRequestList', async (req, res) => {
     try 
     {
 
-        data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).lean()
+        data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).sort({date: -1}).lean()
         console.log(req.session.user_id)
-        let route = "pages/table"
+        let route = "pages/purchaseRequestTable"
+        let breadcrumb = { name1 : "Purchase Request List", link1 : "/purchaseRequestList", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
        
-        res.render('index', { route, data, data, moment: moment }) 
+        res.render('index', { route, data, data, breadcrumb, moment: moment }) 
       
     }
     catch (e) {
@@ -169,7 +178,7 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
     try 
     {
 
-        data = await PurchaseRequests.find({vendorInternalId:944}).lean()
+        data = await PurchaseRequests.find({vendorInternalId:944}).sort({date: -1}).lean()
         console.log(req.session.user_id)
         console.log(data);
 
@@ -204,7 +213,8 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
         dataCollection = {
             recordsTotal : recordsTotal,
             recordsFiltered : recordsFiltered,
-            data : finalData
+            data : finalData,
+            breadcrumb : { name1 : "Item Fulfillment List", link1 : "#", name2 : "Item Fulfillment List", link2 : "#" }
         }
 
        // console.log(data);
@@ -229,8 +239,10 @@ router.get('/paymentList2',authCheck, async (req, res) => {
 
     // app.set('views', path.join(__dirname,'./demo7/views'))
     let route = "pages/paymentsTable"
+    
+    let breadcrumb = { name1 : "Payments List", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
     // console.log("trandata",data)
-    res.render('index', { route, data, data, moment: moment })
+    res.render('index', { route, data, breadcrumb, data, moment: moment })
 })
 
 
