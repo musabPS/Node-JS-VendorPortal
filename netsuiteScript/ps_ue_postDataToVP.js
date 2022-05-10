@@ -32,7 +32,7 @@ define(modules, function (record, log, search, runtime, url, https) {
                log.debug("checkpo", getPOData)
                var newObjForMongo = generateNewObject(getPOData)
    
-               var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/createPurchaseRequest')
+               var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/createPurchaseRequest')
    
    
                if (mongooseResponse.success) {
@@ -56,7 +56,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             var getPOData = getSavedSearchData(customerRecord.type, filterType, customerRecord.id)
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject(getPOData)
-            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/createItemFulfillments')
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/createItemFulfillments')
 
             log.debug("check mongoreturn on sucess", mongooseResponse)
             if (mongooseResponse.success) {
@@ -78,7 +78,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
 
-             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/createBill')
+             var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/createBill')
 
              log.debug("check mongoreturn on sucess", mongooseResponse)
             if (mongooseResponse.success) {
@@ -99,7 +99,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             var getPOData = getPaymentSavedSearch(customerRecord.id)
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateMongoDBObject(getPOData)
-            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/createpayment')
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/createpayment')
             log.debug("newObjForMongo", newObjForMongo)
          }
 
@@ -120,7 +120,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("newObjForMongo", newObjForMongo)
 
 
-            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/updatePurchaseRequest')
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/updatePurchaseRequest')
 
 
             var Record = record.load({
@@ -153,7 +153,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject(getPOData)
 
-            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/updateItemFulfillments')
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/updateItemFulfillments')
 
             if (mongooseResponse.success) {
                log.debug("check mongoreturn on sucess", mongooseResponse)
@@ -173,7 +173,7 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("checkpo", getPOData)
             var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
 
-             var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/updateBill')
+             var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/updateBill')
 
              log.debug("check mongoreturn on sucess", mongooseResponse)
             if (mongooseResponse.success) {
@@ -205,11 +205,11 @@ define(modules, function (record, log, search, runtime, url, https) {
             log.debug("newObjForMongo", newObjForMongo)
 
 
-            var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/DeletePurchaseRequest')
+            var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/DeletePurchaseRequest')
 
             return
 
-         }
+         }  
 
          // if (customerRecord.type == "itemreceipt") {
          //    var filterType = "ItemRcpt"
@@ -217,7 +217,7 @@ define(modules, function (record, log, search, runtime, url, https) {
          //    log.debug("checkpo", getPOData)
          //    var newObjForMongo = generateNewObject(getPOData)
 
-         //    var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/updateItemFulfillments')
+         //    var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/updateItemFulfillments')
 
          //    if (mongooseResponse.success) {
          //       log.debug("check mongoreturn on sucess", mongooseResponse)
@@ -237,7 +237,7 @@ define(modules, function (record, log, search, runtime, url, https) {
          //    log.debug("checkpo", getPOData)
          //    var newObjForMongo = generateNewObject_forgetvendorBillSavedSearch(getPOData)
 
-         //     var mongooseResponse = sendDataToMongoose(newObjForMongo, 'https://bb78-182-190-103-167.in.ngrok.io/updateBill')
+         //     var mongooseResponse = sendDataToMongoose(newObjForMongo, ' https://2722-182-190-103-167.in.ngrok.io/updateBill')
 
          //     log.debug("check mongoreturn on sucess", mongooseResponse)
          //    if (mongooseResponse.success) {

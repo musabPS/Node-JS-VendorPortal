@@ -83,6 +83,8 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
          var dataCollection={}
          var recordsTotal=data.length
          var recordsFiltered = data.length
+
+         console.log(data[0])
       
         for(var i=0; i<data.length; i++){
             finalData.push({

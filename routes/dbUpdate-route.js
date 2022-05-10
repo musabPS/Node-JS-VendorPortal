@@ -160,7 +160,9 @@ router.post('/DeletePurchaseRequest', async (req, res) => {
         //     error: e
         // }
 
-        res.send(JSON.stringify("Error Delete!"))
+        var obj = req.body.netsuiteData[0]
+
+        res.send(JSON.stringify(obj.internalId))
     }
 })
 
