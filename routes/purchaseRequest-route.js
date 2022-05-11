@@ -99,6 +99,8 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
             let location = response.data[0].values["GROUP(locationnohierarchy)"]
             let date = response.data[0].values["GROUP(trandate)"]
             res.send(tableData)
+
+          //  res.status(200).send((tableData,breadcrumb));
             //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
         })
         .catch(function (error) {

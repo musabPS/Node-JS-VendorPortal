@@ -11,7 +11,6 @@
 									<div class="card-body p-0">
 										<!-- begin: Invoice-->
 										<!-- begin: Invoice header-->
-
 										<!-- begin acction button-->
 										<!-- begin acction button-->
 										<div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-27 px-md-0">
@@ -109,7 +108,7 @@
 													  <span class="opacity-70"><%= tranId %></span>
 												  </div>
 												  <div class="d-flex flex-column flex-root">
-													  <span class="font-weight-bolder mb-2">INVOICE TO.</span>
+													  <span class="font-weight-bolder mb-2">LOCATION</span>
 													  <span class="opacity-70">ABC, P.O. Box 283 8562 Fusce RD.
 													  <br />Fredrick Nebraska 20620</span>
 												  </div>
@@ -240,6 +239,67 @@
 
 
 <script>
+
+			function handleCheckBox(i) {
+				
+				var checkBox = document.getElementById("select-check").checked;
+				
+				if(checkBox==true){
+					var billQty=document.getElementById("billQty"+i).innerHTML;  
+					var ordQty=document.getElementById("ordQty"+i).innerHTML; 
+					// alert(billQty)
+					// alert(ordQty)
+					if(billQty==ordQty){
+					//	alert("equal")
+						document.getElementById("createbill").disabled = true;
+					}
+					else{
+						//do nothing
+						//alert("not equal")
+					}
+				}
+				else{
+					document.getElementById("createbill").disabled = false;
+				}
+			
+
+			}
+
+			// $(".select-check").change(function() {
+			// 	if(this.checked) {
+			// 		//Do stuff
+			// 		alert("checkbox is checked..")
+			// 	}
+			// 	else{
+			// 		alert("checkbox is not checked..")
+			// 	}
+			// });
+
+		// // checkbox = document.getElementById('conducted');
+		// var checkBox = document.getElementsByClassName("select-check");
+
+		// checkBox.addEventListener('change', e => {
+
+		// 	if(e.target.checked){
+		// 		//do something
+		// 		alert("checkbox is checked..")
+		// 	}
+
+		// });
+
+		// var checkBox = document.getElementsByClassName("select-check");
+
+		// 	if (checkBox.checked == true){
+		// 		alert("checkbox is checked..")
+		// 	} else {
+		// 		alert("checkbox is not checked..")
+		// 	}
+
+	$(document).ready(function(){
+		document.getElementById('load_btn_container').click();
+		
+	})
+
 	  $(function () {
 
 		$("#checkAll").click(function(){
@@ -319,8 +379,18 @@
    });
 
    $('#load_btn_container').click(function () 
-        {
-          
+        { 
+			
+			function setTimeout(milliseconds){   
+            var date = new Date();
+            date.setMilliseconds(date.getMilliseconds() + milliseconds);
+            while(new Date() < date){
+            }
+            }
+
+			var  startTime = Date.now()/1000;
+
+			
            if($('.btn_loaditems').html()=='Item Details<i class="fas fa-caret-down  icon-2x" style="float:right;"></i>')
            {
             $('#table_container').css('display','none');
@@ -365,6 +435,8 @@
                 contentType: "application/json; charset=utf-8",
                 success   : function(data) 
                             {
+								
+								//setTimeout(20000) //20 sec delay
                                 
 								console.log(data)
                                 $('#table-main').empty();
@@ -374,6 +446,7 @@
                                 var totalQuantity=0
                                 var totalAmount=0
 
+
 								
 								tableData+= '<tr>'
 													+'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
@@ -382,24 +455,40 @@
 													+'<th class="text-right pl-0 font-weight-bold text-muted text-uppercase">S#</th>'
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
 													+'<th class="text-center font-weight-bold text-muted text-uppercase">Delivered Quantity</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Billed Quantity</th>'
 													+' <th class="font-weight-bold text-muted text-uppercase">Order Quantity</th>'
 													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
-													+'<th class="font-weight-bold text-muted text-uppercase">Locationy</th>'
+													+'<th class="font-weight-bold text-muted text-uppercase">Location</th>'
 													+'<th class="font-weight-bold text-muted text-uppercase">Amount</th>'
 
 													+'</tr>'
 												+'</thead>'  
 												+'<tbody>'
 
-                                            for(var i=0; i<data.length; i++)
+													
+					var endTime = Date.now()/1000;
+					console.log("end",endTime);
+				
+					duration = endTime-startTime;
+					console.log("duration",duration);
+
+
+					if(duration>5){
+						$('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Request Timeout... &#128532; Please Load again!  </p><p></p>  </div>');
+					}
+
+					else{
+
+						for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
-													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
+													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input id="select-check" type="checkbox" onChange="handleCheckBox('+i+')">&nbsp;<span></span></label></span></td>'
 													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
                                                  tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
-                                                 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(appliedToTransaction.quantity)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 qty" id="billQty'+i+'">'+data[i].values["SUM(quantitybilled)"]+'</td>' 
+                                                 tableData+='<td class="text-center pt-7 accqty" id="ordQty'+i+'">'+data[i].values["SUM(appliedToTransaction.quantity)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 recty">'+data[i].values["SUM(rate)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(locationnohierarchy)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"]+'</td>'
@@ -412,7 +501,6 @@
 
 											tableData+='</tbody>'	
 
-											console.log
 
 											$('#table-main').append(tableData)
 
@@ -434,6 +522,8 @@
 
                                     $('#btn_save').show();
 
+					}
+                        
                                     // if(pageType=='view'){
                                     //     $('#btn_save').hide();
                                     // }

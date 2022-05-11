@@ -52,7 +52,7 @@ define([
          if(context.request.parameters.type=="itemRecipt")
          {
             var id = context.request.parameters.internalid 
-           log.debug("check",getItemRecipt(id))
+           log.debug("Item Details Data",getItemRecipt(id))
 
            context.response.write(getItemRecipt(id))
            return 
@@ -501,7 +501,10 @@ define([
            summary: "SUM",
            label: "Item Rate"
           }),
-        
+          search.createColumn({
+             name: "quantitybilled", 
+             summary: "SUM",
+             label: "Quantity Billed"}),     
            search.createColumn({
              name: "locationnohierarchy",
              summary: "GROUP",
@@ -521,12 +524,15 @@ define([
              name: "trandate",
              summary: "GROUP",
              label: "Item"
-           }),
+           })
         ]
       });
       var isData = itemreceiptSearchObj.run();
         var isFinalResult = isData.getRange(0, 1000);
         var isFinalResult = JSON.stringify(isFinalResult);
+
+        log.debug("item details Data : ",isFinalResult)
+
         return isFinalResult
  }
  function updateSelectRow(internalId,data)
