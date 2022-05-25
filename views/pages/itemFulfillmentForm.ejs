@@ -47,7 +47,7 @@
 														  <span class="navi-icon">
 														  
 														  </span>
-														  <button type="button" class="btn btn-hover-bg-success btn-text-primary btn-hover-text-white border-0 font-weight-bold"   id="createbill"  onclick="window.open('<%=viewBill %>')" style="width:100%">Create Invoice</button>
+														  <button type="button" class="btn btn-hover-bg-success btn-text-primary btn-hover-text-white border-0 font-weight-bold"   id="createbill"  onclick="redirectToCreateInvoicePage()" style="width:100%">Create Invoice</button>
 
 													   </li>
 													   <li class="navi-item">
@@ -240,27 +240,98 @@
 
 <script>
 
+	
+
+		     function redirectToCreateInvoicePage(){
+
+				var linesToBeInvoice = GetSelected()
+
+				console.log("linesToBeInvoice.length",linesToBeInvoice.length)
+
+				if(linesToBeInvoice.length>0){
+					window.localStorage.setItem('selectedLines', JSON.stringify(linesToBeInvoice));
+					window.open('<%-viewBill %>')
+				}
+
+				
+			 }
+
+			 function GetSelected() {
+
+				var selectedLines = []
+
+				var grid = document.getElementById("table-main");
+
+					for (var i = 0, row; row = grid.rows[i]; i++) {
+						var checkBoxes = grid.rows[i].getElementsByTagName("INPUT");
+						console.log("checkboxes length",checkBoxes.length)
+							// for (var j = 0; j < checkBoxes.length; j++) {
+								if(checkBoxes[0].checked){
+									console.log("row"+i+"is selected!")
+									console.log("itemName","itemName"+(i-1))
+									let itemName = document.getElementById("itemName"+(i-1));
+									itemName = itemName ? itemName.innerHTML : ''
+									let billQty = document.getElementById("billQty"+(i-1));
+									billQty = billQty ? billQty.innerHTML : ''
+									let ordQty = document.getElementById("ordQty"+(i-1));
+									ordQty = ordQty ? ordQty.innerHTML : ''
+									let rate = document.getElementById("rate"+(i-1));
+									rate = rate ? rate.innerHTML : ''
+									let amount = document.getElementById("amount"+(i-1));
+									amount = amount ? amount.innerHTML : ''
+									selectedLines.push({
+										itemName : itemName,
+										billQty : billQty,
+										ordQty : ordQty,
+										billQty : billQty,
+										rate : rate,
+										amount : amount
+									})
+								}	
+						// }
+					  
+					}
+
+					console.log("selectedLines",selectedLines)
+
+					return selectedLines
+		
+			}
+
+
+
 			function handleCheckBox(i) {
+
+				// console.log("handleCheckBox triggered")
 				
-				var checkBox = document.getElementById("select-check").checked;
+				// var checkBox = document.getElementById("select-check").checked;
+
+				// console.log("checkBox triggered",checkBox)
 				
-				if(checkBox==true){
-					var billQty=document.getElementById("billQty"+i).innerHTML;  
-					var ordQty=document.getElementById("ordQty"+i).innerHTML; 
-					// alert(billQty)
-					// alert(ordQty)
-					if(billQty==ordQty){
-					//	alert("equal")
-						document.getElementById("createbill").disabled = true;
-					}
-					else{
-						//do nothing
-						//alert("not equal")
-					}
-				}
-				else{
-					document.getElementById("createbill").disabled = false;
-				}
+				// if(checkBox==true){
+				// 	var billQty=document.getElementById("billQty"+i).innerHTML;  
+				// 	var ordQty=document.getElementById("ordQty"+i).innerHTML; 
+				// 	var itemName=document.getElementById("itemName"+i).innerHTML; 
+				// 	console.log("itemName",itemName)
+				// 	console.log("ordQty",ordQty)
+
+				// 	selectedLines.push({item : itemName})
+
+				// 	// // alert(billQty)
+				// 	// // alert(ordQty)
+				// 	// if(billQty==ordQty){
+				// 	// //	alert("equal")
+				// 	// 	//document.getElementById("createbill").disabled = true;
+				// 	// 	selectedLines.push(itemName)
+				// 	// }
+				// 	// else{
+				// 	// 	//do nothing
+				// 	// 	//alert("not equal")
+				// 	// }
+				// }
+				// else{
+				// 	//document.getElementById("createbill").disabled = false;
+				// }
 			
 
 			}
@@ -296,7 +367,12 @@
 		// 	}
 
 	$(document).ready(function(){
+
 		document.getElementById('load_btn_container').click();
+
+
+
+
 		
 	})
 
@@ -438,7 +514,7 @@
 								
 								//setTimeout(20000) //20 sec delay
                                 
-								console.log(data)
+								console.log("data:",data)
                                 $('#table-main').empty();
 
                                 var dataParse=data
@@ -482,16 +558,20 @@
 						for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
-													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input id="select-check" type="checkbox" onChange="handleCheckBox('+i+')">&nbsp;<span></span></label></span></td>'
-													tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
-
-                                                 tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
+													if(data[i].values["SUM(quantitybilled)"]==data[i].values["SUM(appliedToTransaction.quantity)"]){
+														tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input id="select-check" type="checkbox" disabled>&nbsp;<span></span></label></span></td>'
+													}
+													else{
+														tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input id="select-check" type="checkbox" onChange="handleCheckBox('+i+')">&nbsp;<span></span></label></span></td>'
+													}
+												tableData+='<td class="pl-0 pt-7 txt-td item" name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
+                                                 tableData+='<td class="pl-0 pt-7 txt-td item" id="itemName'+i+'" name=item'+parseInt(i+1)+'>'+data[i].values["GROUP(item)"][0].text+'</td>'
                                                  tableData+='<td class="text-center pt-7 qty">'+data[i].values["SUM(quantity)"]+'</td>' 
 												 tableData+='<td class="text-center pt-7 qty" id="billQty'+i+'">'+data[i].values["SUM(quantitybilled)"]+'</td>' 
                                                  tableData+='<td class="text-center pt-7 accqty" id="ordQty'+i+'">'+data[i].values["SUM(appliedToTransaction.quantity)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 recty">'+data[i].values["SUM(rate)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 recty id="rate'+i+'">'+data[i].values["SUM(rate)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["GROUP(locationnohierarchy)"]+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"]+'</td>'
+												 tableData+='<td class="text-center pt-7 accqty" id="amount'+i+'">'+data[i].values["SUM(rate)"] * data[i].values["SUM(quantity)"]+'</td>'
 												 tableData+='</tr>'
 											
 												 totalQuantity+=parseInt(data[i].values["SUM(quantity)"])
@@ -508,19 +588,11 @@
                                     $('#totalamount').text(totalAmount)
 									$('#pointernalid').val(poInternalId)
 
-                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                    //     $("#trandate option[value='']").attr('selected', true)
-                                    //     $("#customer option[value='']").attr('selected', true)
-                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
-                                    //     $(this).addClass('flaticon2-send-1');
-                                    //   ///  window.location.reload();
-                                    // event.preventDefault();
-
-                                    // if(recordType!='invoice'){
-                                    //     $('#btn_save').show();
-                                    // }
 
                                     $('#btn_save').show();
+
+									
+
 
 					}
                         
