@@ -47,7 +47,7 @@
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2 ">Date</span>
 														<span class="opacity-70"><%= date %></span>
-													</div>
+													</div> 
 													<div class="d-flex flex-column flex-root">
 														<span class="font-weight-bolder mb-2">Invoice #</span>
 														<span class="opacity-70"><%= tranId %></span>
@@ -281,6 +281,16 @@
 
   $('#load_btn_container').click(function () 
         {
+
+			function setTimeout(milliseconds){   
+            var date = new Date();
+            date.setMilliseconds(date.getMilliseconds() + milliseconds);
+            while(new Date() < date){
+            }
+            }
+
+			var  startTime = Date.now()/1000;
+
           
            if($('.btn_loaditems').html()=='Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>')
            {
@@ -349,6 +359,19 @@
 												+'</thead>'
 												+'<tbody>'
 
+																						
+					var endTime = Date.now()/1000;
+					console.log("end",endTime);
+				
+					duration = endTime-startTime;
+					console.log("duration",duration);
+
+
+					if(duration>5){
+						$('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Request Timeout... &#128532; Please Load again!  </p><p></p>  </div>');
+					}
+
+					else{
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
@@ -386,6 +409,8 @@
 
                                     $('#btn_save').show();
 
+								}
+
                                     // if(pageType=='view'){
                                     //     $('#btn_save').hide();
                                     // }
@@ -401,6 +426,10 @@
    
 		$(document).ready(function(){
 		
+			document.getElementById('load_btn_container').click();
+
+
+
 		$.fn.checkFunction=function(){
 			console.log("checkeddddd");
 

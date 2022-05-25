@@ -85,7 +85,7 @@
 												<!--end::Dropdown Menu-->
 											</div>
 
-
+ 
 
 												</div>
 
@@ -362,6 +362,16 @@ var dataParse ="";
   $('#load_btn_container').click(function () 
         {
           
+			function setTimeout(milliseconds){   
+            var date = new Date();
+            date.setMilliseconds(date.getMilliseconds() + milliseconds);
+            while(new Date() < date){
+            }
+            }
+
+			var  startTime = Date.now()/1000;
+
+
            if($('.btn_loaditems').html()=='Item Details<i class="fas fa-c icon-2x" style="float:right;"></i>')
            {
             $('#table_container').css('display','none');
@@ -434,6 +444,19 @@ var dataParse ="";
 												+'</thead>'
 												+'<tbody>'
 
+					var endTime = Date.now()/1000;
+					console.log("end",endTime);
+				
+					duration = endTime-startTime;
+					console.log("duration",duration);
+
+
+					if(duration>5){
+						$('#table-main').append('<div class="col-md-12"><p text-xl-left></p> <p style="text-align: center">Request Timeout... &#128532; Please Load again!  </p><p></p>  </div>');
+					}
+
+					else{
+						
                                             for(var i=0; i<data.length; i++)
 											{
 												var date = data[i].values["GROUP(expectedreceiptdate)"]
@@ -495,6 +518,8 @@ var dataParse ="";
 
                                     $('#btn_save').show();
 
+									
+					}
                                     // if(pageType=='view'){
                                     //     $('#btn_save').hide();
                                     // }
@@ -514,6 +539,10 @@ var dataParse ="";
 
 		
 		$(document).ready(function(){
+
+		document.getElementById('load_btn_container').click();
+
+
 
 			$('#updatestatus').hide();
 			$('#updatespinner').hide();
