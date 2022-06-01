@@ -76,13 +76,13 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
     try {
          data =  await ItemFulfillments.find({vendorInternalId:req.session.user_id}) 
          // data = await ItemFulfillments.findOne({internalId:"6728"})
-         console.log("check",data)
+        // console.log("check",data)
 
          var finalData=[]
          var dataCollection={}
          var recordsTotal=data.length
          var recordsFiltered = data.length
-         console.log(data[0].internalId)
+         //console.log(data[0].internalId)
 
         for(var i=0; i<data.length; i++){
 
@@ -96,11 +96,14 @@ router.get('/itemFulfillmentListAjax', authCheck, async (req, res) => {
             })
         }
 
+
          dataCollection = { 
             recordsTotal : recordsTotal,
             recordsFiltered : recordsFiltered,
             data : finalData
         }
+
+         console.log("final data",finalData)
 
         res.send(dataCollection) 
 
@@ -132,7 +135,8 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
         let route = "pages/itemFulfillmentForm"
         let listName = "Purchase Request"
         let status = data["approvalStatus"]
-
+       
+        console.log("view bill",viewBill)
         breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
         res.render('index', { route, listName, breadcrumb,tranId,date,totalQty,totalAmount,location,viewBill,status})   
      }
@@ -170,6 +174,7 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
 
     let route = "pages/purchaseRequestForm"
     let listName = "Purchase Request"
+    
     let { id } = req.params
 
     console.log("chd", id)
@@ -185,6 +190,7 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
             breadcrumbs = { "noBreadcrumbs": { name: "", link: "" } };
             res.send(tableData)
            
+            console.log("tableData",tableData)
         })
         .catch(function (error) {
             console.log("erorr", error);

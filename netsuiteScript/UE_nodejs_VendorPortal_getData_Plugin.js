@@ -28,7 +28,7 @@
                 "AND",
                 ["internalid", "anyof", internalid],
  
-             ],
+             ], 
           columns:
              [
                 search.createColumn({
