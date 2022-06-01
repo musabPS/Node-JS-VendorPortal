@@ -27,6 +27,8 @@ router.use(bodyParser.json());
 app.use(router)
 
 const PurchaseRequests = require('../models/purchaseRequests-model')
+const SaleOrder = require('../models/sale-order-model')
+
 
 
 
@@ -155,11 +157,14 @@ router.post('/purchaseRequestForm',async (req, res) => {
 
 router.get('/purchaseRequestList', async (req, res) => {
     var data = []
+    var testData=[]
     try 
     {
 
+        
+
         data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).sort({date: -1}).lean()
-        console.log(req.session.user_id)
+       // console.log(req.session.user_id)
         let route = "pages/purchaseRequestTable"
         let breadcrumb = { name1 : "Purchase Request List", link1 : "/purchaseRequestList", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
        
@@ -180,7 +185,7 @@ router.get('/purchaseRequestListAjax', async (req, res) => {
 
         data = await PurchaseRequests.find({vendorInternalId:944}).sort({date: -1}).lean()
         console.log(req.session.user_id)
-        console.log(data);
+        // console.log(data);
 
         var finalData=[]
         var dataCollection={}

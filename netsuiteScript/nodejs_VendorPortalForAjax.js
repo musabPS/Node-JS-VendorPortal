@@ -224,9 +224,6 @@ define([
                enableSourcing: true
             });
 
-          
-
-
             var vnbillobject = record.load({
                type: 'vendorbill',
                id:recordId,

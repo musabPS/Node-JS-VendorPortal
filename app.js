@@ -31,6 +31,7 @@ const updateDb = require('./routes/dbUpdate-route')
 app.use(session({
   secret: "keyy",
 }))
+
 const authCheck = (req, res, next) => {
   if (! req.session.user_id) {
     return res.redirect('/login')
