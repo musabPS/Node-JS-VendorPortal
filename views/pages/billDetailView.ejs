@@ -590,6 +590,12 @@ $.fn.eachFunction=function(){
 		  
 		$('#btn_saveinv').click(function () 
         {
+			
+			KTApp.blockPage({
+			overlayColor: '#000000',
+			state: 'danger',
+			message: 'Please wait...'
+			});
 
 			var itemdata=[]
 
@@ -636,7 +642,8 @@ $.fn.eachFunction=function(){
                 contentType: "application/json; charset=utf-8",
                 success   : function(data) 
                             {
-                                
+								
+								KTApp.unblockPage();
 								console.log(data)
 								var psrseData=JSON.parse(data)
 								var locationURL=window.location.protocol + "//" + window.location.host+'/invoiceForm&id='+psrseData.billId
