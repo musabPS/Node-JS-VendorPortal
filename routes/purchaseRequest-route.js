@@ -74,7 +74,7 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
         //data.purchaseRequests = purchaseRequests
     }
     catch (e) {
-        console.log(e)
+        console.log("Erorr",e)
     }
    
 })
@@ -160,9 +160,6 @@ router.get('/purchaseRequestList', async (req, res) => {
     var testData=[]
     try 
     {
-
-        
-
         data = await PurchaseRequests.find({vendorInternalId:req.session.user_id}).sort({date: -1}).lean()
        // console.log(req.session.user_id)
         let route = "pages/purchaseRequestTable"

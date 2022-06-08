@@ -17,6 +17,8 @@ var stream = require('stream');
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
+let formidable = require('formidable');
+var ajaxrequest = require('ajax-request');
 
 
 app.use('/', express.static(path.join(__dirname, './public')))
@@ -28,9 +30,11 @@ const router = express.Router()
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
+app.use(upload.array()); 
 
 const Invoice = require('../models/invoices-model')
 const ItemFulfillments = require('../models/itemFulfillments-model')
+const { append } = require('express/lib/response')
 
 //const PurchaseRequests = require('../models/purchaseRequests')
 // const ItemFulfillments = require('../models/itemFulfillments')
@@ -160,10 +164,10 @@ router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
       console.log(response);
 
       let tableData = response.data
-      let tranId = response.data[0].values["GROUP(tranid)"]
-      let location = response.data[0].values["GROUP(locationnohierarchy)"]
-      let date = response.data[0].values["GROUP(trandate)"]
-      let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
+      // let tranId = response.data[0].values["GROUP(tranid)"]
+      // let location = response.data[0].values["GROUP(locationnohierarchy)"]
+      // let date = response.data[0].values["GROUP(trandate)"]
+      // let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
       res.send(tableData)
       //  res.render('index', {route,listName ,breadcrumbs,tableData,tranId,location,date}) 
     })
@@ -175,7 +179,7 @@ router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
 router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
 
 
-  try {
+  try { 
     console.log("chddd", req.params)
 
 
@@ -193,7 +197,7 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
     let location = data["location"]
     let totalAmount = data["amount"]
     let poNumber = data["poNumber"]
-    let netsuieFileUpload = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+id
+    let netsuieFileUpload = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='
 
     breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
      res.render('index', { route, listName, breadcrumb, tranId, date, totalQty, totalAmount, location, poNumber, netsuieFileUpload })
@@ -209,59 +213,125 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
 
 })
 
-router.post('/invoiceView&irid=:id', upload.single('custpage_file0'), (req, res,next) => {
+router.post('/invoiceView&irid=:id', (req, res) => {
+  var { id } = req.params
+
+  //Create an instance of the form object
+  // let form = new formidable.IncomingForm();
+  // var formData = new FormData();
+   console.log("req.body",req.body)
 
 
-  const fileRecievedFromClient = req.file; //File Object sent in 'fileFieldName' field in multipart/form-data
-  console.log(req.file)
-  let form = new FormData();
-  form.append('custpage_file0',req.file)
-  // form.append('fieldname', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
+  
 
-  console.log("chddd", req.body)
-  console.log("req.file", req.file)
- 
-  let { id } = req.params
+  // form.parse(req, function (error, fields, file) {
+  //   console.log("req.fields",fields)
+  //   console.log("req.param",req.params)
+  //   console.log("file",file)
 
-  console.log("chd", id)
-  const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid=" + id
-
-
-  // axios.post(url, form, {
-  //           headers: {
-  //               'Content-Type': `multipart/form-data; boundary=${form._boundary()}`
-  //           }
-  //       }).then((responseFromServer2) => {
-
-          
-  //           res.send("SUCCESS")
-  //       }).catch((err) => {
-  //           res.send("ERROR")
-  //       })
-
-  let bufferStream = new stream.PassThrough();
-  bufferStream.end(req.file.buffer);
+  // // formData.append('jsonData',{ first: 'Saeid', last: 'Alidadi' })
+   
+  //  formData.append('data', JSON.stringify(fields));
+  //  console.log(formData)
+  //   // formData = {
+  //   //   name: { first: 'Saeid', last: 'Alidadi' }
+  //   // }
+  // });
+  let url = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+id
+  
   request({
     url, json: true,
     method: "POST",
-    body:form,
+    body: req.body,
     headers: {
-      "contentType": "multipart/form-data",
+      "contentType": "application/json",
+
     }
   },
     (error, response, body) => {
       if (error) {
         console.log('Unable to connect to suitelet', body)
-        res.send("error")
-    
       }
       else {
-        console.log("check0", response.body)
-        res.redirect('/invoiceForm&id=' + response.body)
 
+        console.log("check id",response.body)
+        res.send(JSON.stringify(response.body))
+     
       }
+
     })
 
+
+//   let http = require('http');
+// let formidable = require('formidable');
+// let fs = require('fs');
+
+// http.createServer(function (req, res) {
+
+//   //Create an instance of the form object
+//   let form = new formidable.IncomingForm();
+
+//   //Process the file upload in Node
+//   form.parse(req, function (error, fields, file) {
+//     let filepath = file.fileupload.filepath;
+//     let newpath = 'C:/upload-example/';
+//     newpath += file.fileupload.originalFilename;
+
+//     //Copy the uploaded file to a custom folder
+//     fs.rename(filepath, newpath, function () {
+//       //Send a NodeJS file upload confirmation message
+//       res.write('NodeJS File Upload Success!');
+//       res.end();
+//     });
+//   });
+
+
+// ajaxrequest.post({
+//   url: url,
+//   data: formData,
+//   enctype: "multipart/form-data", 
+//   processData: false,
+//   contentType: false,
+// })
+
+// ajaxrequest({
+//   url: url,
+//   method: 'POST',
+//   data: {
+//     query1: 'value1'
+//   },
+//   headers: {
+//           "contentType": "application/json",
+//         }
+
+// }, function(err, res, body) {
+//   console.log("res",res)
+  
+//   console.log("err",err)
+// });
+
+// }).listen(80);
+// ajaxrequest({
+//     url, json: true,
+//     method: "POST",
+//     body: {"data":"asad"},
+//     headers: {
+//       "contentType": "application/json",
+//     }
+//   },
+//     (error, response, body) => {
+//       if (error) {
+//         console.log('Unable to connect to suitelet', body)
+//       }
+//       else {
+
+//         req.session.user_id = response.body
+//         console.log("check0",response.body)
+
+//         res.redirect("/")
+//       }
+
+//     })
 
 })
 
@@ -330,6 +400,28 @@ router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
 })
 
 
+
+// var axios = require('axios');
+// var FormData = require('form-data');
+// var data = new FormData();
+// data.append('data', 'asldkfjalsdkjf');
+
+// var config = {
+//   method: 'post',
+//   url: 'https://some-domain.com/formdata',
+//   headers: { 
+//     ...data.getHeaders()
+//   },
+//   data : data
+// };
+
+// axios(config)
+// .then(function (response) {
+//   console.log(JSON.stringify(response.data));
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
 
 // router.post('/uploadFile&irid=:id', multer.single('fileFieldName'), (req, res) => {
 

@@ -45,9 +45,11 @@ router.get('/billViewForm', (req, res) => {
             console.log(response.data[0]);
 
             let tableData = response.data
+            
             // let tranId=response.data[0].values["GROUP(tranid)"]
             // let location=response.data[0].values["GROUP(locationnohierarchy)"]
             // let date=response.data[0].values["GROUP(trandate)"]
+
             let breadcrumb = { name1 : "", link1 : "#", name2 : "", link2 : "#", name3 : "Home>", link3 : "/" }
             res.render('index', { route, listName, breadcrumb, tableData })
         })

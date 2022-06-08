@@ -68,7 +68,7 @@
                                                 <div id="load_btn_container" class="btn col-md-12 btn-hover-primary bg-primary h-38px btn_loaditems text-white text-center">Item Details<i class="fas fa-caret-right text-white icon-2x" style="float: right;"></i></div>
 
 												<NLFORM>
-													<form method="POST">
+													<form >
 												<div class="table-responsive">
                                                    
 													<td style="display:none;"><input id="totalrows" class="form-control" value="0" name="totalrows" style="display:none;"></td>
@@ -129,7 +129,8 @@
 											<!-- <button type="submit" class="btn btn-light-success font-weight-bold headerapprove" >Accept</button>-->
 											<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModaldate" id="modaldate" >Attach (0)</button>
 											 										<!-- <button type="button" class="btn btn-hover-bg-dark btn-text-dark btn-hover-text-white border-0 font-weight-bold" onclick="window.open('${ds.attachfile}', 'test', 'width=600, height=400');">Attach Files</button>-->
-																					 <button id="btn_saveinv"  class="btn btn-success" name="filesave" onclick="document.getElementById('filesave').click()">Save</button>
+																					 <!-- <button id="btn_saveinv"  class="btn btn-success" name="filesave" onclick="document.getElementById('filesave').click()">Save</button> -->
+																					 <button id="btn_saveinv"  class="btn btn-success" >Save</button>
 
 										</div>
 									</div>
@@ -162,7 +163,7 @@
 		
 		</div>
 		<div class="modal-body">
-				<form method="POST" enctype="multipart/form-data" id="fileform" action="<%-netsuieFileUpload%>">
+				<form >
 
 					<!-- <button style="display:block;width:120px; height:30px;" onclick="document.getElementById('custpage_file').click()">Your text here</button> -->
 					<!-- <button type="button"  class="btn btn-light-primary font-weight-bold"  onclick="document.getElementById('custpage_file').click()"/>Choose File </button> -->
@@ -173,7 +174,7 @@
 						<tbody id="filetabletbody">	
 						</tbody>
 						    <tr>
-							 <td><input type="file" class="filestyle" id="custpage_file" name="custpage_file0"  /></td>
+							 <td><input type="file" class="filestyle" id="custpage_file0" name="custpage_file0"  /></td>
 							</tr>
 					</table>
 			
@@ -187,7 +188,7 @@
 		</div>
 	</div>
 	  
-	</div>
+	</div> 
   </div>
 
    <!-- END  Modal -->
@@ -219,6 +220,7 @@
 
 
  $(document).ready(function(){
+
 
 	document.getElementById('load_btn_container').click();
 
@@ -263,7 +265,7 @@ fileUpload.addEventListener('change', (event) => {
 		//   console.log('files.files', files.FileList);
 			// <i class="far fa-file-pdf"></i>
 			//filename ='<td><img src="https://img.icons8.com/office/30/000000/pdf.png"/>  </td>'
-            filename = '<tr><td><input type="file" class="filestyle" id="custpage_file"  name="custpage_file'+filelines+'" /></td></tr>'
+            filename = '<tr><td><input type="file" class="filestyle" id="custpage_file'+filelines+'"  name="custpage_file'+filelines+'" /></td></tr>'
 
 		//   for(var i=0; i<files.length; i++)
 		//   {
@@ -324,9 +326,9 @@ $('#table-main .table-tbody').on('click','.addformtablerows',function()
   qty=0
    td='<tr>'
    td+='<td>'+sno+'</td>'
-   td+='<td><select class="form-control" name="option'+lines+'">  ${ds.selectoption} </select>'
+   td+='<td><select class="form-control sno" name="option'+lines+'">  ${ds.selectoption} </select>'
    td+=  '</td>'                                                              
-   td+='<td><input type="text" class="form-control" name="qty'+lines+'" ></td>'   
+   td+='<td><input type="text" class="form-control qty" name="qty'+lines+'" ></td>'   
    td+=' <td><input type="text" class="form-control" name="rate'+lines+'" ></td>'  
    td+= '<td><input type="text" class="form-control" name="amount'+lines+'" ></td>'                                              
    td+='<td style="width:50px"><button type="button" class="btn btn-light-primary font-weight-bold addformtablerows">+</button></td>'
@@ -490,7 +492,6 @@ $.fn.eachFunction=function(){
                                 var poInternalId = urlSplit[1]
 
           
-
            $.ajax({ 
                 type      : 'GET', //Method type
                 url       : '/invoiceViewGetItemDetail&irid='+poInternalId, //Your form processing file URL 
@@ -531,12 +532,12 @@ $.fn.eachFunction=function(){
 											{
 												tableData+='<tr>'
 													tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
-													tableData+='<td class="pl-0 pt-7 txt-td item text-right pl-0 " name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
+													tableData+='<td class="pl-0 pt-7 txt-td sno text-right pl-0 " name=item'+parseInt(i+1)+'>'+parseInt(i+1)+'</td>'
 
                                                  tableData+='<td class="pl-0 pt-7 txt-td item text-center pl-0 " name=item'+parseInt(i+1)+'>'+invoiceData[i].itemName+'</td>'
                                                  tableData+='<td class="text-center pt-7 qty">'+invoiceData[i].billQty+'</td>' 
-												 tableData+='<td class="text-center pt-7 recty">'+invoiceData[i].rate+'</td>'
-												 tableData+='<td class="text-center pt-7 accqty">'+invoiceData[i].amount+'</td>'
+												 tableData+='<td class="text-center pt-7 rate">'+invoiceData[i].rate+'</td>'
+												 tableData+='<td class="text-center pt-7 amoubt">'+invoiceData[i].amount+'</td>'
 												 tableData+='</tr>'
 											
 												 totalQuantity+=parseInt(invoiceData[i].billQty)
@@ -587,31 +588,92 @@ $.fn.eachFunction=function(){
             
         });
 		  
-		// $('#filesave').click(function () 
-        // {
+		$('#btn_saveinv').click(function () 
+        {
 
-		// 	var poInternalId = urlSplit[1]
-		// 	var fd = new FormData();
-        //     var files = $('#custpage_file0')[0].files[0]
-		// 	fd.append('file',files)
+			var itemdata=[]
 
-		// 	console.log(files)
-		
-		// 	$.ajax({ 
-		// 			type      : 'POST', //Method type
-		// 			url       : 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+poInternalId,  
-		// 			data      :  files,
-		// 			contentType: false,
-        //             processData: false,
-		// 			success   : function(data) 
-		// 						{
-		// 							console.log("check",data)
+			alert("ddd")
+
+			var counttd=0
+	     //Loop through all checked CheckBoxes in GridView.
+	     $("#table-main tbody input[type=checkbox]:checked").each(function () {
+		 // var row = $(this).closest("tr")[0];
+		 //var name = $('.txt-td').val();
+		 item=$(this).parents("tr ").find(".item").text();
+		 quantity=$(this).parents("tr").find(".inputquantity").val();
+
+		 itemdata.push({
+			'item'      : item,
+			'quantity' : quantity
+		 })
+
+         console.log("check",item+"--"+ quantity)		 
+         counttd++
+		 });
+
+			var formData = new FormData();
+
+			for(var i=0; i<filelines; i++)
+			{ 
+				var files = $('#custpage_file'+i)[0].files[0]
+                formData.append('file'+i,files)
+			}
+          
+
+			formData.append('itemDetail',JSON.stringify(itemdata))
+
+            console.log(formData)
+  
+		 var poInternalId = urlSplit[1]
+
+
+
+		 $.ajax({ 
+                type      : 'POST', //Method type
+                url       : window.location.href, //Your form processing file URL
+                data      : JSON.stringify(itemdata), //Forms name
+                contentType: "application/json; charset=utf-8",
+                success   : function(data) 
+                            {
+                                
+								console.log(data)
+								var psrseData=JSON.parse(data)
+								var locationURL=window.location.protocol + "//" + window.location.host+'/invoiceForm&id='+psrseData.billId
+                                 window.location.href=locationURL
+
 								
-		// 						}
-	
-		// 		});
+							}
+                            
+            });
+
+
+
+
+
+
+
+
+		//  $.ajax({
+		//  			type      : 'POST', //Method type
+		// 			url       : window.location.href, //Your form processing file URL
+		// 			data      : formData , //Forms 
+		// 			enctype: "multipart/form-data", 
+		// 			processData: false,
+        //             contentType: false,
+				
+			
+		// 			success   : function(data) 
+		// 					{
+		// 						console.log("checkdata",data)
+							
+		// 					}
+				
+		// 	});
+		
+			
       
-		// });
+		 });
 		$(document).ready(function(){
 		
 		$.fn.checkFunction=function(){
