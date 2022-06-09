@@ -334,6 +334,8 @@
                 url       : 'invoiceForm/itemdetail&id='+poInternalId, //Your form processing file URL
                 data      : JSON.stringify(postForm), //Forms name
                 contentType: "application/json; charset=utf-8",
+				timeout: 5000,
+
                 success   : function(data) 
                             {
                                 
@@ -417,7 +419,31 @@
 
 									$.fn.checkFunction();
 
-                            }
+                            },
+								error: function(xmlhttprequest, textstatus, message) 
+								{
+									if(textstatus==="timeout") {
+										swal.fire({
+											text: "Server Time out",
+											icon: "error",
+											buttonsStyling: false,
+											confirmButtonText: "Ok",
+											customClass: {
+												confirmButton: "btn font-weight-bold btn-light-primary"
+											}
+										})
+									} else {
+										swal.fire({
+											text: textstatus,
+											icon: "error",
+											buttonsStyling: false,
+											confirmButtonText: "Ok",
+											customClass: {
+												confirmButton: "btn font-weight-bold btn-light-primary"
+											}
+										})
+									}
+								}
                             
             });
         

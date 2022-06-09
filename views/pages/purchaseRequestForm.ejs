@@ -342,14 +342,39 @@ var dataParse ="";
                 url       : '/purchaseRequestForm', //Your form processing file URL
                 data      : JSON.stringify(poObject), //Forms name
                 contentType: "application/json; charset=utf-8",
-                success   : function(data) 
+				timeout: 5000,
+                success   : function(data)
                             {
 								console.log(data)
 								$('#updatestatus').show();
 								$('#updatespinner').hide();
 								
 								$("#load_btn_container").click();
-                            }
+                            },
+							error: function(xmlhttprequest, textstatus, message) 
+							{
+								if(textstatus==="timeout") {
+									swal.fire({
+										text: "Server Time out",
+										icon: "error",
+										buttonsStyling: false,
+										confirmButtonText: "Ok",
+										customClass: {
+											confirmButton: "btn font-weight-bold btn-light-primary"
+											}
+									})
+								} else {
+									swal.fire({
+										text: textstatus,
+										icon: "error",
+										buttonsStyling: false,
+										confirmButtonText: "Ok",
+										customClass: {
+											confirmButton: "btn font-weight-bold btn-light-primary"
+											}
+									})
+								}
+							}
 							
              
             });
@@ -406,12 +431,13 @@ var dataParse ="";
                                 var poInternalId = urlSplit[1]
 
           
-
            $.ajax({ 
                 type      : 'GET', //Method type
                 url       : '/purchaseRequestForm/itemdetail&id='+poInternalId, //Your form processing file URL
                 data      : JSON.stringify(postForm), //Forms name
                 contentType: "application/json; charset=utf-8",
+				timeout: 5000,
+
                 success   : function(data) 
                             {
                                 
@@ -465,7 +491,7 @@ var dataParse ="";
 													date='';
 												}
 												else {
-													date=moment(date).format("YYYY-MM-DD");
+													date=moment(date).format("MM-DD-YYYY");
 											}
 
 
@@ -479,7 +505,7 @@ var dataParse ="";
 												 tableData+='<td class="text-center  accqty">'+data[i].values["SUM(quantitybilled)"]+'</td>'
 												 tableData+='<td class="text-center  rate">'+data[i].values["MAX(rate)"]+'</td>'
 												 tableData+='<td class="text-center  accqty">'+data[i].values["MAX(formulanumeric)"]+'</td>'
-												 tableData+='<td class="text-center  date" name=date'+i+'>'+date+'</td>' 
+												 tableData+='<td class="text-center  date" name=date'+i+'>'+moment(date).format("MM/DD/YYYY")+'</td>' 
 												 tableData+='<td class="text-center  accqty">'+data[i].values["GROUP(formulatext)"]+'</td>'
 												 tableData+='</tr>'
 
@@ -497,9 +523,9 @@ var dataParse ="";
 											$('#table-main').append(tableData)
 
                                     $('#totalqty').text(totalQuantity)
-                                    $('#totalamount').text(totalAmount)
+                                    $('#totalamount').text(totalAmount.toFixed(2))
 									$('#totalacceptedquantity').text(totalAcceptedQuantity)
-									$('#totalaccetedamount').text(totalAcceptedAmount)
+									$('#totalaccetedamount').text(totalAcceptedAmount.toFixed(2))
 									$('#pointernalid').val(poInternalId)
 									
 
@@ -524,7 +550,34 @@ var dataParse ="";
                                     //     $('#btn_save').hide();
                                     // }
 									$.fn.checkFunction();
-                            }
+                            },
+							error: function(xmlhttprequest, textstatus, message) 
+									{
+										if(textstatus==="timeout") {
+											swal.fire({
+												text: "Server Time out",
+												icon: "error",
+												buttonsStyling: false,
+												confirmButtonText: "Ok",
+												customClass: {
+													confirmButton: "btn font-weight-bold btn-light-primary"
+												}
+											})
+										} else {
+											swal.fire({
+												text: textstatus,
+												icon: "error",
+												buttonsStyling: false,
+												confirmButtonText: "Ok",
+												customClass: {
+													confirmButton: "btn font-weight-bold btn-light-primary"
+												}
+											})
+										}
+									}
+
+
+
 							
              
             });
@@ -581,10 +634,10 @@ var dataParse ="";
 				var date22 = $(this).parents('tr').find('input[name="date"]').val();
 
 				$(this).parents('tr').find('td:eq(4)').text(quantity22);
-				$(this).parents('tr').find('td:eq(9)').text(date22);
+				$(this).parents('tr').find('td:eq(9)').text(moment(date22).format("MM/DD/YYYY"));
 
 				$(this).parents('tr').val(quantity22);
-				$(this).parents('tr').val(date22);
+				$(this).parents('tr').val(moment(date22).format("MM/DD/YYYY"));
 				
 			}
 });

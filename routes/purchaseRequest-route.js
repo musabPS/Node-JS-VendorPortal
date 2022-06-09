@@ -27,7 +27,7 @@ router.use(bodyParser.json());
 app.use(router)
 
 const PurchaseRequests = require('../models/purchaseRequests-model')
-const SaleOrder = require('../models/sale-order-model')
+const configration = require('../models/configration-model')
 
 
 
@@ -52,9 +52,14 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
     var data = []
     var query = { internalId: id };
     try {
+
+
         console.log("id", parseInt(id))
         data = await PurchaseRequests.findOne({ internalId: parseInt(id) })
-        console.log("data", data)
+        console.log("mongo data", data)
+
+      
+
 
         let route = "pages/purchaseRequestForm"
         let listName = "Payment List"
@@ -78,7 +83,7 @@ router.get('/purchaseRequestForm&id=:id',authCheck, async (req, res) => {
     }
    
 })
-router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
+router.get('/purchaseRequestForm/itemdetail&id=:id',async (req, res) => {
 
     console.log("chddd", req.params)
 
@@ -91,7 +96,11 @@ router.get('/purchaseRequestForm/itemdetail&id=:id',(req, res) => {
     var { id } = req.params 
 
     console.log("chd", id)
-    axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=purchaseRequest&internalid=' + id, {
+
+    configrationData = await configration.findOne({ companyId: 1 })
+    
+
+    axios.get(configrationData.externalSuiteletURLProd+'&type=purchaseRequest&internalid=' + id, {
     })
         .then(function (response) {
             // console.log(response.data[0]); 
@@ -122,14 +131,16 @@ router.post('/purchaseRequestForm',async (req, res) => {
 
     // let route = "pages/purchaseRequestForm"
     // let listName = "Payment List"
-    const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff"
+    configrationData = await configration.findOne({ companyId: 1 })
+    const url = configrationData.externalSuiteletURLProd
     request({
         url, json: true,
         method: "POST",
         body: req.body,
         headers: {
             "User-Agent": "Mozilla/5.0",
-        }
+        },
+        timeout: 5000,
     },
         (error, response, body) => {
             if (error) {

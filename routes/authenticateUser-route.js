@@ -14,6 +14,7 @@ const router = express.Router()
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
+const configration = require('../models/configration-model')
 
 app.use(session({
   secret: "key",
@@ -33,11 +34,14 @@ router.get('/login', (req, res) => {
   res.render(route)
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
 
   req.body.type = 'login'
-  
-  const url = "https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff"
+
+
+  configrationData = await configration.findOne({ companyId: 1 })
+  const url = configrationData.externalSuiteletURLProd
+
   request({
     url, json: true,
     method: "POST",
@@ -45,7 +49,8 @@ router.post('/login', (req, res) => {
     headers: {
       "contentType": "application/json",
 
-    }
+    },
+    timeout: 4000,
   },
     (error, response, body) => {
       if (error) {
@@ -53,13 +58,18 @@ router.post('/login', (req, res) => {
       }
       else {
 
-        req.session.user_id = response.body
         console.log("check0",response.body)
+        req.session.user_id = response.body.internalId
+       
+        res.send(JSON.stringify(response.body))
+       // res.redirect("/")
 
-        res.redirect("/")
+
       }
 
     })
+
+    
 
 
 })

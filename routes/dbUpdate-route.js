@@ -169,7 +169,7 @@ router.post('/DeletePurchaseRequest', async (req, res) => {
 
 router.post('/createItemFulfillments', async (req, res) => {
     try {
-
+ 
         console.log("reg", req.body)
         var obj = req.body.netsuiteData[0]
 
@@ -187,7 +187,6 @@ router.post('/createItemFulfillments', async (req, res) => {
             currentDateTime: currentDateTime,
             type: "Create",
             mongoObjId: purchaseRequests._id
-
         }
 
 

@@ -599,7 +599,6 @@ $.fn.eachFunction=function(){
 
 			var itemdata=[]
 
-			alert("ddd")
 
 			var counttd=0
 	     //Loop through all checked CheckBoxes in GridView.
@@ -640,25 +639,60 @@ $.fn.eachFunction=function(){
                 url       : window.location.href, //Your form processing file URL
                 data      : JSON.stringify(itemdata), //Forms name
                 contentType: "application/json; charset=utf-8",
+				timeout: 30000,
+
                 success   : function(data) 
                             {
-								
+
 								KTApp.unblockPage();
 								console.log(data)
 								var psrseData=JSON.parse(data)
-								var locationURL=window.location.protocol + "//" + window.location.host+'/invoiceForm&id='+psrseData.billId
+								if(psrseData.success)
+								{
+									var locationURL=window.location.protocol + "//" + window.location.host+'/invoiceForm&id='+psrseData.billId
                                  window.location.href=locationURL
-
-								
-							}
+								}
+								else
+								{
+									swal.fire({
+										text: psrseData.error,
+										icon: "error",
+										buttonsStyling: false,
+										confirmButtonText: "Ok",
+										customClass: {
+											confirmButton: "btn font-weight-bold btn-light-primary"
+										}
+									})
+								}
+							
+							},
+				error: function(xmlhttprequest, textstatus, message) 
+				{
+					KTApp.unblockPage();
+					if(textstatus==="timeout") {
+						swal.fire({
+							text: "Server Time out",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light-primary"
+						 	}
+						})
+					} else {
+						swal.fire({
+							text: textstatus,
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok",
+							customClass: {
+								confirmButton: "btn font-weight-bold btn-light-primary"
+						 	}
+						})
+					}
+                }
                             
             });
-
-
-
-
-
-
 
 
 		//  $.ajax({

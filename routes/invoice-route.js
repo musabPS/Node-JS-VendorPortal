@@ -34,6 +34,8 @@ app.use(upload.array());
 
 const Invoice = require('../models/invoices-model')
 const ItemFulfillments = require('../models/itemFulfillments-model')
+const configration = require('../models/configration-model')
+
 const { append } = require('express/lib/response')
 
 //const PurchaseRequests = require('../models/purchaseRequests')
@@ -148,7 +150,7 @@ router.get('/invoiceForm&id=:id', async (req, res) => {
 
 })
 
-router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
+router.get('/invoiceForm/itemdetail&id=:id',async (req, res) => {
 
   console.log("chddd", req.params)
 
@@ -158,7 +160,10 @@ router.get('/invoiceForm/itemdetail&id=:id', (req, res) => {
   var { id } = req.params
 
   console.log("chd", id)
-  axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=invoice&internalid=' + id, {
+
+  configrationData = await configration.findOne({ companyId: 1 })
+    
+    axios.get(configrationData.externalSuiteletURLProd+'&type=invoice&internalid=' + id, {
   })
     .then(function (response) {
       console.log(response);
@@ -197,7 +202,8 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
     let location = data["location"]
     let totalAmount = data["amount"]
     let poNumber = data["poNumber"]
-    let netsuieFileUpload = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='
+    configrationData = await configration.findOne({ companyId: 1 })
+    let netsuieFileUpload = configrationData.externalSuiteletURLProd+'&type=createBill&irid='
 
     breadcrumb = { "noBreadcrumbs": { name: "", link: "" } };
      res.render('index', { route, listName, breadcrumb, tranId, date, totalQty, totalAmount, location, poNumber, netsuieFileUpload })
@@ -213,7 +219,7 @@ router.get('/invoiceView&irid=:id', authCheck, async (req, res) => {
 
 })
 
-router.post('/invoiceView&irid=:id', (req, res) => {
+router.post('/invoiceView&irid=:id', async (req, res) => {
   var { id } = req.params
 
   //Create an instance of the form object
@@ -237,7 +243,10 @@ router.post('/invoiceView&irid=:id', (req, res) => {
   //   //   name: { first: 'Saeid', last: 'Alidadi' }
   //   // }
   // });
-  let url = 'https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=createBill&irid='+id
+
+  configrationData = await configration.findOne({ companyId: 1 })
+
+  let url = configrationData.externalSuiteletURLProd+'&type=createBill&irid='+id
   
   request({
     url, json: true,
@@ -255,6 +264,7 @@ router.post('/invoiceView&irid=:id', (req, res) => {
       else {
 
         console.log("check id",response.body)
+        
         res.send(JSON.stringify(response.body))
      
       }
@@ -370,7 +380,7 @@ function uploadAttachedFiles(auth, file, folderId) {
 
 }
 
-router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
+router.get('/invoiceViewGetItemDetail&irid=:id', async(req, res) => {
 
   console.log("chddd", req.params)
 
@@ -379,8 +389,10 @@ router.get('/invoiceViewGetItemDetail&irid=:id', (req, res) => {
   let listName = "Purchase Request"
   let { id } = req.params
 
+
+  configrationData = await configration.findOne({ companyId: 1 })
   console.log("chd", id)
-  axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt&internalid=' + id, {
+  axios.get(configrationData.externalSuiteletURLProd+'&type=itemRecipt&internalid=' + id, {
   })
     .then(function (response) {
       console.log(response.data);

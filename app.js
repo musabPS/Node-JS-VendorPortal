@@ -21,11 +21,12 @@ const itemFulfillmentRouter = require('./routes/itemfulfillment-route')
 const invoiceRouter = require('./routes/invoice-route')
 
 const billRouter = require('./routes/bill-route')
- 
+
 const paymentRouter = require('./routes/payment-route')
 
 const updateDb = require('./routes/dbUpdate-route')
 
+const configration = require('./models/configration-model')
 
 
 app.use(session({
@@ -57,14 +58,16 @@ app.use(updateDb)
 
 
 
-app.get('/', authCheck, (req, res) => {
+app.get('/', authCheck, async (req, res) => {
 
   var weekData;
   var itemStatistics;
   var userId= req.session.user_id;
   console.log("session id",userId)
 
-  axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=dashboard')
+  configrationData = await configration.findOne({ companyId: 1 })
+
+  axios.get(configrationData.externalSuiteletURLProd+'&type=dashboard')
       .then(function (response) {
         weekData = JSON.parse(response.data[0].salesByWeekData)
         itemStatistics = JSON.parse(response.data[0].itemStatisticsData)
@@ -83,15 +86,10 @@ app.get('/', authCheck, (req, res) => {
 })
  
 
-
 const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`Serving on port ${port}`)
 })
-
-
-
-
 
 
 // const accountSettings = {

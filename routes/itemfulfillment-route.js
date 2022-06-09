@@ -31,6 +31,7 @@ app.use(router)
 
 // const PurchaseRequests = require('../models/purchaseRequests')
  const ItemFulfillments = require('../models/itemFulfillments-model')
+ const configration = require('../models/configration-model')
 
 
 
@@ -167,7 +168,7 @@ router.get('/itemfulfillmentForm&id=:id',authCheck,async (req, res) => {
 
 })
 
-router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
+router.get('/itemfulfillmentForm/itemdetail&id=:id', async(req, res) => {
 
     console.log("chddd", req.params)
 
@@ -178,7 +179,11 @@ router.get('/itemfulfillmentForm/itemdetail&id=:id',(req, res) => {
     let { id } = req.params
 
     console.log("chd", id)
-    axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt&internalid=' + id, {
+
+    configrationData = await configration.findOne({ companyId: 1 })
+    
+
+    axios.get(configrationData.externalSuiteletURLProd+'&type=itemRecipt&internalid=' + id, {
     })
         .then(function (response) {
             // console.log(response.data[0]);

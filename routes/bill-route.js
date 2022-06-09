@@ -28,16 +28,20 @@ app.use(router)
 //const PurchaseRequests = require('../models/purchaseRequests')
 // const ItemFulfillments = require('../models/itemFulfillments')
 // const Invoices = require('./models/invoices')
+const configration = require('../models/configration-model')
 
 
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(bodyParser.json());
 app.use(router)
 
-router.get('/billViewForm', (req, res) => {
+router.get('/billViewForm', async (req, res) => {
     let route = "pages/BeforeCreateBill_View"
     let listName = "Purchase Request"
-    axios.get('https://tstdrv925863.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=700&deploy=1&compid=TSTDRV925863&h=dfb1a0d8daae184c8cff&type=itemRecipt', {
+
+    configrationData = await configration.findOne({ companyId: 1 })
+
+    axios.get(configrationData.externalSuiteletURLProd+'&type=itemRecipt', {
         firstName: 'Fred',
         lastName: 'Flintstone'
     })
