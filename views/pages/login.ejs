@@ -219,7 +219,7 @@ $('#login_button').on('click', function (e) {
 						url       : window.location.href, //Your form processing file URL
 						data      : JSON.stringify(postFormData), //Forms 
 						contentType: "application/json; charset=utf-8",
-						timeout: 5000,
+						timeout: 10000,
 
 	   success   : function(data) 
 
@@ -264,6 +264,7 @@ $('#login_button').on('click', function (e) {
 				},
 				error: function(xmlhttprequest, textstatus, message) 
 				{
+					KTApp.unblockPage();	
 					if(textstatus==="timeout") {
 						swal.fire({
 							text: "Server Time out",

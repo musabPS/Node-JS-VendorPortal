@@ -132,54 +132,7 @@
 					<!--end::Content-->
 
   <!-- Modal -->
-  <div class="modal fade" id="myModaldate" role="dialog">
-	<div class="modal-dialog">
-	
-	  <!-- Modal content-->
-	  <div class="modal-content">
-		<div class="modal-header">
-		<h5 class="modal-title" id="exampleModalLabel">Change Date To all Items</h5>
-		
-		
-		</div>
-		<div class="modal-body">
-			<NLFORM>
-				<form method="POST" action="/purchaseRequestForm">
-					<div id="totalcount" style="display:none;">
 
-					</div>
-					<label for="changeallitemdate">Expected Delivery Date</label>
-					<input type="date" id="changeallitemdate" class="form-control changeallitemdate" name="changeallitemdate" value="">
-					<input type="text"  id="pointernalid" name="pointernalid" value="" style="display:none;">
-		
-			<table class="table modeltable">
-				<thead>
-					<tr>
-						<th scope="col" style="display:none;">line #</th>
-						<th scope="col">Product</th>
-						<th scope="col">A.Qty</th>
-						<th scope="col">Ordered Qty</th>
-						<th scope="col">Rate</th>
-						<th scope="col">Remove</th>
-					</tr>
-				</thead>
-				<tbody class="table-body">
-
-				</tbody>
-		
-			</table>
-			<button type="submit" class="btn btn-primary" name="save" value="linedate">Save</button>
-		</form>
-	</NLFORM>
-		</div>
-
-		<div class="modal-footer">
-	   
-		</div>
-	</div>
-	  
-	</div>
-  </div>
    <!-- END  Modal -->
    <NLFORM>
 		<form method="POST" id="approveform" >
@@ -192,90 +145,7 @@
 
 
 <script>
-	  $(function () {
-
-		$("#checkAll").click(function(){
-        $('input:checkbox').not(this).prop('checked', this.checked);
-        });
-
-	 //
-
-	 // var Nodata ="<tr><th colspan='10' style='font-weight:normal;'>No Data Available In Table</th></tr>"
-	 // $('#table-main tbody').append(Nodata);
-
-	 $("#modaldate").click(function () {
-
-		$('.modeltable .table-body').empty();
-		var counttd=0
-		var nodata='<tr colspan="7"><td>No data Selected </td></tr>'
- 		     //Loop through all checked CheckBoxes in GridView.
-            $("#table-main tbody input[type=checkbox]:checked").each(function () {
-				
-                // var row = $(this).closest("tr")[0];
-				//var name = $('.txt-td').val();
-				linenumber=$(this).parents("tr").find(".linenumber").text();
-                 item =$(this).parents("tr").find(".item").text();
-                 qty =$(this).parents("tr").find(".qty").text();
-                 rate =$(this).parents("tr").find(".rate").text();
-                // amount =$(this).parents("tr").find(".amount").text();
-                // itemid=$(this).parents("tr").find(".itemid").text();
-                // linenumber=$(this).parents("tr").find(".linenumber").text();
-                 td=  '<tr>'
-                 td+= '<td style="display:none;" ><input id="modallinenumber" class="form-control" value="'+linenumber+'" name="linenumber'+counttd+'" ></td>'
-				 td+= '<td  style="width:30%"><input id="modalitem" class="form-control" value="'+item+'" name="item'+counttd+'" ></td>'
-				 td+= '<td style="width:23%"><input type="number"min="1" max="'+qty+'" id="modalqty" class="form-control acceptqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" ></td>' 
-				 td+= '<td><input type="number"min="1" max="'+qty+'" id="orderqty" class="form-control orderqty" value="'+qty+'" name="qty'+parseInt(linenumber-1)+'" disabled></td>' 
-				 td+= '<td><input id="modalqty" class="form-control" value="'+rate+'" name="rate'+counttd+'" ></td>' 
-				 
-				 td+='<td><button type="button" class="btn btn-danger removebtntop" id="deltop">-</button></td>'
-                 td+='</tr>' 
-				 counttd++ 
-				 $('.modeltable .table-body').append(td);
-            });
-			if(counttd==0)
-			{
-				$('.modeltable .table-body').append(nodata);
-			}
-
-			total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-			$('#totalcount').append(total);
-
-        })
-		 $('.modeltable .table-body').on('click' , '#deltop',function(){
-
-			$(this).parents('tr').remove();
-			counttd--
-		 })
-
-		$(".headerapprove").click(function () 
-		{
-			
-          var counttd=0
-	     //Loop through all checked CheckBoxes in GridView.
-	     $("#table-main tbody input[type=checkbox]:checked").each(function () {
-		 // var row = $(this).closest("tr")[0];
-		 //var name = $('.txt-td').val();
-		 linenumber=$(this).parents("tr").find(".linenumber").text();
-		  td='<input type="text" id="changeallitemdate" class="form-control changeallitemdate" name="lineapprove'+counttd+'" value="'+linenumber+' " >'
-		  $('#approvepost').append(td);
-		  counttd++
-		 });
-		 td='<button type="submit" class="btn btn-light-success font-weight-bold" id="btnapprove" name="save" value="approve">Approve</button>'
-		 $('#approvepost').append(td);
-		 total= '<input id="linenumbertop" class="form-control" value="'+counttd+'" name="linenumbertop" >' 
-	       $('#approvepost').append(total);
-		 console.log("check")
-		 $("#btnapprove").click();
-		 const form  = document.getElementById('#approveform');
-         // form.addEventListener('submit', (event) => {
-           // handle the form data
-		  // form.submit();
-            // });
-	      
-         })
-
-
-   });
+	 
 
  
 
@@ -350,13 +220,11 @@
 								
 								tableData+= '<tr>'
 								            	+'<thead>'
-													+'<th data-field="RecordID" id="table-checkAll" class="datatable-cell-center datatable-cell datatable-cell-check">'
-													+'<span style="width: 20px;"><label class="checkbox checkbox-single checkbox-all">'
-													+'<input type="checkbox"  id="checkboxAll">&nbsp;<span></span></label></span></th>'
+													
 													+'<th class="text-center pl-0 font-weight-bold text-muted text-uppercase">Product</th>'
 													+'<th class="text-center font-weight-bold text-muted text-uppercase">Billed Quantity</th>'
-													+'<th class="font-weight-bold text-muted text-uppercase">Rate</th>'
-													+'<th class="pr-0 font-weight-bold text-muted text-uppercase">Amount</th>'
+													+'<th class="text-center font-weight-bold text-muted text-uppercase">Rate</th>'
+													+'<th  class="text-center font-weight-bold text-muted text-uppercase">Amount</th>'
 													+'</tr>'
 												+'</thead>'
 												+'<tbody>'
@@ -377,7 +245,6 @@
                                             for(var i=0; i<data.length; i++)
 											{
 												tableData+='<tr>'
-												 tableData+='<td data-field="RecordID" class="datatable-cell-center datatable-cell datatable-cell-check"><span style="width: 20px;"><label class="checkbox checkbox-single"><input type="checkbox" id="checkbox-solo">&nbsp;<span></span></label></span></td>'
                                                  tableData+='<td class="text-center pt-7 qty">'+data[i].values["GROUP(item)"][0].text+'</td>' 
 												 tableData+='<td class="text-center pt-7 rate">'+data[i].values["SUM(quantity)"]+'</td>'
 												 tableData+='<td class="text-center pt-7 accqty">'+data[i].values["MAX(rate)"]+'</td>'
@@ -397,17 +264,7 @@
                                     $('#totalamount').text(totalAmount)
 									$('#pointernalid').val(poInternalId)
 
-                                    //     Swal.fire({  icon: 'success',  title: 'Saved', button: "Aww yiss!" ,text: 'Data Saved',  footer: '<a href="/sales-orders">View all saleorder</a>'})
-                                    //     $("#trandate option[value='']").attr('selected', true)
-                                    //     $("#customer option[value='']").attr('selected', true)
-                                    //     $('#btn_save').removeClass('fa fa-spinner fa-spin');
-                                    //     $(this).addClass('flaticon2-send-1');
-                                    //   ///  window.location.reload();
-                                    // event.preventDefault();
-
-                                    // if(recordType!='invoice'){
-                                    //     $('#btn_save').show();
-                                    // }
+                                
 
                                     $('#btn_save').show();
 
@@ -459,28 +316,7 @@
 		$.fn.checkFunction=function(){
 			console.log("checkeddddd");
 
-				$(".table #checkbox-solo").change(function(event){
-					console.log("dadadad")
-					var billedQuantity = $(this).parents('tr').find('td:eq(2)').text();
-					
-
-			if (this.checked){
-
-				$(this).parents('tr').find('td:eq(2)').html('<input class="inputquantity form-control"  name="quantity" type="number" value='+billedQuantity+' min="0">');
-			
-
-			} else {
-
-				var quantity2 = $(this).parents('tr').find('input[name="quantity"]').val();
-				
-				$(this).parents('tr').find('td:eq(2)').text(quantity2);
-				
-
-				$(this).parents('tr').val(quantity2);
-				
-				
-			}
-});
+	
 
 		
 		}
