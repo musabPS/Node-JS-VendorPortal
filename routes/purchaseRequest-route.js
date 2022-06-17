@@ -140,7 +140,7 @@ router.post('/purchaseRequestForm',async (req, res) => {
         headers: {
             "User-Agent": "Mozilla/5.0",
         },
-        timeout: 5000,
+        timeout: 100000,
     },
         (error, response, body) => {
             if (error) {
